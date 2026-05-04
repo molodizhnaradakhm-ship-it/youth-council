@@ -8,8 +8,8 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const repoRoot = path.resolve(__dirname, '..', '..');
 const deployDir = path.join(repoRoot, '.deploy');
-const composeFile = path.join(deployDir, 'docker-compose.dev.yml');
-const envFile = path.join(deployDir, 'env.dev');
+const defaultDevEnvFile = path.join(deployDir, 'env.dev');
+const defaultProdEnvFile = path.join(deployDir, 'env.web.prod');
 const seedDir = path.join(deployDir, 'seed-data');
 const mongoArchive = path.join(seedDir, 'mongo.archive.gz');
 const minioDir = path.join(seedDir, 'minio');
@@ -61,6 +61,38 @@ function containerIdByName(name) {
   }
 }
 
+function pickArgValue(argv, flag) {
+  const idx = argv.indexOf(flag);
+  if (idx === -1) return null;
+  const val = argv[idx + 1];
+  if (!val || val.startsWith('-')) return null;
+  return val;
+}
+
+function getConfigFromArgs() {
+  const argv = process.argv.slice(2);
+  const envNameRaw = pickArgValue(argv, '--env');
+  const envName = envNameRaw === 'prod' ? 'prod' : 'dev';
+
+  const envFileArg = pickArgValue(argv, '--env-file');
+  const envFile =
+    envFileArg ||
+    (envName === 'prod'
+      ? // Prod env files are typically present only on the server.
+        defaultProdEnvFile
+      : defaultDevEnvFile);
+
+  const mongoContainerArg = pickArgValue(argv, '--mongo-container');
+  const minioContainerArg = pickArgValue(argv, '--minio-container');
+
+  const mongoContainer =
+    mongoContainerArg || (envName === 'prod' ? 'youth-council-landing-mongo' : 'youth-council-landing-mongo-dev');
+  const minioContainer =
+    minioContainerArg || (envName === 'prod' ? 'youth-council-landing-minio' : 'youth-council-landing-minio-dev');
+
+  return { envName, envFile, mongoContainer, minioContainer };
+}
+
 function getContainerNetworks(containerId) {
   const raw = sh(`docker inspect ${containerId} --format "{{json .NetworkSettings.Networks}}"`);
   const obj = JSON.parse(raw || '{}');
@@ -71,9 +103,13 @@ function usage() {
   console.log(
     [
       'Usage:',
-      '  node .deploy/seed/seed.mjs backup',
-      '  node .deploy/seed/seed.mjs seed --yes',
+      '  node .deploy/seed/seed.mjs backup [--env dev|prod] [--env-file <path>]',
+      '  node .deploy/seed/seed.mjs seed [--env dev|prod] [--env-file <path>] --yes',
       '  (or: SEED=true node .deploy/seed/seed.mjs seed)',
+      '',
+      'Overrides (optional):',
+      '  --mongo-container <name>   (defaults: youth-council-landing-mongo-dev / youth-council-landing-mongo)',
+      '  --minio-container <name>   (defaults: youth-council-landing-minio-dev / youth-council-landing-minio)',
       '',
       'What it does:',
       '  backup: creates .deploy/seed-data/mongo.archive.gz and .deploy/seed-data/minio/**',
@@ -84,10 +120,11 @@ function usage() {
 
 async function backup() {
   ensureDirs();
+  const { envFile, mongoContainer, minioContainer } = getConfigFromArgs();
+  if (!fs.existsSync(envFile)) {
+    throw new Error(`Env file not found: ${envFile}. Use --env-file to point to the correct file.`);
+  }
   const env = parseEnv(envFile);
-
-  const mongoContainer = 'youth-council-landing-mongo-dev';
-  const minioContainer = 'youth-council-landing-minio-dev';
 
   const mongoId = containerIdByName(mongoContainer);
   const minioId = containerIdByName(minioContainer);
@@ -132,14 +169,15 @@ function seedConfirmed() {
 }
 
 async function seed() {
+  const { envFile, mongoContainer, minioContainer } = getConfigFromArgs();
+  if (!fs.existsSync(envFile)) {
+    throw new Error(`Env file not found: ${envFile}. Use --env-file to point to the correct file.`);
+  }
   const env = parseEnv(envFile);
   if (!seedConfirmed()) {
     console.log('Seed skipped. Run with --yes (or SEED=true) to execute (drops Mongo, overwrites MinIO).');
     return;
   }
-
-  const mongoContainer = 'youth-council-landing-mongo-dev';
-  const minioContainer = 'youth-council-landing-minio-dev';
 
   const mongoId = containerIdByName(mongoContainer);
   const minioId = containerIdByName(minioContainer);
@@ -154,8 +192,8 @@ async function seed() {
   const accessKey = env.S3_ACCESS_KEY_ID || env.MINIO_ROOT_USER;
   const secretKey = env.S3_SECRET_ACCESS_KEY || env.MINIO_ROOT_PASSWORD;
   const endpoint = env.S3_ENDPOINT || 'http://minio:9000';
-  if (!bucket) throw new Error('S3_BUCKET is missing in .deploy/env.dev');
-  if (!accessKey || !secretKey) throw new Error('MinIO credentials missing in .deploy/env.dev');
+  if (!bucket) throw new Error(`S3_BUCKET is missing in ${envFile}`);
+  if (!accessKey || !secretKey) throw new Error(`MinIO credentials missing in ${envFile}`);
 
   const bucketPath = path.join(minioDir, bucket);
   if (!fs.existsSync(bucketPath)) {

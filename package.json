@@ -18,7 +18,11 @@
     "lint:fix": "eslint . --ext .ts,.tsx --fix",
     "typecheck": "pnpm -r typecheck",
     "seed:backup": "node .deploy/seed/seed.mjs backup",
-    "seed:restore": "node .deploy/seed/seed.mjs seed --yes"
+    "seed:restore": "node .deploy/seed/seed.mjs seed --yes",
+    "seed:backup:dev": "node .deploy/seed/seed.mjs backup --env dev",
+    "seed:restore:dev": "node .deploy/seed/seed.mjs seed --env dev --yes",
+    "seed:backup:prod": "node .deploy/seed/seed.mjs backup --env prod",
+    "seed:restore:prod": "node .deploy/seed/seed.mjs seed --env prod --yes"
   },
   "devDependencies": {
     "@next/eslint-plugin-next": "^15.5.2",
