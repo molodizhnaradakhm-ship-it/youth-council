@@ -210,10 +210,9 @@ async function seed() {
   console.log('\n== Mongo: restore archive ==\n');
   // Copy archive into container and restore (drop existing)
   run(`docker cp "${mongoArchive}" ${mongoId}:/tmp/seed.archive.gz`);
-  const rewriteArgs =
-    nsFrom && nsTo
-      ? ` --nsFrom=${JSON.stringify(nsFrom)} --nsTo=${JSON.stringify(nsTo)}`
-      : '';
+  // Important: don't inject quotes here (command is already wrapped by sh -lc "...").
+  // Patterns like smarty-landing.* have no spaces and are safe without shell quoting.
+  const rewriteArgs = nsFrom && nsTo ? ` --nsFrom=${nsFrom} --nsTo=${nsTo}` : '';
   if ((nsFrom && !nsTo) || (!nsFrom && nsTo)) {
     throw new Error('Both --ns-from and --ns-to must be provided together.');
   }
