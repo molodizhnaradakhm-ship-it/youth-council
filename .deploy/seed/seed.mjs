@@ -90,7 +90,12 @@ function getConfigFromArgs() {
   const minioContainer =
     minioContainerArg || (envName === 'prod' ? 'youth-council-landing-minio' : 'youth-council-landing-minio-dev');
 
-  return { envName, envFile, mongoContainer, minioContainer };
+  // Optional Mongo namespace rewrite for restores (e.g. smarty-landing.* -> youth-council.*)
+  // mongorestore flags: --nsFrom <pattern> --nsTo <replacement>
+  const nsFrom = pickArgValue(argv, '--ns-from');
+  const nsTo = pickArgValue(argv, '--ns-to');
+
+  return { envName, envFile, mongoContainer, minioContainer, nsFrom, nsTo };
 }
 
 function getContainerNetworks(containerId) {
@@ -110,6 +115,8 @@ function usage() {
       'Overrides (optional):',
       '  --mongo-container <name>   (defaults: youth-council-landing-mongo-dev / youth-council-landing-mongo)',
       '  --minio-container <name>   (defaults: youth-council-landing-minio-dev / youth-council-landing-minio)',
+      '  --ns-from <pattern>        (mongorestore namespace rewrite source, e.g. smarty-landing.*)',
+      '  --ns-to <pattern>          (mongorestore namespace rewrite target, e.g. youth-council.*)',
       '',
       'What it does:',
       '  backup: creates .deploy/seed-data/mongo.archive.gz and .deploy/seed-data/minio/**',
@@ -169,7 +176,7 @@ function seedConfirmed() {
 }
 
 async function seed() {
-  const { envFile, mongoContainer, minioContainer } = getConfigFromArgs();
+  const { envFile, mongoContainer, minioContainer, nsFrom, nsTo } = getConfigFromArgs();
   if (!fs.existsSync(envFile)) {
     throw new Error(`Env file not found: ${envFile}. Use --env-file to point to the correct file.`);
   }
@@ -203,7 +210,17 @@ async function seed() {
   console.log('\n== Mongo: restore archive ==\n');
   // Copy archive into container and restore (drop existing)
   run(`docker cp "${mongoArchive}" ${mongoId}:/tmp/seed.archive.gz`);
-  run(`docker exec ${mongoId} sh -lc "mongorestore --archive=/tmp/seed.archive.gz --gzip --drop"`);
+  const rewriteArgs =
+    nsFrom && nsTo
+      ? ` --nsFrom=${JSON.stringify(nsFrom)} --nsTo=${JSON.stringify(nsTo)}`
+      : '';
+  if ((nsFrom && !nsTo) || (!nsFrom && nsTo)) {
+    throw new Error('Both --ns-from and --ns-to must be provided together.');
+  }
+  run(
+    `docker exec ${mongoId} sh -lc ` +
+      `"mongorestore --archive=/tmp/seed.archive.gz --gzip --drop${rewriteArgs}"`,
+  );
   run(`docker exec ${mongoId} sh -lc "rm -f /tmp/seed.archive.gz"`);
 
   console.log('\n== MinIO: mirror local folder → bucket ==\n');
