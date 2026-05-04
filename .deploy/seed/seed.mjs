@@ -95,7 +95,12 @@ function getConfigFromArgs() {
   const nsFrom = pickArgValue(argv, '--ns-from');
   const nsTo = pickArgValue(argv, '--ns-to');
 
-  return { envName, envFile, mongoContainer, minioContainer, nsFrom, nsTo };
+  // Optional namespace include/exclude (mongorestore filters)
+  // Helpful when archive contains multiple DBs and rewrite would cause conflicts.
+  const nsInclude = pickArgValue(argv, '--ns-include');
+  const nsExclude = pickArgValue(argv, '--ns-exclude');
+
+  return { envName, envFile, mongoContainer, minioContainer, nsFrom, nsTo, nsInclude, nsExclude };
 }
 
 function getContainerNetworks(containerId) {
@@ -117,6 +122,8 @@ function usage() {
       '  --minio-container <name>   (defaults: youth-council-landing-minio-dev / youth-council-landing-minio)',
       '  --ns-from <pattern>        (mongorestore namespace rewrite source, e.g. smarty-landing.*)',
       '  --ns-to <pattern>          (mongorestore namespace rewrite target, e.g. youth-council.*)',
+      '  --ns-include <pattern>     (mongorestore filter include, e.g. smarty-landing.*)',
+      '  --ns-exclude <pattern>     (mongorestore filter exclude, e.g. youth-council.*)',
       '',
       'What it does:',
       '  backup: creates .deploy/seed-data/mongo.archive.gz and .deploy/seed-data/minio/**',
@@ -176,7 +183,7 @@ function seedConfirmed() {
 }
 
 async function seed() {
-  const { envFile, mongoContainer, minioContainer, nsFrom, nsTo } = getConfigFromArgs();
+  const { envFile, mongoContainer, minioContainer, nsFrom, nsTo, nsInclude, nsExclude } = getConfigFromArgs();
   if (!fs.existsSync(envFile)) {
     throw new Error(`Env file not found: ${envFile}. Use --env-file to point to the correct file.`);
   }
@@ -213,12 +220,19 @@ async function seed() {
   // Important: don't inject quotes here (command is already wrapped by sh -lc "...").
   // Patterns like smarty-landing.* have no spaces and are safe without shell quoting.
   const rewriteArgs = nsFrom && nsTo ? ` --nsFrom=${nsFrom} --nsTo=${nsTo}` : '';
+  const filterArgs = [
+    nsInclude ? `--nsInclude=${nsInclude}` : '',
+    nsExclude ? `--nsExclude=${nsExclude}` : '',
+  ]
+    .filter(Boolean)
+    .map((s) => ` ${s}`)
+    .join('');
   if ((nsFrom && !nsTo) || (!nsFrom && nsTo)) {
     throw new Error('Both --ns-from and --ns-to must be provided together.');
   }
   run(
     `docker exec ${mongoId} sh -lc ` +
-      `"mongorestore --archive=/tmp/seed.archive.gz --gzip --drop${rewriteArgs}"`,
+      `"mongorestore --archive=/tmp/seed.archive.gz --gzip --drop${rewriteArgs}${filterArgs}"`,
   );
   run(`docker exec ${mongoId} sh -lc "rm -f /tmp/seed.archive.gz"`);
 

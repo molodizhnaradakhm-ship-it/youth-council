@@ -22,7 +22,7 @@
     "seed:backup:dev": "node .deploy/seed/seed.mjs backup --env dev",
     "seed:restore:dev": "node .deploy/seed/seed.mjs seed --env dev --yes",
     "seed:backup:prod": "node .deploy/seed/seed.mjs backup --env prod",
-    "seed:restore:prod": "node .deploy/seed/seed.mjs seed --env prod --yes --ns-from smarty-landing.* --ns-to youth-council.*"
+    "seed:restore:prod": "node .deploy/seed/seed.mjs seed --env prod --yes --ns-from smarty-landing.* --ns-to youth-council.* --ns-exclude youth-council.*"
   },
   "devDependencies": {
     "@next/eslint-plugin-next": "^15.5.2",
