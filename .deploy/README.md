@@ -26,5 +26,6 @@ docker compose -f docker-compose.prod.yml \
 
 Notes:
 - `docker-compose.prod.yml` now includes a `traefik` service. Set `TRAEFIK_ACME_EMAIL` in `env.traefik.prod` so Let's Encrypt can issue certificates.
+- **CMS (production)** uses **`DockerfileCms`** at the repo root (Next.js `standalone`, like `DockerfileWeb`). No bind mount to `/app` is required.
 
 

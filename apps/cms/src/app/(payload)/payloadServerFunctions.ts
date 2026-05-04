@@ -12,10 +12,9 @@ import { importMap } from './admin/importMap.js';
  * with stable imports (config + importMap). Avoid defining `'use server'` inside nested
  * closures in layout.tsx — that can compile to a brittle action closure in Next.js 15.
  */
-export const payloadServerFunction: ServerFunctionClient = async (args) => {
-  return handleServerFunctions({
+export const payloadServerFunction: ServerFunctionClient = async (args) =>
+  await handleServerFunctions({
     ...args,
     config,
     importMap,
   });
-};

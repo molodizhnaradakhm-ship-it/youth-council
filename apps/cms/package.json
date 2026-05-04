@@ -15,7 +15,7 @@
     "migrate:create": "cross-env NODE_OPTIONS=--no-deprecation payload migrate:create",
     "typecheck": "tsc -p tsconfig.json --noEmit",
     "payload": "cross-env NODE_OPTIONS=--no-deprecation payload",
-    "start": "cross-env NODE_OPTIONS=--no-deprecation next start -p 3000 -H 0.0.0.0",
+    "start": "cross-env NODE_OPTIONS=--no-deprecation next start -p 3001 -H 0.0.0.0",
     "jobs": "payload jobs:run --cron \"*/5 * * * *\""
   },
   "dependencies": {

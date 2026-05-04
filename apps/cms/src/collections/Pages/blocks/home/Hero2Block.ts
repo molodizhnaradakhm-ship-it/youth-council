@@ -144,13 +144,15 @@ export const Hero2Block: Block = {
               type: 'checkbox',
             },
             {
-              admin: { condition: (_: any, s: any) => Boolean(s?.enabled) },
+              admin: {
+                condition: (_: any, s: any) => Boolean(s?.enabled),
+                step: 0.5,
+              },
               label: 'Average rating',
               name: 'averageRating',
               type: 'number',
               min: 0,
               max: 5,
-              step: 0.5,
               required: false,
             },
             {

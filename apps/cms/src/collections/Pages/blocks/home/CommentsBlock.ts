@@ -1,7 +1,5 @@
 import type { Block } from 'payload';
 
-import { link } from '@/fields/link';
-
 export const CommentsBlock: Block = {
   fields: [
     {
@@ -25,17 +23,16 @@ export const CommentsBlock: Block = {
       type: 'textarea',
     },
     {
-      admin: { description: 'Average rating shown near the stars (e.g. 4.8).' },
+      admin: {
+        description: 'Average rating 0..5 (step 0.5), shown near the stars (e.g. 4.8).',
+        step: 0.5,
+      },
       label: 'Average rating',
       name: 'averageRating',
       required: false,
       type: 'number',
       min: 0,
       max: 5,
-      admin: {
-        description: 'Average rating 0..5 (step 0.5).',
-        step: 0.5,
-      },
     },
     {
       admin: { description: 'Label shown under the stars (e.g. "reviews").' },

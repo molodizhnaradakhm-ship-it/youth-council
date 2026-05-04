@@ -6,7 +6,12 @@ import simpleImportSort from 'eslint-plugin-simple-import-sort';
 
 export default [
   {
-    ignores: ['**/node_modules/**', '**/.next/**', '.turbo/**'],
+    ignores: [
+      '**/node_modules/**',
+      '**/.next/**',
+      '.turbo/**',
+      '**/admin/importMap.js',
+    ],
   },
   {
     files: ['**/*.{js,ts,tsx}'],

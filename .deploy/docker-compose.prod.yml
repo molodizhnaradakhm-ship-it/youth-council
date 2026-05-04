@@ -43,11 +43,10 @@ services:
   youth-council-landing-cms:
     build:
       context: ../
-      dockerfile: .deploy/Dockerfile.youth-council-landing.dev
+      dockerfile: DockerfileCms
     image: youth-council-landing-cms:latest
     container_name: youth-council-landing-cms
     restart: unless-stopped
-    working_dir: /app
     networks:
       - traefik-network
     env_file:
@@ -63,13 +62,6 @@ services:
     depends_on:
       - mongo
       - minio
-    volumes:
-      - type: volume
-        source: pnpm_store
-        target: /pnpm-store
-      - type: volume
-        source: landing_deps_state
-        target: /deps
     labels:
       - "traefik.enable=true"
       - "traefik.http.services.youth-council-landing-cms.loadbalancer.server.port=3001"
@@ -78,8 +70,6 @@ services:
       - "traefik.http.routers.youth-council-landing-cms.tls=true"
       - "traefik.http.routers.youth-council-landing-cms.tls.certresolver=letsencrypt"
       - "traefik.http.routers.youth-council-landing-cms.middlewares=security@file,rate-limit@file"
-    command: ["sh", "-lc", "pnpm --filter @monorepo/cms start"]
-
   youth-council-landing-web:
     build:
       context: ../
@@ -157,6 +147,4 @@ networks:
 volumes:
   mongo_data:
   minio_data:
-  pnpm_store:
-  landing_deps_state:
   traefik_acme:

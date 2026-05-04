@@ -1,6 +1,8 @@
-import type { MigrateDownArgs, MigrateUpArgs } from 'payload';
+import type { Payload } from 'payload';
 
 type AnyDoc = Record<string, unknown>;
+
+type MigrationArgs = { payload: Payload };
 
 const BLOCK_TYPE_RENAMES: Record<string, string> = {
   'dark-home-section-block': 'home-section-block',
@@ -91,7 +93,7 @@ function migrateBlocks(value: unknown, map: Record<string, string>): { value: un
 }
 
 async function migrateCollectionBlocks(
-  payload: MigrateUpArgs['payload'],
+  payload: Payload,
   args: { collection: string; fields: string[]; map: Record<string, string> },
 ) {
   const { collection, fields, map } = args;
@@ -135,7 +137,7 @@ async function migrateCollectionBlocks(
   }
 }
 
-export async function up({ payload }: MigrateUpArgs): Promise<void> {
+export async function up({ payload }: MigrationArgs): Promise<void> {
   // Pages: homeBlocks + informationBlocks
   await migrateCollectionBlocks(payload, {
     collection: 'pages',
@@ -158,7 +160,7 @@ export async function up({ payload }: MigrateUpArgs): Promise<void> {
   });
 }
 
-export async function down({ payload }: MigrateDownArgs): Promise<void> {
+export async function down({ payload }: MigrationArgs): Promise<void> {
   // Best-effort reverse (mostly useful in dev).
   await migrateCollectionBlocks(payload, {
     collection: 'pages',
