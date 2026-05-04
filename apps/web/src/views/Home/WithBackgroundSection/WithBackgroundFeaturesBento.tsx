@@ -6,6 +6,7 @@ import clsx from 'clsx';
 import { Container } from '@/components/Container';
 import { InViewAnimation } from '@/components/InViewAnimation';
 import { Text } from '@/components/Text';
+import { aspectRatioTokenToCss } from '@/utils/aspectRatioTokenToCss';
 import { cssUrl } from '@/utils/cssUrl';
 import { resolvePayloadMediaUrl } from '@/utils/resolvePayloadMediaUrl';
 import type { Media } from '@monorepo/cms/src/payload-types';
@@ -50,17 +51,6 @@ function getMediaImageUrl(media: Media | null | undefined): string | null {
   const version =
     typeof media.updatedAt === 'string' && media.updatedAt.trim() !== '' ? media.updatedAt : '';
   return version ? `${base}${base.includes('?') ? '&' : '?'}v=${encodeURIComponent(version)}` : base;
-}
-
-function aspectRatioToCss(ratio: string | null | undefined): string | undefined {
-  if (!ratio || ratio === 'auto' || ratio === 'fill') {
-    return undefined;
-  }
-  const [a, b] = ratio.split(':');
-  if (!a || !b) {
-    return undefined;
-  }
-  return `${a.trim()} / ${b.trim()}`;
 }
 
 export const WithBackgroundFeaturesBento = ({
@@ -126,7 +116,7 @@ export const WithBackgroundFeaturesBento = ({
                   const widthPct = card.imageWidthPercent ?? '100';
                   const aspectRaw = card.imageAreaAspectRatio ?? 'auto';
                   const isMediaFill = aspectRaw === 'fill';
-                  const aspectCss = aspectRatioToCss(aspectRaw);
+                  const aspectCss = aspectRatioTokenToCss(aspectRaw);
                   const hasFixedAspect = Boolean(aspectCss);
                   const imageLayer = card.imageLayer === 'cardBackground' ? 'cardBackground' : 'content';
                   const heightPreset = card.heightPreset ?? 'default';

@@ -5,18 +5,12 @@ import { CMSMedia } from '@/components/CMSMedia';
 import { Container } from '@/components/Container';
 import { InViewAnimation } from '@/components/InViewAnimation';
 import { Text } from '@/components/Text';
+import { aspectRatioTokenToCss } from '@/utils/aspectRatioTokenToCss';
 import { clampPctCss, clampPxCss } from '@/utils/clampCss';
 import type { StyleWithVars } from '@/utils/styleVars';
 import type { SolutionsBlockFields } from '@monorepo/cms/src/payload-types';
 
 import styles from './Solutions.module.scss';
-
-const ratioToCss = (ratio?: string | null): string | undefined => {
-  if (!ratio || ratio === 'auto') return undefined;
-  const parts = ratio.split(':').map((x) => Number(x));
-  if (parts.length !== 2 || !Number.isFinite(parts[0]) || !Number.isFinite(parts[1])) return undefined;
-  return `${parts[0]} / ${parts[1]}`;
-};
 
 function CardCopy({
   number,
@@ -54,7 +48,7 @@ export const Solutions = ({ title, cards }: SolutionsBlockFields) => {
         <ul className={styles.rows}>
           {list.map((card, index) => {
             const textRight = (card.textPosition ?? 'left') === 'right';
-            const cssRatio = ratioToCss(card.imageAspectRatio);
+            const cssRatio = aspectRatioTokenToCss(card.imageAspectRatio);
             const visualFg = card.foregroundImage ?? card.image;
             const visualBg = card.backgroundImage ?? null;
             const bgLayout = card.backgroundLayout;

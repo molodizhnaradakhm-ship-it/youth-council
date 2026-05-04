@@ -936,7 +936,9 @@ export interface FeaturesBentoBlockFields {
       /**
        * Fixed aspect ratio for the image area (stabilizes layout). Auto = flexible height from content.
        */
-      imageAreaAspectRatio?: ('auto' | 'fill' | '1:1' | '4:3' | '3:4' | '16:9' | '21:9' | '3:2') | null;
+      imageAreaAspectRatio?:
+        | ('auto' | 'fill' | 'ratio_1_1' | 'ratio_4_3' | 'ratio_3_4' | 'ratio_16_9' | 'ratio_21_9' | 'ratio_3_2')
+        | null;
       /**
        * Optional min-height for this card. Default = CSS for the chosen preset. Custom = exact min-height in px.
        */
@@ -1195,7 +1197,7 @@ export interface SolutionsBlockFields {
     /**
      * Controls the visual size of the image. If "Auto" is used, the image height is derived from the original file proportions (can vary between cards).
      */
-    imageAspectRatio: 'auto' | '1:1' | '4:3' | '16:9' | '3:4' | '9:16';
+    imageAspectRatio: 'auto' | 'ratio_1_1' | 'ratio_4_3' | 'ratio_16_9' | 'ratio_3_4' | 'ratio_9_16';
     description: string;
     /**
      * Text card position relative to the centered image.
@@ -1375,7 +1377,7 @@ export interface CommentsBlockFields {
    */
   description?: string | null;
   /**
-   * Average rating 0..5 (step 0.5).
+   * Average rating 0..5 (step 0.5), shown near the stars (e.g. 4.8).
    */
   averageRating?: number | null;
   /**
