@@ -4,7 +4,8 @@ version: "3.8"
 
 services:
   traefik:
-    image: traefik:v3.1
+    # v3.1 Docker client used API 1.24 — fails on modern Engine (min 1.40+). Fixed in v3.6+ (API negotiation).
+    image: traefik:v3.6
     container_name: youth-council-traefik
     restart: unless-stopped
     networks:
