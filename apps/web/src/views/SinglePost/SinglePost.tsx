@@ -9,12 +9,12 @@ import { Container } from '@/components/Container';
 import { InViewAnimation } from '@/components/InViewAnimation';
 import { LocalizedLink } from '@/components/LocalizedLink';
 import { RenderBlocks } from '@/components/RenderBlocks';
+import { unifiedBlocksMapper } from '@/components/RenderBlocks/unifiedBlocksMapper';
 import RichText from '@/components/RichText';
 import { Tag } from '@/components/Tag';
 import { Text } from '@/components/Text';
 import { formatDateLong } from '@/utils/common';
 import type { RichTextType } from '@/utils/customTypes';
-import { unifiedBlocksMapper } from '@/components/RenderBlocks/unifiedBlocksMapper';
 import type { Blog, BlogAuthor, BlogCategory, Media } from '@monorepo/cms/src/payload-types';
 
 import { PostCard } from '../News/PostCard';

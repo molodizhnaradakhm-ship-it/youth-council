@@ -2,8 +2,8 @@
 
 import clsx from 'clsx';
 
-import { CMSLink } from '@/components/CMSLink';
 import type { CMSLinkType } from '@/components/CMSLink';
+import { CMSLink } from '@/components/CMSLink';
 import { CMSMedia } from '@/components/CMSMedia';
 import { Container } from '@/components/Container';
 import { InViewAnimation } from '@/components/InViewAnimation';

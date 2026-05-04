@@ -5,11 +5,11 @@ import clsx from 'clsx';
 import type { ImageLoaderProps, StaticImageData } from 'next/image';
 import NextImage from 'next/image';
 
-import { resolvePayloadMediaUrl } from '@/utils/resolvePayloadMediaUrl';
 import { getCmsBaseUrl } from '@/lib/cmsBaseUrl';
+import { resolvePayloadMediaUrl } from '@/utils/resolvePayloadMediaUrl';
+import type { Media as MediaType } from '@monorepo/cms/src/payload-types';
 
 import type { Props as MediaProps } from '../types';
-import type { Media as MediaType } from '@monorepo/cms/src/payload-types';
 
 // export const cssVariables = {
 //   breakpoints: {

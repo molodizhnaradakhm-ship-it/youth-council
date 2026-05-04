@@ -9,7 +9,7 @@ import { Container } from '@/components/Container';
 import { InViewAnimation } from '@/components/InViewAnimation';
 import { Text } from '@/components/Text';
 import { resolvePayloadMediaUrl } from '@/utils/resolvePayloadMediaUrl';
-import type { DarkLaunchMapBlockFields, Media } from '@monorepo/cms/src/payload-types';
+import type { LaunchMapBlockFields, Media } from '@monorepo/cms/src/payload-types';
 
 import styles from './WithBackgroundLaunchMap.module.scss';
 
@@ -20,7 +20,7 @@ export const WithBackgroundLaunchMap = ({
   sectionTitle,
   mapImage,
   pointers,
-}: DarkLaunchMapBlockFields) => {
+}: LaunchMapBlockFields) => {
   const [active, setActive] = useState<number | null>(null);
 
   const mapSrc = useMemo(() => {

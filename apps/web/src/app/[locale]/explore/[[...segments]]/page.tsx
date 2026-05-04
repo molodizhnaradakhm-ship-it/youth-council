@@ -7,7 +7,6 @@ import {
   fetchExploreNavTreesBySection,
   fetchExplorePagesBySectionId,
   fetchExploreSections,
-  fetchExploreSettingsFromPages,
   resolveExploreDefaultHref,
 } from '@/lib/exploreData';
 import { firstExplorePageHref, resolveExplorePageFromSegments } from '@/lib/exploreTree';

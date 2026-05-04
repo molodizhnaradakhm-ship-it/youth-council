@@ -3,8 +3,8 @@
 import clsx from 'clsx';
 
 import { Accordion } from '@/components/Accordion';
-import { Container } from '@/components/Container';
 import { CMSMedia } from '@/components/CMSMedia';
+import { Container } from '@/components/Container';
 import { InViewAnimation } from '@/components/InViewAnimation';
 import { Text } from '@/components/Text';
 

@@ -1,15 +1,15 @@
 import { RenderBlocks } from '@/components/RenderBlocks';
 
-type Props = {
-  sectionBlocks?: any[] | null;
-};
-
 import { WithBackgroundFeaturesBento } from './WithBackgroundFeaturesBento';
 import { WithBackgroundHeading } from './WithBackgroundHeading';
 import { WithBackgroundLaunchMap } from './WithBackgroundLaunchMap';
 import { WithBackgroundSectionFaq } from './WithBackgroundSectionFaq';
 
 import styles from './WithBackgroundSection.module.scss';
+
+type Props = {
+  sectionBlocks?: any[] | null;
+};
 
 const SECTION_BLOCK_TYPE = {
   Heading: 'heading-block',

@@ -176,7 +176,7 @@ export function SubscribeBlock({
                   className={styles.image}
                   loading='eager'
                   resource={image as any}
-                  sizes='(max-width: 1023px) min(90vw, 520px), min(45vw, 520px)'
+                  size='(max-width: 1023px) min(90vw, 520px), min(45vw, 520px)'
                   withBlur
                   onLoadingComplete={() => setVisualLoaded(true)}
                 />

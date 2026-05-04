@@ -32,7 +32,7 @@ export function FaqBlock({ id, tone, icon, iconSizePx, title, items, footerTitle
     return out;
   }, [items]);
 
-  const safeTone: FaqTone = 'light';
+  const safeTone: FaqTone = tone ?? 'light';
   const headingId = id ? `faq-block-heading-${id}` : 'faq-block-heading';
 
   return (

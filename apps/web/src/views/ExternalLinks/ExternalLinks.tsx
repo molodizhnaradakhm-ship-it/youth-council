@@ -3,8 +3,8 @@ import { getTranslations } from 'next-intl/server';
 import { CMSLink } from '@/components/CMSLink';
 import { Container } from '@/components/Container';
 import { RenderBlocks } from '@/components/RenderBlocks';
-import RichText from '@/components/RichText';
 import { unifiedBlocksMapper } from '@/components/RenderBlocks/unifiedBlocksMapper';
+import RichText from '@/components/RichText';
 import type { Page } from '@monorepo/cms/src/payload-types';
 
 import styles from './ExternalLinks.module.scss';

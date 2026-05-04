@@ -1,5 +1,5 @@
 import { notFound } from 'next/navigation';
 
-export default async function SubscriptionsPage() {
+export default function SubscriptionsPage() {
   notFound();
 }

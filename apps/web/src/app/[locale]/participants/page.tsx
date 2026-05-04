@@ -30,7 +30,6 @@ export default async function ParticipantsPage({ params, searchParams }: Props) 
   const currentPage = Number.isFinite(pageRaw) && pageRaw > 0 ? pageRaw : 1;
 
   const where = buildParticipantSearchWhere(q);
-  const whereArg = Object.keys(where).length > 0 ? { where } : {};
 
   const res = await payload.find({
     collection: 'participants',
@@ -39,7 +38,7 @@ export default async function ParticipantsPage({ params, searchParams }: Props) 
     locale,
     page: currentPage,
     sort: 'title',
-    ...whereArg,
+    ...(Object.keys(where).length > 0 ? { where: where as never } : {}),
   });
 
   const participants = res.docs ?? [];

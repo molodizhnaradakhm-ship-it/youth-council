@@ -1,14 +1,21 @@
-import { HintBlock } from '@/components/HintBlock';
-import { FaqBlock } from '@/components/FaqBlock/FaqBlock';
-import { DownloadAppBlock } from '@/components/DownloadAppBlock/DownloadAppBlock';
-import { SubscribeBlock } from '@/components/SubscribeBlock/SubscribeBlock';
-import { PlayBigBlock } from '@/components/PlayBigBlock/PlayBigBlock';
-import { PeekInsideBlock } from '@/components/PeekInsideBlock/PeekInsideBlock';
-import { ForgetQuizzesBlock } from '@/components/ForgetQuizzesBlock/ForgetQuizzesBlock';
 import { ChallengesBlock } from '@/components/ChallengesBlock/ChallengesBlock';
+import { DownloadAppBlock } from '@/components/DownloadAppBlock/DownloadAppBlock';
+import { FaqBlock } from '@/components/FaqBlock/FaqBlock';
+import { ForgetQuizzesBlock } from '@/components/ForgetQuizzesBlock/ForgetQuizzesBlock';
+import { HintBlock } from '@/components/HintBlock';
+import { PeekInsideBlock } from '@/components/PeekInsideBlock/PeekInsideBlock';
+import { PlayBigBlock } from '@/components/PlayBigBlock/PlayBigBlock';
+import type { BlockMapper, UnifiedBlock } from '@/components/RenderBlocks/blockTypes';
+import { SubscribeBlock } from '@/components/SubscribeBlock/SubscribeBlock';
 
 import { CommentsBlock } from './CommentsBlock/CommentsBlock';
 import { CTA } from './CTA';
+import { Hero2 } from './Hero2/Hero2';
+import { HeroScroll } from './HeroScroll';
+import { LastBlog } from './LastBlog';
+import { LaunchRegions } from './LaunchRegions/LaunchRegions';
+import { QuoteSliderBlock } from './QuoteSlider/QuoteSlider';
+import { Solutions } from './Solutions';
 import {
   WithBackgroundFeaturesBento,
   WithBackgroundHeading,
@@ -16,14 +23,6 @@ import {
   WithBackgroundSection,
   WithBackgroundSectionFaq,
 } from './WithBackgroundSection';
-import { HeroScroll } from './HeroScroll';
-import { LastBlog } from './LastBlog';
-import { LaunchRegions } from './LaunchRegions/LaunchRegions';
-import { QuoteSliderBlock } from './QuoteSlider/QuoteSlider';
-import { Solutions } from './Solutions';
-import { Hero2 } from './Hero2/Hero2';
-
-import type { BlockMapper, UnifiedBlock } from '@/components/RenderBlocks/blockTypes';
 
 /** Home page blocks (homeBlocks). */
 export const homeBlocksMapper = {

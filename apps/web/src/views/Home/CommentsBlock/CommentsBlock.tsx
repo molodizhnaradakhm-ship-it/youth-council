@@ -1,7 +1,6 @@
 'use client';
 
-import { useMemo, useRef } from 'react';
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import clsx from 'clsx';
 
 import { CMSMedia } from '@/components/CMSMedia';
@@ -113,7 +112,7 @@ export const CommentsBlock = ({
               {previewAvatars.length ? (
                 <div className={styles.avatarStack} aria-label='People'>
                   {previewAvatars.map((c) => (
-                    <span key={c.id ?? `${c.fullName}-${c.nickname}`} className={styles.avatarStackItem}>
+                    <span key={c.id ?? `${c.fullName}-${c.subtitle ?? ''}`} className={styles.avatarStackItem}>
                       <CMSMedia className={styles.avatarStackImg} resource={c.avatar} withBlur={false} />
                     </span>
                   ))}
@@ -187,7 +186,7 @@ export const CommentsBlock = ({
             <div ref={scrollerRef} className={styles.carouselTrack}>
               {list.map((item, idx) => (
                 <InViewAnimation
-                  key={item.id ?? `${item.fullName}-${item.nickname}`}
+                  key={item.id ?? `${item.fullName}-${item.subtitle ?? ''}`}
                   className='InViewAnimation_animate'
                   effect='y'
                   translateAmount='medium'

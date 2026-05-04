@@ -7,8 +7,8 @@ import { CMSMedia } from '@/components/CMSMedia';
 import { Container } from '@/components/Container';
 import { LocalizedLink } from '@/components/LocalizedLink';
 import { RenderBlocks } from '@/components/RenderBlocks';
-import { Text } from '@/components/Text';
 import { unifiedBlocksMapper } from '@/components/RenderBlocks/unifiedBlocksMapper';
+import { Text } from '@/components/Text';
 import type { Media,Page } from '@monorepo/cms/src/payload-types';
 
 import { BasketballDecor } from './BasketballDecor';

@@ -19,7 +19,6 @@ import { BackToTop } from './BackToTop';
 
 import styles from './Footer.module.scss';
 
-type NavItem = NonNullable<FooterGlobal['navItems']>[number];
 type NavLinkRow = { id?: string | null; link: any };
 
 type SocialIconRow = {

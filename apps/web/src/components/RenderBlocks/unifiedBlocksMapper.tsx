@@ -2,6 +2,7 @@ import { HintBlock } from '@/components/HintBlock';
 import { contactsBlocksMapper } from '@/views/Contacts/contactsBlocksMapper';
 import { exploreBlocksMapper } from '@/views/Explore/exploreBlocksMapper';
 import { homeBlocksMapper } from '@/views/Home/homeBlocksMapper';
+import type { HintBlockFields } from '@monorepo/cms/src/payload-types';
 
 import type { BlockMapper, UnifiedBlock } from './blockTypes';
 
@@ -14,5 +15,5 @@ export const unifiedBlocksMapper = {
   ...homeBlocksMapper,
   ...exploreBlocksMapper,
   ...contactsBlocksMapper,
-  'hint-block': (props: Record<string, unknown>) => <HintBlock {...(props as any)} insideContainer />,
+  'hint-block': (props: HintBlockFields) => <HintBlock {...props} insideContainer />,
 } satisfies BlockMapper<UnifiedBlock>;

@@ -1,4 +1,5 @@
 import type { FC } from 'react';
+
 import type { Page } from '@monorepo/cms/src/payload-types';
 
 export type UnifiedBlock = NonNullable<Page['homeBlocks']>[number];

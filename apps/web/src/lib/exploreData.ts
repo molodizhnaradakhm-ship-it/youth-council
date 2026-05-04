@@ -3,7 +3,7 @@ import { cache } from 'react';
 import { payload } from '@/api';
 import type { Config, ExplorePage, ExploreSection, Page } from '@monorepo/cms/src/payload-types';
 
-import { buildExploreNav, firstExplorePageHref, type ExploreNavItem } from './exploreTree';
+import { buildExploreNav, type ExploreNavItem,firstExplorePageHref } from './exploreTree';
 
 /**
  * Stub entry in Pages (viewType: explore) — header style, manual copy. Explore content lives in Explore collections.

@@ -42,7 +42,7 @@ export const ContactsView = (page: Page) => {
           </header>
 
           {blocks?.length ? (
-            <RenderBlocks blocks={blocks} mapper={unifiedBlocksMapper} />
+            <RenderBlocks blocks={blocks as never} mapper={unifiedBlocksMapper} />
           ) : (
             <>
               <ContactOurLinks className={styles.block} />

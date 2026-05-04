@@ -9,11 +9,11 @@ import { CMSMedia } from '@/components/CMSMedia';
 import { Container } from '@/components/Container';
 import { InViewAnimation } from '@/components/InViewAnimation';
 import { RenderBlocks } from '@/components/RenderBlocks';
+import { unifiedBlocksMapper } from '@/components/RenderBlocks/unifiedBlocksMapper';
 import RichText from '@/components/RichText';
 import { Text } from '@/components/Text';
 import { useGlobals } from '@/contexts/GlobalsContext';
 import { pathsMatchLocalePath, stripLocaleFromPathname } from '@/utils/locale-path';
-import { unifiedBlocksMapper } from '@/components/RenderBlocks/unifiedBlocksMapper';
 import type { Page } from '@monorepo/cms/src/payload-types';
 
 import styles from './PrivacyPolicy.module.scss';

@@ -1,6 +1,5 @@
 'use client';
 
-import { useTranslations } from 'next-intl';
 import clsx from 'clsx';
 
 import { BreadCrumbs } from '@/components/BreadCrumbs';

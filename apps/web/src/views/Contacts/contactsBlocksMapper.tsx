@@ -1,7 +1,12 @@
 'use client';
 
 import { HintBlock } from '@/components/HintBlock';
-import type { ContactsPaymentBlockFields, Form } from '@monorepo/cms/src/payload-types';
+import type {
+  ContactsFormBlockFields,
+  ContactsOurLinksBlockFields,
+  ContactsPaymentBlockFields,
+  HintBlockFields,
+} from '@monorepo/cms/src/payload-types';
 
 import { ContactOurLinks } from './ContactOurLinks';
 import { ContactPaymentSection } from './ContactPaymentSection';
@@ -18,7 +23,7 @@ const CONTACTS_BLOCK_TYPE = {
   Hint: 'hint-block',
 } as const;
 
-const ContactsOurLinksBlockComponent = ({ cards }: { cards?: any[] }) => (
+const ContactsOurLinksBlockComponent = ({ cards }: ContactsOurLinksBlockFields) => (
   <ContactOurLinks cards={cards ?? null} className={styles.block} />
 );
 
@@ -28,26 +33,7 @@ const ContactsFormBlockComponent = ({
   layout,
   terms,
   formSubheading,
-}: {
-  formHeading?: string;
-  form?: Form | string;
-  layout?: {
-    emailField?: string | null;
-    messageField?: string | null;
-    nameField?: string | null;
-    phoneField?: string | null;
-    surnameField?: string | null;
-    termsField?: string | null;
-  };
-  terms?: {
-    enabled?: boolean | null;
-    fieldName?: string | null;
-    href?: string | null;
-    linkText?: string | null;
-    text?: string | null;
-  } | null;
-  formSubheading?: string;
-}) => {
+}: ContactsFormBlockFields) => {
   if (!form || typeof form === 'string') {
     return null;
   }
@@ -60,7 +46,7 @@ const ContactsFormBlockComponent = ({
           {formSubheading?.trim() ? <p className={styles.formSubheading}>{formSubheading.trim()}</p> : null}
         </div>
         <div className={styles.formRight}>
-          <ContactsForm {...({ form, layout: layout ?? null, terms: terms ?? null } as any)} />
+          <ContactsForm form={form} layout={layout ?? null} terms={terms} />
         </div>
       </div>
     </section>
@@ -91,5 +77,5 @@ export const contactsBlocksMapper = {
   [CONTACTS_BLOCK_TYPE.ContactsForm]: ContactsFormBlockComponent,
   [CONTACTS_BLOCK_TYPE.ContactsOffice]: ContactsOfficeBlock,
   [CONTACTS_BLOCK_TYPE.ContactsPayment]: ContactsPaymentBlockComponent,
-  [CONTACTS_BLOCK_TYPE.Hint]: (props: Record<string, unknown>) => <HintBlock {...(props as any)} insideContainer />,
+  [CONTACTS_BLOCK_TYPE.Hint]: (props: HintBlockFields) => <HintBlock {...props} insideContainer />,
 };

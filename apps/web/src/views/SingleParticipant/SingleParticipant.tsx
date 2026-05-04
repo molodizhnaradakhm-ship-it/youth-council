@@ -1,11 +1,11 @@
 import { getTranslations } from 'next-intl/server';
 
-import {
-  EntityRelatedPostsSection,
-  type EntityRelatedPostsProps,
-} from '@/components/EntityRelatedPostsSection';
 import { CMSMedia } from '@/components/CMSMedia';
 import { Container } from '@/components/Container';
+import {
+  type EntityRelatedPostsProps,
+  EntityRelatedPostsSection,
+} from '@/components/EntityRelatedPostsSection';
 import { InViewAnimation } from '@/components/InViewAnimation';
 import { PhoneBlock } from '@/components/PhoneBlock';
 import RichText from '@/components/RichText';

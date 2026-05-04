@@ -8,8 +8,8 @@ import { ContactsView } from '@/views/Contacts';
 import { ExternalLinks } from '@/views/ExternalLinks';
 import { Home } from '@/views/Home';
 import { ParticipantsView } from '@/views/Participants/Participants';
-import { ProjectsView } from '@/views/Projects/Projects';
 import { PrivacyPolicy } from '@/views/PrivacyPolicy';
+import { ProjectsView } from '@/views/Projects/Projects';
 import { UnderDevelopment } from '@/views/UnderDevelopment';
 import type { Config, Page } from '@monorepo/cms/src/payload-types';
 
@@ -224,7 +224,6 @@ export async function renderParticipants({
   const currentPage = Number.isFinite(pageRaw) && pageRaw > 0 ? pageRaw : 1;
 
   const where = buildParticipantSearchWhere(q);
-  const whereArg = Object.keys(where).length > 0 ? { where } : {};
 
   const res = await payload.find({
     collection: 'participants',
@@ -233,7 +232,7 @@ export async function renderParticipants({
     locale,
     page: currentPage,
     sort: 'title',
-    ...whereArg,
+    ...(Object.keys(where).length > 0 ? { where: where as never } : {}),
   });
 
   const slugSegment =

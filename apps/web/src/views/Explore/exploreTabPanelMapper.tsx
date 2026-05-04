@@ -11,25 +11,28 @@ import { ExploreSubtitleBlock } from '@/components/ExploreBlocks/ExploreSubtitle
 import { ExploreTableBlock } from '@/components/ExploreBlocks/ExploreTableBlock';
 import { ExploreTitleBlock } from '@/components/ExploreBlocks/ExploreTitleBlock';
 import { HintBlock } from '@/components/HintBlock';
+import type {
+  ExploreFeatureCardBlockFields,
+  ExploreFeatureCardsGridBlockFields,
+  ExploreHtmlBlockFields,
+  ExploreImageBlockFields,
+  ExploreParagraphBlockFields,
+  ExploreSubtitleBlockFields,
+  ExploreTableBlockFields,
+  ExploreTitleBlockFields,
+  HintBlockFields,
+} from '@monorepo/cms/src/payload-types';
 
 export const exploreTabPanelMapper = {
-  'explore-feature-card': (props: Record<string, unknown>) => (
-    <ExploreFeatureCardBlock {...(props as any)} />
+  'explore-feature-card': (props: ExploreFeatureCardBlockFields) => <ExploreFeatureCardBlock {...props} />,
+  'explore-feature-cards': (props: ExploreFeatureCardsGridBlockFields) => (
+    <ExploreFeatureCardsGridBlock {...props} />
   ),
-  'explore-feature-cards': (props: Record<string, unknown>) => (
-    <ExploreFeatureCardsGridBlock {...(props as any)} />
-  ),
-  'explore-html': (props: Record<string, unknown>) => <ExploreHtmlBlock {...(props as any)} />,
-  'explore-image': (props: Record<string, unknown>) => <ExploreImageBlock {...(props as any)} />,
-  'explore-paragraph': (props: Record<string, unknown>) => (
-    <ExploreParagraphBlock {...(props as any)} />
-  ),
-  'explore-subtitle': (props: Record<string, unknown>) => (
-    <ExploreSubtitleBlock {...(props as any)} />
-  ),
-  'explore-table': (props: Record<string, unknown>) => <ExploreTableBlock {...(props as any)} />,
-  'explore-title': (props: Record<string, unknown>) => <ExploreTitleBlock {...(props as any)} />,
-  'hint-block': (props: Record<string, unknown>) => (
-    <HintBlock {...(props as any)} insideContainer />
-  ),
+  'explore-html': (props: ExploreHtmlBlockFields) => <ExploreHtmlBlock {...props} />,
+  'explore-image': (props: ExploreImageBlockFields) => <ExploreImageBlock {...props} />,
+  'explore-paragraph': (props: ExploreParagraphBlockFields) => <ExploreParagraphBlock {...props} />,
+  'explore-subtitle': (props: ExploreSubtitleBlockFields) => <ExploreSubtitleBlock {...props} />,
+  'explore-table': (props: ExploreTableBlockFields) => <ExploreTableBlock {...props} />,
+  'explore-title': (props: ExploreTitleBlockFields) => <ExploreTitleBlock {...props} />,
+  'hint-block': (props: HintBlockFields) => <HintBlock {...props} insideContainer />,
 };

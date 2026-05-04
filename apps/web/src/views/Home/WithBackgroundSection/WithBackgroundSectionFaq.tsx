@@ -3,16 +3,9 @@
 import { useMemo } from 'react';
 
 import { Faq, type FaqItem } from '@/components/Faq/Faq';
-import type { DarkSectionFaqBlockFields } from '@monorepo/cms/src/payload-types';
+import type { SectionFaqBlockFields } from '@monorepo/cms/src/payload-types';
 
-export const WithBackgroundSectionFaq = ({
-  icon,
-  iconSizePx,
-  title,
-  items,
-  footerTitle,
-  footerText,
-}: DarkSectionFaqBlockFields) => {
+export const WithBackgroundSectionFaq = ({ icon, iconSizePx, title, items }: SectionFaqBlockFields) => {
   const titleText = title?.trim() ?? '';
 
   const list = useMemo<FaqItem[]>(() => {
@@ -43,8 +36,6 @@ export const WithBackgroundSectionFaq = ({
       iconSizePx={iconSizePx}
       title={titleText}
       items={list}
-      footerTitle={footerTitle}
-      footerText={footerText}
       withInViewAnimation
     />
   );

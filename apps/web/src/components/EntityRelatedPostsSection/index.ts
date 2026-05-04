@@ -1,2 +1,2 @@
-export { EntityRelatedPostsSection } from './EntityRelatedPostsSection';
 export type { EntityRelatedPostsProps } from './EntityRelatedPostsSection';
+export { EntityRelatedPostsSection } from './EntityRelatedPostsSection';

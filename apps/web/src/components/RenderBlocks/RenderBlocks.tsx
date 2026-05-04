@@ -1,4 +1,7 @@
+import type { ComponentType } from 'react';
+
 import { ResponsiveBlocksSlot } from '@/components/RenderBlocks/ResponsiveBlocksRenderer.client';
+import type { ResponsiveBlocksBlockFields } from '@monorepo/cms/src/payload-types';
 
 import type { BlockMapper, UnifiedBlock } from './blockTypes';
 
@@ -20,8 +23,9 @@ export const RenderBlocks = ({ blocks, mapper }: Props) => {
     <>
       {blocks.map((block, index) => {
         if (typeof block.blockType === 'string' && block.blockType.startsWith('responsive-blocks')) {
-          const mobileBlocks = sanitizeBlocks(block.mobileBlocks);
-          const desktopBlocks = sanitizeBlocks(block.desktopBlocks);
+          const rb = block as ResponsiveBlocksBlockFields;
+          const mobileBlocks = sanitizeBlocks(rb.mobileBlocks);
+          const desktopBlocks = sanitizeBlocks(rb.desktopBlocks);
 
           const mobileList = mobileBlocks.length ? mobileBlocks : desktopBlocks;
           const desktopList = desktopBlocks.length ? desktopBlocks : mobileBlocks;
@@ -39,11 +43,15 @@ export const RenderBlocks = ({ blocks, mapper }: Props) => {
           );
         }
 
-        const BlockComponent = mapper[block.blockType];
+        const BlockComponent = mapper[block.blockType] as
+          | ComponentType<Record<string, unknown>>
+          | undefined;
 
         if (!BlockComponent) return null;
 
-        return <BlockComponent key={block.id ?? `block-${index}`} {...block} />;
+        return (
+          <BlockComponent key={block.id ?? `block-${index}`} {...(block as unknown as Record<string, unknown>)} />
+        );
       })}
     </>
   );
