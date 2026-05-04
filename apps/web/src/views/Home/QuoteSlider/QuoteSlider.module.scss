@@ -1,0 +1,150 @@
+.wrapper {
+  padding-top: 64px;
+  padding-bottom: 64px;
+  .title {
+    margin-bottom: 44px;
+  }
+
+  .sliderItemOuter {
+    padding-top: 12px;
+  }
+
+  .sliderItem {
+    position: relative;
+    border-radius: 20px;
+    background-color: var(--quote-card-bg);
+    padding: 40px 10px 30px 20px;
+    color: var(--text-on-brand-dark);
+  }
+
+  .quoteIcon {
+    position: absolute;
+    top: -12px;
+    left: 30px;
+    width: 27.367px;
+    height: 23.163px;
+    color: var(--brand-accent);
+  }
+
+  .quote {
+    margin-bottom: 20px;
+  }
+
+  .sliderBottom {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .quoteAutor {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .handle {
+    color: var(--ui-green-500);
+    opacity: 0.95;
+  }
+
+  .logo {
+    display: block;
+    max-width: 150px;
+    height: auto;
+  }
+
+  @include tablet {
+  }
+
+  @include laptop {
+    .title {
+      margin-bottom: 120px;
+      text-align: center;
+    }
+
+    .quoteIcon {
+      top: -24px;
+      width: 60px;
+      height: 50px;
+
+      path {
+        fill: var(--ui-green-500);
+        transition: fill 0.3s;
+      }
+    }
+
+    .sliderItem {
+      transform: scale(0.8, 0.7);
+      opacity: 0.2;
+      filter: blur(2px);
+      transition: all 0.3s;
+      background: #fff;
+      padding: 80px 30px 65px 60px;
+      width: 100%;
+
+      p {
+        transition: color 0.3s;
+        color: var(--ui-green-700);
+      }
+    }
+
+    .slider {
+      cursor: grab;
+
+      &:active {
+        cursor: grabbing;
+      }
+
+      :global(.swiper-wrapper) {
+        align-items: center;
+      }
+
+      :global(.swiper-slide-active) {
+        .sliderItem {
+          transform: scale(1);
+          opacity: 1;
+          filter: blur(0);
+          background: var(--quote-card-bg);
+          max-width: 100%;
+          color: var(--text-on-brand-dark);
+
+          p {
+            color: var(--text-on-brand-dark);
+          }
+        }
+
+        .quoteIcon {
+          path {
+            fill: var(--brand-accent);
+          }
+        }
+      }
+    }
+
+    .sliderItemOuter {
+      padding-top: 24px;
+    }
+
+    .quote {
+      margin-bottom: 30px;
+    }
+
+    .sliderBottom {
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: flex-start;
+    }
+
+    .logo {
+      max-width: 270px;
+    }
+  }
+
+  @include desktop {
+    padding-top: 120px;
+    padding-bottom: 120px;
+    // .sliderItem {
+    //   min-width: 710px;
+    // }
+  }
+}

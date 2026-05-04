@@ -1,0 +1,71 @@
+.wrapper {
+  background: var(--Background-Dark);
+  padding-top: 48px;
+  padding-bottom: 72px;
+  @include tablet {
+  }
+
+  @include laptop {
+    padding-top: 40px;
+    padding-bottom: 64px;
+  }
+
+  @include desktop {
+    padding-top: 70px;
+    padding-bottom: 96px;
+  }
+}
+
+.content-wrapper {
+  display: grid;
+  row-gap: 32px;
+  @include laptop {
+    grid-template-columns: 365px 636px;
+    column-gap: 80px;
+    align-items: center;
+  }
+  @include desktop {
+    grid-template-columns: 365px 880px;
+    column-gap: 120px;
+  }
+}
+
+.left {
+  display: flex;
+  gap: 12px;
+}
+
+.right {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  @include laptop {
+    gap: 50px;
+  }
+}
+
+.image {
+  width: 124px;
+  height: 169px;
+  @include laptop {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+}
+
+.banner-button {
+  button {
+    @include laptop {
+      min-width: 222px;
+      height: 64px;
+    }
+    @include desktop {
+      min-width: 365px;
+      height: 70px;
+    }
+  }
+  @include laptop {
+    padding-top: 24px;
+  }
+}

@@ -1,0 +1,58 @@
+.card {
+  display: block;
+  overflow: hidden;
+  margin: 0;
+  border-radius: 24px;
+  background: #ebebec;
+  max-width: 100%;
+  text-decoration: none;
+  color: #0a0a0a;
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease;
+  will-change: transform;
+
+  &:hover {
+    transform: scale(1.02);
+    box-shadow:
+      0 12px 28px rgba(0, 0, 0, 0.1),
+      0 4px 8px rgba(0, 0, 0, 0.06);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--brand-accent);
+    outline-offset: 3px;
+  }
+}
+
+.media {
+  position: relative;
+  width: 100%;
+  height: 330px;
+  overflow: hidden;
+}
+
+.mediaImg {
+  object-fit: contain;
+  object-position: center center;
+}
+
+.body {
+  padding: 20px 20px 22px;
+
+  @include laptop {
+    padding: 22px 24px 26px;
+  }
+}
+
+.cardTitle {
+  margin: 0;
+  font-family: var(--font-arimo, 'Arimo', system-ui, sans-serif);
+  font-weight: 600;
+  font-size: 24px;
+  font-style: normal;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  text-align: center;
+  color: #0a0a0a;
+}

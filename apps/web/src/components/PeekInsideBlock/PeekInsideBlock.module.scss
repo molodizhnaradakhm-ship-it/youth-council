@@ -1,0 +1,209 @@
+.wrapper {
+  padding: 56px 0 80px;
+  background:
+    radial-gradient(1007.89px 310.614px at 0% 100%, rgba(68, 176, 179, 0.16) 0%, rgba(68, 176, 179, 0) 70%),
+    radial-gradient(894.255px 278.5px at 68.7% 0%, rgba(14, 51, 71, 0.14) 0%, rgba(14, 51, 71, 0) 70%),
+    var(--ui-mint-100);
+  border-radius: 30px;
+}
+
+.header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 44px;
+}
+
+.copy {
+  max-width: 720px;
+}
+
+.title {
+  margin: 0 0 18px;
+  font-family: var(--font-arimo), system-ui, sans-serif;
+  font-weight: 700;
+  font-size: 34px;
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+  color: #080809;
+
+  @include laptop {
+    font-size: 48px;
+  }
+}
+
+.description {
+  margin: 0;
+  max-width: 560px;
+  font-family: var(--font-arimo), system-ui, sans-serif;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 1.35;
+  letter-spacing: -0.01em;
+  color: rgba(8, 8, 9, 0.65);
+
+  @include laptop {
+    font-size: 16px;
+  }
+}
+
+.arrows {
+  display: none;
+  gap: 10px;
+  align-items: center;
+  align-self: flex-end;
+  margin-top: auto;
+  padding-top: 0;
+
+  @include laptop {
+    display: inline-flex;
+  }
+}
+
+.arrowBtn {
+  width: 40px;
+  height: 40px;
+  border-radius: 999px;
+  border: 0;
+  background: rgba(8, 8, 9, 0.06);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.18s ease;
+
+  &:hover {
+    background: rgba(8, 8, 9, 0.1);
+  }
+}
+
+.arrowIcon {
+  width: 12px;
+  height: 12px;
+  border-right: 2px solid rgba(8, 8, 9, 0.75);
+  border-bottom: 2px solid rgba(8, 8, 9, 0.75);
+  transform: rotate(135deg);
+}
+
+.arrowIconNext {
+  transform: rotate(-45deg);
+}
+
+.track {
+  display: flex;
+  gap: 16px;
+  overflow-x: auto;
+  padding: 2px 2px 10px;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+
+  &::-webkit-scrollbar {
+    height: 0;
+  }
+
+  /*
+   overflow-x: auto makes this a scroll container; layout overflow-y becomes non-visible,
+   so card hover translateY / box-shadow gets clipped unless we bleed space inside.
+  */
+  @include laptop {
+    padding: 28px 2px 32px;
+    margin-top: -22px;
+    margin-bottom: -24px;
+  }
+}
+
+.card {
+  position: relative;
+  flex: 0 0 auto;
+  scroll-snap-align: start;
+  border-radius: 24px;
+  background: linear-gradient(180deg, var(--ui-green-600) 0%, var(--ui-green-700) 100%);
+  padding: 20px 20px 0;
+  width: min(340px, 82vw);
+  height: 420px;
+  overflow: hidden;
+  color: #f5f5f7;
+  transition:
+    transform 0.28s ease,
+    box-shadow 0.28s ease;
+
+  @include laptop {
+    width: 360px;
+    height: 480px;
+    padding: 22px 22px 0;
+
+    &:hover {
+      z-index: 2;
+      transform: translateY(-5px);
+      box-shadow:
+        0 12px 32px rgb(8 8 9 / 22%),
+        0 4px 14px rgb(8 8 9 / 16%);
+    }
+  }
+}
+
+.cardTitle {
+  margin: 0 0 16px;
+  max-width: 260px;
+  font-family: var(--font-arimo), system-ui, sans-serif;
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+}
+
+.cardImageWrap {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -10px;
+  top: 76px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  padding: 0 10px;
+}
+
+.cardImageFrame {
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  isolation: isolate;
+  border-radius: 18px;
+  transform: translate(var(--img-shift-x, 0%), var(--img-shift-y, 0%));
+
+  @include tablet {
+    border-radius: 20px;
+  }
+
+  @include laptop {
+    border-radius: 24px;
+  }
+}
+
+.cardImage {
+  box-sizing: border-box;
+  display: block;
+  flex: 0 0 auto;
+  width: auto;
+  max-width: 100%;
+  height: auto;
+  max-height: 100%;
+  border-radius: 18px;
+
+  @include tablet {
+    border-radius: 20px;
+  }
+
+  @include laptop {
+    border-radius: 24px;
+  }
+
+  /* Intrinsic aspect from Payload dimensions; capped by frame — no width:100% stretch. */
+}
+

@@ -1,0 +1,14 @@
+.wrapper {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  color: var(--brand-accent, var(--ui-green-600));
+  @include tablet {
+  }
+
+  @include laptop {
+  }
+
+  @include desktop {
+  }
+}

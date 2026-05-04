@@ -1,0 +1,20 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+
+  .title {
+    color: rgba(255, 255, 255, 0.5);
+  }
+
+  .titleOnLight {
+    color: var(--ui-ink-muted);
+  }
+
+  .email {
+    :global(svg) {
+      flex-shrink: 0;
+    }
+  }
+}
+

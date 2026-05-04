@@ -1,0 +1,28 @@
+.wrapper {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+
+  .blogAuthorPhoto {
+    display: block;
+    border-radius: 50%;
+    width: 24px;
+    height: 24px;
+    overflow: hidden;
+    object-fit: cover;
+  }
+
+  @include tablet {
+  }
+
+  @include laptop {
+    gap: 13px;
+    .blogAuthorPhoto {
+      width: 32px;
+      height: 32px;
+    }
+  }
+
+  @include desktop {
+  }
+}

@@ -1,0 +1,121 @@
+.wrapper {
+  .sliderItemOuter {
+    padding-top: 12px;
+    overflow: hidden;
+  }
+
+  .sliderItem {
+    position: relative;
+  }
+
+  .sliderItemIntem {
+    position: relative;
+    border-radius: 16px;
+    background: rgba(14, 51, 71, 0.82);
+    padding: 32px 24px;
+    overflow: hidden;
+
+    &::before {
+      position: absolute;
+      top: -123px;
+      left: 50%;
+      transform: translateX(-50%);
+      opacity: 0.2;
+      filter: blur(64px);
+      border-radius: 295px;
+      background: var(--Accent);
+      width: 295px;
+      height: 245px;
+      pointer-events: none;
+      content: '';
+    }
+  }
+
+  .quoteIcon {
+    position: absolute;
+    top: -12px;
+    left: 24px;
+    z-index: 1;
+    width: 27.367px;
+    height: 23.163px;
+    color: var(--brand-accent);
+  }
+
+  .sliderBottom {
+    margin-top: 32px;
+  }
+
+  .quoteAutor {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    margin-bottom: 24px;
+  }
+
+  .logo {
+    display: block;
+    max-width: 180px;
+    height: auto;
+  }
+
+  @include tablet {
+  }
+
+  @include laptop {
+    cursor: grab;
+
+    &:active {
+      cursor: grabbing;
+    }
+
+    .sliderItemIntem {
+      padding: 40px 32px 24px 32px;
+    }
+
+    .quoteIcon {
+      top: -25px;
+      width: 57.149px;
+      height: 46.72px;
+    }
+
+    .sliderItemOuter {
+      padding-top: 25px;
+    }
+
+    .sliderBottom {
+      margin-top: 100px;
+    }
+
+    .quoteAutor {
+      margin-bottom: 24px;
+    }
+
+    .logo {
+      max-width: 211px;
+    }
+  }
+
+  @include desktop {
+    .sliderItemIntem {
+      padding: 56px 48px 32px 48px;
+
+      &::before {
+        top: -211px;
+        filter: blur(64px);
+        border-radius: 506.667px;
+        width: 506.667px;
+        height: 421px;
+      }
+    }
+
+    .sliderBottom {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 90px;
+    }
+
+    .quoteAutor {
+      margin-bottom: 0;
+    }
+  }
+}

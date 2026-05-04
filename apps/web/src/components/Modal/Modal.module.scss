@@ -1,0 +1,238 @@
+@keyframes fadeShow {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeHide {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+.overlay {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 9;
+  background: #ffffff;
+  width: 100%;
+  height: 100dvh;
+
+  &.centered {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .content {
+      margin: auto;
+    }
+  }
+}
+
+.content {
+  position: relative;
+  margin: 0;
+  max-height: 100%;
+}
+
+.fade {
+  &[data-state='open'] {
+    animation: fadeShow 450ms ease-in-out;
+  }
+  &[data-state='closed'] {
+    animation: fadeHide 250ms ease-in-out;
+  }
+}
+
+@keyframes fromRightShow {
+  from {
+    transform: translateX(100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+@keyframes fromRightHide {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(100%);
+  }
+}
+
+.fromRight {
+  &[data-state='open'] {
+    animation: fromRightShow 450ms ease-in-out;
+  }
+  &[data-state='closed'] {
+    animation: fromRightHide 250ms ease-in-out;
+  }
+}
+
+@keyframes fromLeftShow {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+@keyframes fromLeftHide {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-100%);
+  }
+}
+
+.fromLeft {
+  &[data-state='open'] {
+    animation: fromLeftShow 450ms ease-in-out;
+  }
+  &[data-state='closed'] {
+    animation: fromLeftHide 250ms ease-in-out;
+  }
+}
+
+@keyframes fromBottomShow {
+  from {
+    transform: translateY(40%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+@keyframes fromBottomHide {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(-40%);
+  }
+}
+
+.fromBottom {
+  &[data-state='open'] {
+    animation: fromBottomShow 450ms ease-in-out;
+  }
+  &[data-state='closed'] {
+    animation: fromBottomHide 250ms ease-in-out;
+  }
+}
+
+@keyframes fromTopShow {
+  from {
+    transform: translateY(-40%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+@keyframes fromTopHide {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(-40%);
+  }
+}
+
+.fromTop {
+  will-change: transform;
+  &[data-state='open'] {
+    animation: fromTopShow 350ms ease-in-out;
+  }
+  &[data-state='closed'] {
+    animation: fromTopHide 250ms ease-in-out;
+  }
+}
+
+@keyframes bgShow {
+  from {
+    height: 0;
+  }
+  to {
+    height: 100%;
+  }
+}
+
+@keyframes bgHide {
+  from {
+    height: 100%;
+  }
+  to {
+    height: 0;
+  }
+}
+
+.backgroundLines {
+  display: grid;
+  position: fixed;
+  top: 0;
+  left: 0;
+  grid-template-columns: repeat(6, 1fr);
+  z-index: -1;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  & > div {
+    display: none;
+    height: 0;
+
+    &:nth-child(-n + 6) {
+      display: block;
+    }
+  }
+}
+
+.slice {
+  &[data-state='open'] {
+    .backgroundLines > div {
+      &:nth-of-type(1),
+      &:nth-of-type(5) {
+        animation: bgShow 500ms ease-in-out forwards;
+      }
+      &:nth-of-type(2),
+      &:nth-of-type(4) {
+        animation: bgShow 500ms ease-in-out 0.1s forwards;
+      }
+      &:nth-of-type(3),
+      &:nth-of-type(6) {
+        animation: bgShow 500ms ease-in-out 0.2s forwards;
+      }
+    }
+  }
+
+  &[data-state='closed'] {
+    animation: fadeHide 500ms ease-in-out;
+    // .backgroundLines > div {
+    //   &:nth-of-type(1),
+    //   &:nth-of-type(5) {
+    //     animation: bgHide 250ms ease-in-out;
+    //   }
+    //   &:nth-of-type(2),
+    //   &:nth-of-type(4) {
+    //     animation: bgHide 250ms ease-in-out 0.1s;
+    //   }
+    //   &:nth-of-type(3),
+    //   &:nth-of-type(6) {
+    //     animation: bgHide 250ms ease-in-out 0.2s;
+    //   }
+    // }
+  }
+}

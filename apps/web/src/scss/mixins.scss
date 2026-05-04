@@ -1,0 +1,323 @@
+@mixin tablet {
+  @media (min-width: 768px) {
+    @content;
+  }
+}
+
+@mixin maxTablet {
+  @media (max-width: 767px) {
+    @content;
+  }
+}
+
+@mixin onlyTablet {
+  @media screen and (min-width: 768px) and (max-width: 1279px) {
+    @content;
+  }
+}
+
+@mixin laptop {
+  @media (min-width: 1200px) {
+    @content;
+  }
+}
+
+@mixin maxLaptop {
+  @media (max-width: 1279px) {
+    @content;
+  }
+}
+
+@mixin onlyLaptop {
+  @media screen and (min-width: 1280px) and (max-width: 1749px) {
+    @content;
+  }
+}
+
+@mixin desktop {
+  @media (min-width: 1750px) {
+    @content;
+  }
+}
+
+@mixin maxDesktop {
+  @media (max-width: 1749px) {
+    @content;
+  }
+}
+
+@mixin horizont-scrollbar {
+  &::-webkit-scrollbar {
+    border-radius: 2.5px;
+    background-color: var(--brand-accent);
+    height: 3px;
+    overflow: hidden;
+  }
+  &::-webkit-scrollbar-thumb {
+    -webkit-box-shadow: 0 0 1px rgba(255, 255, 255, 0.5);
+    box-shadow: 0 0 1px rgba(255, 255, 255, 0.5);
+    border-radius: 2.5px;
+    background: var(--brand-accent);
+  }
+}
+
+@mixin vertical-scrollbar {
+  &::-webkit-scrollbar {
+    border-radius: 2.5px;
+    background-color: transparent;
+    width: 5px;
+  }
+  &::-webkit-scrollbar-thumb {
+    -webkit-box-shadow: 0 0 1px rgba(255, 255, 255, 0.5);
+    box-shadow: 0 0 1px rgba(255, 255, 255, 0.5);
+    border-radius: 2.5px;
+    background: var(--brand-accent);
+    width: 5px;
+  }
+}
+
+@mixin reset-btn {
+  outline: none;
+  border: none;
+  background: none;
+  padding: 0;
+  font-family: var(--font-primary);
+}
+
+@mixin text-clamp($lines) {
+  -webkit-line-clamp: $lines;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  -webkit-box-orient: vertical;
+  display: -webkit-box;
+}
+
+@mixin hover-white {
+  transition: color 0.3s;
+
+  &:hover {
+    color: var(--color-white);
+  }
+}
+
+@mixin hover-red {
+  transition: color 0.3s;
+
+  &:hover {
+    color: var(--color-red);
+  }
+}
+
+@mixin page-wrapper {
+  padding-top: calc(50px + var(--top-header));
+
+  @include laptop {
+    padding-top: calc(88px + var(--top-header));
+  }
+}
+
+@mixin line-support($bg) {
+  position: relative;
+  &::before {
+    position: absolute;
+    top: -10px;
+    left: 0;
+    background-color: $bg;
+    width: 100%;
+    height: 20px;
+    pointer-events: none;
+    content: '';
+  }
+}
+
+@mixin richtext {
+  p {
+    &:not(:last-child) {
+      margin-bottom: 20px;
+    }
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    margin-bottom: 20px;
+  }
+
+  ul {
+    margin: 30px 0;
+    padding-left: 20px;
+
+    li {
+      list-style: disc;
+    }
+
+    li:not(:last-child) {
+      margin-bottom: 15px;
+    }
+  }
+
+  ol {
+    margin: 30px 0;
+    padding-left: 20px;
+
+    li {
+      list-style: decimal;
+    }
+
+    li:not(:last-child) {
+      margin-bottom: 15px;
+    }
+  }
+
+  img {
+    display: block;
+    margin: 30px 0;
+    border-radius: 10px;
+    max-width: 100%;
+    height: auto;
+    overflow: hidden;
+    object-fit: contain;
+  }
+
+  blockquote {
+    display: block;
+    margin: 24px 0 50px;
+    border-radius: 20px;
+    padding: 24px;
+
+    strong {
+      display: block;
+      margin-top: 24px;
+      font-style: normal;
+      font-weight: 400;
+      font-size: 14px;
+      line-height: 140%;
+      letter-spacing: -0.28px;
+    }
+  }
+
+  a {
+    display: inline;
+    text-decoration: underline;
+  }
+
+  h2 {
+    margin-top: 48px;
+
+    &:first-child {
+      margin-top: 0;
+    }
+  }
+
+  h3 {
+    margin-top: 24px;
+
+    &:first-child {
+      margin-top: 0;
+    }
+  }
+
+  table {
+    margin: 30px 0;
+    border-collapse: collapse;
+    width: 100%;
+    overflow: hidden;
+
+    th,
+    td {
+      border: 1px solid var(--Border---Stroke, rgba(153, 134, 255, 0.16));
+      padding: 12px 16px;
+      text-align: left;
+    }
+
+    th {
+      font-weight: 600;
+    }
+
+    tr:nth-child(odd) {
+      background-color: var(--accent-surface-tint);
+    }
+  }
+
+  @include tablet {
+    table {
+      td:first-child {
+        p {
+          white-space: nowrap;
+        }
+      }
+    }
+  }
+
+  @include laptop {
+    blockquote {
+      margin: 40px 0 64px;
+
+      strong {
+        margin-top: 32px;
+        font-size: 18px;
+        letter-spacing: -0.36px;
+      }
+    }
+
+    h2 {
+      margin-top: 64px;
+    }
+
+    h3 {
+      margin-top: 32px;
+    }
+
+    img {
+      border-radius: 20px;
+    }
+
+    table {
+      td:first-child {
+        p {
+          white-space: nowrap;
+        }
+      }
+
+      td:nth-child(2) {
+        min-width: 150px;
+      }
+
+      td {
+        > p {
+          max-width: 400px;
+        }
+      }
+    }
+  }
+
+  @include desktop {
+    blockquote {
+      margin: 40px 0 96px;
+    }
+
+    h2 {
+      margin-top: 96px;
+    }
+
+    h3 {
+      margin-top: 48px;
+    }
+    table {
+      td {
+        > p {
+          max-width: 500px;
+        }
+      }
+    }
+  }
+}
+
+@mixin padding-24 {
+  padding: 0 24px;
+
+  @include laptop {
+    padding: 0;
+  }
+}

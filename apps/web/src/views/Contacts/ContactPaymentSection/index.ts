@@ -1,0 +1,1 @@
+export { ContactPaymentSection } from './ContactPaymentSection';

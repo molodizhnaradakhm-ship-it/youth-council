@@ -1,0 +1,15 @@
+.list {
+  display: grid;
+  gap: 50px;
+  @include tablet {
+  }
+
+  @include laptop {
+    grid-template-columns: 1fr 1fr;
+    gap: 48px 40px;
+  }
+
+  @include desktop {
+    gap: 72px 64px;
+  }
+}

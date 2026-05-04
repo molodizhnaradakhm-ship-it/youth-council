@@ -1,0 +1,249 @@
+.wrapper {
+  padding: 24px 0 56px;
+}
+
+.card {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 24px;
+  border-radius: 28px;
+  background: linear-gradient(180deg, var(--ui-green-600) 0%, var(--ui-green-700) 100%);
+  padding: 28px 20px;
+  overflow: hidden;
+
+  @include laptop {
+    grid-template-columns: 1fr;
+    align-items: start;
+    gap: 28px;
+    padding: 44px;
+  }
+}
+
+.content {
+  min-width: 0;
+  color: #f5f5f7;
+  position: relative;
+  z-index: 1;
+}
+
+.title {
+  margin: 0;
+  max-width: 720px;
+  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'SF Pro Display', system-ui, sans-serif;
+  font-weight: 510;
+  font-style: normal;
+  font-size: 40px;
+  line-height: 1;
+  letter-spacing: -0.025em;
+
+  @include laptop {
+    font-size: 60px;
+  }
+}
+
+.description {
+  margin: 12px 0 0;
+  max-width: 520px;
+  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'SF Pro Display', system-ui, sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 16px;
+  line-height: 1;
+  letter-spacing: -0.025em;
+  color: rgba(245, 245, 247, 0.85);
+
+  @include laptop {
+    margin-top: 14px;
+    font-size: 16px;
+  }
+}
+
+.actions {
+  margin-top: 18px;
+
+  @include laptop {
+    margin-top: 20px;
+  }
+}
+
+.buttonLink {
+  display: inline-flex;
+  text-decoration: none;
+  line-height: 0;
+}
+
+.button {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  border-radius: 999px;
+  background: rgba(245, 245, 247, 0.92);
+  padding: 12px 16px;
+  color: #0b0b0d;
+  transition: transform 0.18s ease, background 0.18s ease;
+
+  &:hover {
+    transform: translateY(-1px);
+    background: #ffffff;
+  }
+}
+
+.buttonIcon {
+  width: 18px;
+  height: 18px;
+  object-fit: contain;
+}
+
+.buttonLabel {
+  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'SF Pro Display', system-ui, sans-serif;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  white-space: nowrap;
+}
+
+.bonuses {
+  margin-top: 22px;
+}
+
+.bonusesTitle {
+  margin: 0 0 10px;
+  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'SF Pro Display', system-ui, sans-serif;
+  font-weight: 590;
+  font-style: normal;
+  font-size: 20px;
+  line-height: 1;
+  letter-spacing: -0.025em;
+  color: rgba(245, 245, 247, 0.92);
+}
+
+.bonusesList {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.bonusesItem {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.bonusBullet {
+  flex-shrink: 0;
+  width: 16px;
+  height: 16px;
+  margin-top: 2px;
+  border-radius: 999px;
+  background: rgba(245, 245, 247, 0.18);
+  position: relative;
+
+  &::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 6px;
+    height: 6px;
+    border-radius: 999px;
+    background: rgba(245, 245, 247, 0.85);
+    transform: translate(-50%, -50%);
+  }
+}
+
+.bonusText {
+  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'SF Pro Display', system-ui, sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 16px;
+  line-height: 1;
+  letter-spacing: -0.025em;
+  color: rgba(245, 245, 247, 0.9);
+}
+
+.visual {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  min-width: 0;
+  position: relative;
+  /* Reserve space while media resolves / network loads (stack layout). */
+  min-height: min(280px, 62vw);
+
+  @include laptop {
+    min-height: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    width: min(var(--right-image-max-w, 520px), 60%);
+    transform: translate(
+      calc(var(--right-image-offset-x, 0px) + var(--right-image-offset-x-pct, 0%)),
+      calc(var(--right-image-offset-y, 0px) + var(--right-image-offset-y-pct, 0%))
+    );
+    pointer-events: none;
+    z-index: 0;
+  }
+}
+
+.visualLoading {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  border-radius: 20px;
+  background: rgba(245, 245, 247, 0.12);
+  overflow: hidden;
+  pointer-events: none;
+
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      105deg,
+      transparent 0%,
+      rgba(255, 255, 255, 0.14) 45%,
+      transparent 90%
+    );
+    background-size: 200% 100%;
+    animation: subscribe-visual-shimmer 1.35s ease-in-out infinite;
+  }
+}
+
+@keyframes subscribe-visual-shimmer {
+  0% {
+    background-position: 100% 0;
+  }
+
+  100% {
+    background-position: -100% 0;
+  }
+}
+
+.image {
+  position: relative;
+  z-index: 1;
+  width: min(var(--right-image-max-w, 520px), 100%);
+  max-height: var(--right-image-max-h, 520px);
+  height: auto;
+  border-radius: 20px;
+  object-fit: var(--right-image-fit, contain);
+  object-position: var(--right-image-pos, center);
+
+  @include laptop {
+    width: 100%;
+    height: 100%;
+    max-height: none;
+    border-radius: 24px;
+  }
+
+  :global(img) {
+    border-radius: inherit;
+  }
+}
+

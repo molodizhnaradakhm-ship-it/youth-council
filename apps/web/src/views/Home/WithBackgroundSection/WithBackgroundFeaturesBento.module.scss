@@ -1,0 +1,358 @@
+.section {
+  padding: 24px 0 56px;
+
+  @include laptop {
+    padding: 32px 0 88px;
+  }
+}
+
+.kicker {
+  margin: 0 auto 12px;
+  max-width: 720px;
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-size: 12px;
+  opacity: 0.85;
+}
+
+.heading {
+  margin: 0 auto 16px;
+  max-width: 900px;
+  text-align: center;
+  color: var(--ui-ink);
+}
+
+.lead {
+  margin: 0 auto 40px;
+  max-width: 720px;
+  text-align: center;
+  line-height: 1.5;
+  opacity: 0.92;
+  color: var(--ui-ink-muted);
+
+  @include laptop {
+    margin-bottom: 48px;
+  }
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+
+  @include tablet {
+    grid-template-columns: repeat(12, 1fr);
+    align-items: stretch;
+    gap: 20px;
+  }
+}
+
+.column {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  min-width: 0;
+
+  @include tablet {
+    align-items: stretch;
+    height: 100%;
+    min-height: 0;
+  }
+}
+
+.col25 {
+  @include tablet {
+    grid-column: span 3;
+  }
+}
+
+.col50 {
+  @include tablet {
+    grid-column: span 6;
+  }
+}
+
+.col75 {
+  @include tablet {
+    grid-column: span 9;
+  }
+}
+
+.col100 {
+  @include tablet {
+    grid-column: span 12;
+  }
+}
+
+/** Wraps the animated node so inline `transform` does not block hover lift on the inner card. */
+.cellOuter {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  min-width: 0;
+  min-height: 0;
+
+  @include tablet {
+    flex: 1 1 0%;
+    align-self: stretch;
+  }
+}
+
+.cell {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  overflow: hidden;
+  border-radius: 25px;
+  min-height: 200px;
+  min-width: 0;
+  transition:
+    transform 0.28s ease,
+    box-shadow 0.28s ease;
+
+  @include tablet {
+    min-height: 0;
+  }
+
+  @include laptop {
+    &:hover {
+      transform: translateY(-5px);
+    }
+  }
+}
+
+/* Hover shadows by tone (card surface is `.cell` + `.tone*`). */
+@include laptop {
+  .toneGrey:hover,
+  .toneCharcoal:hover,
+  .toneOrange:hover,
+  .toneDark:hover {
+    box-shadow:
+      0 12px 32px rgb(8 8 9 / 12%),
+      0 4px 12px rgb(8 8 9 / 8%);
+  }
+
+  .toneDarkGreen:hover,
+  .tonePurple:hover {
+    box-shadow:
+      0 12px 32px rgb(8 8 9 / 22%),
+      0 4px 14px rgb(8 8 9 / 16%);
+  }
+
+  .toneLightGreen:hover {
+    box-shadow:
+      0 12px 28px rgb(8 8 9 / 14%),
+      0 4px 12px rgb(8 8 9 / 10%);
+  }
+}
+
+/* Full-card image as background under text (tone gradient disabled, add light scrim). */
+.cellCardBg {
+  position: relative;
+  isolation: isolate;
+  background: transparent !important;
+
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    border-radius: inherit;
+    pointer-events: none;
+    background: linear-gradient(180deg, rgba(8, 8, 9, 0.06) 0%, rgba(8, 8, 9, 0.14) 100%);
+  }
+}
+
+.cellBgLayer {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  border-radius: inherit;
+  background-color: var(--ui-mint-200);
+}
+
+/* After layout: optional min-height from CMS «Card height» (overrides .cell / tallHalf when preset ≠ default) */
+.cellHeightCompact {
+  min-height: 160px;
+
+  @include tablet {
+    min-height: 200px;
+  }
+}
+
+.cellHeightMedium {
+  min-height: 220px;
+
+  @include tablet {
+    min-height: 300px;
+  }
+}
+
+.cellHeightTall {
+  min-height: 260px;
+
+  @include tablet {
+    min-height: 380px;
+  }
+}
+
+.cellHeightExtraTall {
+  min-height: 300px;
+
+  @include tablet {
+    min-height: 480px;
+  }
+}
+
+.cellHeightSquare {
+  @include tablet {
+    aspect-ratio: 1 / 1;
+    min-height: 0;
+  }
+}
+
+.cellHeightRect {
+  @include tablet {
+    aspect-ratio: 16 / 9;
+    min-height: 0;
+  }
+}
+
+.cellHeightRectLong {
+  @include tablet {
+    aspect-ratio: 21 / 9;
+    min-height: 0;
+  }
+}
+
+.toneDarkGreen {
+  background: var(--ui-green-700);
+  color: #ffffff;
+}
+
+.toneLightGreen {
+  background: var(--ui-mint-200);
+  color: #080809;
+}
+
+.toneGrey {
+  background: #f7f7f7;
+  color: #080809;
+}
+
+/* Kicker label colors per tone. */
+.toneDarkGreen .cellKicker {
+  color: rgba(255, 255, 255, 0.88);
+}
+
+.toneLightGreen .cellKicker,
+.toneGrey .cellKicker {
+  color: rgba(8, 8, 9, 0.6);
+}
+
+/* Legacy tone values (backward compat). */
+.toneCharcoal {
+  @extend .toneLightGreen;
+}
+
+.tonePurple {
+  @extend .toneDarkGreen;
+}
+
+.toneOrange,
+.toneDark {
+  @extend .toneGrey;
+}
+
+.cellText {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex: 0 0 auto;
+  flex-direction: column;
+  padding: 24px 24px 12px;
+
+  @include laptop {
+    padding: 28px 32px 16px;
+  }
+}
+
+.cellCardBg .cellText {
+  flex: 1 1 auto;
+}
+
+.cellKicker {
+  margin-bottom: 8px;
+}
+
+.cellTitle {
+  margin: 0 0 10px;
+  font-family: var(--font-arimo, 'Arimo', system-ui, sans-serif);
+  font-weight: 600;
+  font-style: normal;
+  font-size: 24px;
+  line-height: 120%;
+  letter-spacing: -0.02em;
+}
+
+.cellBody {
+  flex-grow: 1;
+  margin: 0;
+  line-height: 1.45;
+  opacity: 0.88;
+}
+
+/* Media area under text: fills remaining card height (no margin-top:auto). */
+.cellMedia {
+  display: flex;
+  flex: 1 1 0%;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  width: 100%;
+  min-width: 0;
+  min-height: 0;
+}
+
+.cellMediaFixedRatio {
+  min-height: 0;
+}
+
+.cellMediaFillArea {
+  flex: 1 1 0%;
+  align-self: stretch;
+  width: 100%;
+  min-height: 0;
+
+  .cellMediaFrame {
+    flex: 1 1 auto;
+    min-height: 0;
+    height: 100%;
+    max-width: 100%;
+  }
+}
+
+.cellMediaFrame {
+  position: relative;
+  flex: 1 1 0%;
+  align-self: stretch;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  min-height: 140px;
+}
+
+/* Image as a CSS background (position/size from CMS). */
+.cellMediaBg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: inherit;
+  background-color: transparent;
+}
+

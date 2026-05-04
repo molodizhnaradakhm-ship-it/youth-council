@@ -1,0 +1,56 @@
+.wrapper {
+  display: block;
+
+  .bullets.bullets {
+    display: flex;
+    position: initial;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+    z-index: 1;
+    margin: 13px auto 0;
+    width: max-content;
+    height: 16px;
+  }
+
+  .bullet {
+    display: block;
+    position: relative;
+    opacity: 1;
+    clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%);
+    transition: background 0.3s;
+    margin: 0 !important;
+    border-radius: 0;
+    background: rgba(var(--brand-accent-rgb), 0.4);
+    width: 12px;
+    height: 11px;
+  }
+
+  .bulletActive {
+    background: var(--brand-accent);
+  }
+
+  @include tablet {
+  }
+
+  @include laptop {
+    .bullets.bullets {
+      gap: 24px;
+      margin: 20px auto 0;
+    }
+
+    .bullet {
+      width: 13px;
+      height: 12px;
+    }
+
+    &.hidePagination {
+      .bullets.bullets {
+        display: none;
+      }
+    }
+  }
+
+  @include desktop {
+  }
+}

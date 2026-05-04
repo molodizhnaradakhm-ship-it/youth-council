@@ -1,0 +1,127 @@
+.wrapper {
+  @include page-wrapper;
+
+  @include maxTablet {
+    padding-top: calc(80px + var(--top-header));
+  }
+
+  .intro {
+    position: relative;
+    background: var(--ui-surface-0, #fff);
+    padding: 24px 0 72px;
+  }
+
+  .container {
+    position: relative;
+  }
+
+  .introRow {
+    display: grid;
+    gap: 32px;
+  }
+
+  .introLeft {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+    min-width: 0;
+  }
+
+  .photoWrap {
+    display: block;
+    overflow: hidden;
+    border-radius: 16px;
+    width: 100%;
+  }
+
+  .photo {
+    display: block;
+    border-radius: inherit;
+    width: 100%;
+    height: auto;
+  }
+
+  @include laptop {
+    .photoWrap {
+      border-radius: 20px;
+    }
+  }
+
+  .namePosition {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    margin-bottom: 32px;
+  }
+
+  .positionLabel {
+    color: var(--ui-ink-muted);
+  }
+
+  .authorTitle {
+    color: var(--ui-ink);
+  }
+
+  .aboutDescription {
+    @include richtext;
+    margin-bottom: 32px;
+    color: var(--ui-ink-muted);
+  }
+
+  .contacts {
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+
+    @include laptop {
+      gap: 32px;
+    }
+  }
+
+  .authorPosts {
+    padding: 0;
+  }
+
+  .loaderContainer {
+    display: flex;
+    justify-content: center;
+    padding: 20px 0;
+  }
+
+  @include tablet {
+  }
+
+  @include laptop {
+    .intro {
+      padding: 48px 0 80px;
+    }
+
+    .introRow {
+      grid-template-columns: 420px 1fr;
+      gap: 72px;
+    }
+
+    .introRight {
+      padding-right: 156px;
+    }
+
+    .namePosition {
+      gap: 16px;
+    }
+
+    .aboutDescription {
+      margin-bottom: 48px;
+      max-width: 960px;
+    }
+
+    .authorPosts {
+      padding: 0;
+    }
+  }
+
+  @include desktop {
+    .intro {
+      padding: 72px 0 120px;
+    }
+  }
+}

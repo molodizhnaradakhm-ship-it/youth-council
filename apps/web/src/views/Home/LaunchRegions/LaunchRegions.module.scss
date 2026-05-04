@@ -1,0 +1,51 @@
+.wrapper {
+  padding-top: 48px;
+  padding-bottom: 48px;
+  @include laptop {
+    padding-top: 88px;
+    padding-bottom: 88px;
+  }
+}
+
+.heading {
+  margin-bottom: 40px;
+  @include laptop {
+    margin-bottom: 56px;
+  }
+}
+
+.card {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 28px;
+}
+
+.featured {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  border: 1px solid var(--accent-border-soft);
+  border-radius: 20px;
+  background: linear-gradient(145deg, rgba(24, 14, 47, 0.95) 0%, rgba(17, 9, 32, 0.8) 100%);
+  padding: 32px 48px;
+  min-width: min(100%, 420px);
+  text-align: center;
+  @include laptop {
+    padding: 40px 64px;
+  }
+}
+
+.featuredName {
+  font-size: clamp(1.5rem, 3vw, 2rem);
+}
+
+.dateLabel {
+  opacity: 0.85;
+}
+
+.line {
+  max-width: 920px;
+  margin: 0 auto;
+  line-height: 1.6;
+}

@@ -1,0 +1,86 @@
+.wrapper {
+  @include page-wrapper;
+
+  .intro {
+    position: relative;
+    padding: 24px 0 72px;
+    background: var(--ui-surface-0, #fff);
+  }
+
+  .introRow {
+    display: grid;
+    gap: 32px;
+  }
+
+  .introLeft {
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+    min-width: 0;
+  }
+
+  .coverWrap {
+    display: block;
+    overflow: hidden;
+    border-radius: 16px;
+    width: 100%;
+  }
+
+  .cover {
+    display: block;
+    border-radius: inherit;
+    width: 100%;
+    height: auto;
+  }
+
+  .nameBlock {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    margin-bottom: 16px;
+  }
+
+  .excerptMuted {
+    color: var(--ui-ink-muted);
+  }
+
+  .nameTitle {
+    color: var(--ui-ink);
+  }
+
+  .about {
+    @include richtext;
+    max-width: 960px;
+    color: var(--ui-ink-muted);
+  }
+
+  @include laptop {
+    .intro {
+      padding: 48px 0 80px;
+    }
+
+    .introRow {
+      grid-template-columns: 420px 1fr;
+      gap: 72px;
+    }
+
+    .coverWrap {
+      border-radius: 20px;
+    }
+
+    .introRight {
+      padding-right: 80px;
+    }
+
+    .nameBlock {
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+  }
+
+  @include desktop {
+    .intro {
+      padding: 72px 0 120px;
+    }
+  }
+}

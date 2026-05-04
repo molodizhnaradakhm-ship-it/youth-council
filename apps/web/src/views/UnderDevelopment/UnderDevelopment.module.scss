@@ -1,0 +1,199 @@
+.wrapper {
+  position: relative;
+  overflow: hidden;
+  @include page-wrapper;
+  background: #000;
+  min-height: min(72vh, 900px);
+}
+
+.customBg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+
+  /* Darken uploaded art so it reads as a background layer behind dots + copy */
+  &::after {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    background: linear-gradient(
+      180deg,
+      rgba(0, 0, 0, 0.45) 0%,
+      rgba(0, 0, 0, 0.62) 45%,
+      rgba(0, 0, 0, 0.72) 100%
+    );
+    pointer-events: none;
+    content: '';
+  }
+}
+
+/* Like the ball: full asset in frame — no edge-to-edge crop that reads as “stretched” map */
+.customBgImg {
+  position: relative;
+  z-index: 0;
+  object-fit: contain;
+  object-position: center center;
+  filter: brightness(0.72);
+}
+
+.hasCustomBg {
+  .vignette {
+    background: radial-gradient(
+      ellipse 90% 75% at 50% 42%,
+      transparent 0%,
+      rgba(0, 0, 0, 0.78) 100%
+    );
+  }
+
+  .dotMap {
+    opacity: 0.18;
+  }
+}
+
+.dotMap {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  opacity: 0.14;
+  background-image: radial-gradient(rgba(255, 255, 255, 0.35) 1px, transparent 1px);
+  background-size: 22px 22px;
+  background-position: center;
+  pointer-events: none;
+}
+
+.vignette {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: radial-gradient(ellipse 85% 70% at 50% 45%, transparent 0%, rgba(0, 0, 0, 0.65) 100%);
+  pointer-events: none;
+}
+
+.inner {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 80px 16px 80px;
+  max-width: 640px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.heroVisual {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 36px;
+  min-height: 160px;
+}
+
+.ballWrap {
+  position: relative;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Fixed “frame” so uploaded art keeps aspect ratio (contain), never stretches */
+.ballPhotoBox {
+  position: relative;
+  width: min(220px, 72vw);
+  aspect-ratio: 1 / 1;
+  max-width: 260px;
+  max-height: 260px;
+  filter: drop-shadow(0 24px 48px rgba(0, 0, 0, 0.45));
+}
+
+.ball {
+  width: min(200px, 48vw);
+  height: auto;
+
+  svg {
+    display: block;
+    width: 100%;
+    height: auto;
+    filter: drop-shadow(0 24px 48px rgba(0, 0, 0, 0.45));
+  }
+}
+
+.ballPhoto {
+  object-fit: contain;
+  object-position: center;
+}
+
+.title {
+  margin-bottom: 16px;
+  color: #fff;
+  font-weight: 600;
+  font-size: clamp(28px, 5vw, 44px);
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+}
+
+.description {
+  margin-bottom: 32px;
+  max-width: 520px;
+  color: rgba(255, 255, 255, 0.62);
+  font-size: 16px;
+  line-height: 1.55;
+}
+
+.cta {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  transition:
+    opacity 0.2s ease,
+    transform 0.2s ease;
+  border-radius: 999px;
+  background: #fff;
+  padding: 14px 28px;
+  min-height: 48px;
+  color: #0a0a0a;
+  font-weight: 600;
+  font-size: 15px;
+  line-height: 1.2;
+  text-decoration: none;
+
+  &:hover {
+    opacity: 0.92;
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--brand-accent);
+    outline-offset: 3px;
+  }
+
+  @include laptop {
+    padding: 16px 36px;
+    min-height: 52px;
+    font-size: 16px;
+  }
+}
+
+@include laptop {
+  .inner {
+    padding: 104px 24px 120px;
+  }
+
+  .heroVisual {
+    margin-bottom: 48px;
+    min-height: 200px;
+  }
+
+  .ball {
+    width: min(240px, 36vw);
+  }
+
+  .ballPhotoBox {
+    width: min(240px, 36vw);
+    max-width: 280px;
+    max-height: 280px;
+  }
+
+  .description {
+    font-size: 17px;
+  }
+}

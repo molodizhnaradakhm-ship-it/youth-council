@@ -1,0 +1,111 @@
+.section {
+  width: 100%;
+  margin-top: 24px;
+  margin-bottom: 24px;
+
+  &:first-child {
+    margin-top: 0;
+  }
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.wrapper {
+  display: flex;
+  gap: 16px;
+  padding: 20px 24px;
+  border-radius: 16px;
+  max-width: 100%;
+  --hint-body-color: #252527;
+
+  @include maxTablet {
+    margin-inline: 14px;
+  }
+}
+
+.iconWrap {
+  flex-shrink: 0;
+  width: 48px;
+  height: 48px;
+}
+
+.customIcon {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.body {
+  flex: 1;
+  min-width: 0;
+}
+
+.title {
+  margin: 0 0 8px;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 1.35;
+}
+
+.text {
+  margin: 0;
+  color: var(--hint-body-color);
+
+  :global(p) {
+    margin: 0 0 0.5em;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+}
+
+/* Original blue “Tip” bar */
+.primary {
+  align-items: flex-start;
+  background: rgba(73, 133, 190, 0.2);
+  --hint-body-color: #4985be;
+}
+
+.title_primary {
+  color: #4985be;
+}
+
+/* Hint (2) — neutral gray “Note” bar */
+.info {
+  align-items: center;
+  border-radius: 20px;
+  background: #ebebec;
+  --hint-body-color: #252527;
+}
+
+.title_info {
+  color: #252527;
+  font-weight: 700;
+}
+
+/* Hint (1) — warm gold / “Important” bar */
+.warning {
+  align-items: flex-start;
+  border-radius: 20px;
+  background: rgba(205, 181, 56, 0.2);
+  --hint-body-color: #b89a28;
+}
+
+.title_warning {
+  color: #b89a28;
+  font-weight: 700;
+}
+
+.success {
+  align-items: flex-start;
+  background: rgba(47, 163, 107, 0.18);
+  --hint-body-color: #2fa36b;
+}
+
+.title_success {
+  color: #2fa36b;
+}

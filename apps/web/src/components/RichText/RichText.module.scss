@@ -1,0 +1,16 @@
+/** Horizontal scroll for wide tables from Lexical (mobile-safe). */
+.tableScroll {
+  margin: 16px 0 24px;
+  width: 100%;
+  max-width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  border-radius: 8px;
+
+  :global(table) {
+    margin: 0;
+    width: max-content;
+    min-width: 100%;
+    border-collapse: collapse;
+  }
+}

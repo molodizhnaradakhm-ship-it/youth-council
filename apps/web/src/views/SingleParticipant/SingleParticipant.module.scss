@@ -1,0 +1,128 @@
+.wrapper {
+  @include page-wrapper;
+
+  .intro {
+    position: relative;
+    padding: 24px 0 72px;
+    background: var(--ui-surface-0, #fff);
+  }
+
+  .introRow {
+    display: grid;
+    gap: 32px;
+  }
+
+  .introLeft {
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+    min-width: 0;
+  }
+
+  .photoWrap {
+    display: block;
+    overflow: hidden;
+    border-radius: 16px;
+    width: 100%;
+  }
+
+  .photo {
+    display: block;
+    border-radius: inherit;
+    width: 100%;
+    height: auto;
+  }
+
+  .sideMeta {
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+  }
+
+  .block {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .blockTitle {
+    color: var(--ui-ink-muted);
+  }
+
+  .workplaceList {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+
+    li + li {
+      margin-top: 16px;
+    }
+  }
+
+  .org {
+    color: var(--ui-ink);
+    font-weight: 600;
+  }
+
+  .note {
+    margin: 4px 0 0;
+    color: var(--ui-ink-muted);
+  }
+
+  .plainText {
+    margin: 0;
+    color: var(--ui-ink-muted);
+    white-space: pre-wrap;
+  }
+
+  .nameBlock {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    margin-bottom: 24px;
+  }
+
+  .specializationLabel {
+    color: var(--ui-ink-muted);
+  }
+
+  .nameTitle {
+    color: var(--ui-ink);
+  }
+
+  .about {
+    @include richtext;
+    max-width: 960px;
+    color: var(--ui-ink-muted);
+  }
+
+  @include laptop {
+    .intro {
+      padding: 48px 0 80px;
+    }
+
+    .introRow {
+      grid-template-columns: 420px 1fr;
+      gap: 72px;
+    }
+
+    .photoWrap {
+      border-radius: 20px;
+    }
+
+    .introRight {
+      padding-right: 80px;
+    }
+
+    .nameBlock {
+      gap: 16px;
+      margin-bottom: 32px;
+    }
+  }
+
+  @include desktop {
+    .intro {
+      padding: 72px 0 120px;
+    }
+  }
+}

@@ -1,0 +1,53 @@
+:root {
+  --font-primary: 'Mustica Pro Medium', 'Mustica Pro Medium Placeholder', sans-serif;
+  --font-arimo: 'Mustica Pro Medium', 'Mustica Pro Medium Placeholder', sans-serif;
+  --white: #ffffff;
+  --color-error: #f53f4d;
+  --top-header: 0px;
+
+  /* Youth Council brand palette (teal / navy). */
+  --ui-green-700: #0e3347; /* navy */
+  --ui-green-600: #13485d; /* deep teal */
+  --ui-green-500: #44b0b3; /* teal */
+  --ui-mint-200: #cfeff0;
+  --ui-mint-100: #e8f7f7;
+  --ui-surface-0: #ffffff;
+  --ui-surface-50: #f8f8f8;
+  --ui-surface-75: #f6f8f7;
+  --ui-ink: #080809;
+  --ui-ink-muted: rgba(8, 8, 9, 0.72);
+  --ui-border-subtle: rgba(0, 0, 0, 0.08);
+  --ui-border: #f2f2f2;
+  --ui-star: #ffbd22;
+
+  /** Primary accent (links, focus rings, CTAs). */
+  --brand-accent: var(--ui-green-600);
+  --brand-accent-rgb: 19, 72, 93;
+  --accent-border-soft: rgba(var(--brand-accent-rgb), 0.28);
+  --accent-surface-tint: rgba(var(--brand-accent-rgb), 0.06);
+
+  /** Default body text on light backgrounds (replaces legacy lavender `--Text`). */
+  --Text: var(--ui-ink-muted);
+
+  /** Text on dark navy / filters / quote slides. */
+  --text-on-brand-dark: var(--ui-mint-100);
+  --quote-card-bg: var(--ui-green-700);
+
+  /**
+   * Legacy variable names — remapped to brand tokens so existing SCSS keeps working
+   * without purple literals.
+   */
+  --Dark-violet: var(--ui-green-700);
+  --Light-violet: var(--ui-mint-200);
+  --Light-violet-2: #f6f6f6;
+  --Main-violet: var(--brand-accent);
+  --Additional-violet: var(--ui-green-600);
+  --Additional-violet-2: var(--ui-green-500);
+  --blue-23: var(--ui-green-700);
+
+  /** String tokens used across legacy components / CMS-era SCSS */
+  --Accent: var(--brand-accent);
+  --Background-Dark: var(--ui-green-700);
+  --Button---Dark: var(--ui-green-600);
+  --Pure-violet: var(--ui-green-500);
+}

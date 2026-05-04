@@ -1,0 +1,61 @@
+.wrapper {
+  @include tablet {
+  }
+
+  @include laptop {
+  }
+
+  @include desktop {
+  }
+}
+
+.animate {
+  will-change: transform, opacity;
+}
+
+.animateImage {
+  position: relative;
+  opacity: 1 !important;
+  clip-path: inset(100% 0 0 0);
+  transition: clip-path 1.5s;
+  transition-delay: 0.8s;
+
+  &::before {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    z-index: 10;
+    border-radius: 10px;
+    background-color: black;
+    width: 100%;
+    height: 100%;
+    content: '';
+  }
+  &.animateImageInView {
+    clip-path: inset(0 0 0 0);
+    &::before {
+      animation: imgAnimation 2s ease-in-out 0.5s forwards;
+    }
+  }
+}
+
+@keyframes imgAnimation {
+  0% {
+    height: 100%;
+  }
+  50% {
+    top: 0;
+    bottom: auto;
+    height: 100%;
+  }
+  65% {
+    top: 0;
+    bottom: auto;
+    height: 100%;
+  }
+  100% {
+    top: 0;
+    bottom: auto;
+    height: 0%;
+  }
+}

@@ -1,0 +1,17 @@
+.mobileOnly {
+  display: block;
+  width: 100%;
+  min-width: 0;
+  @include tablet {
+    display: none !important;
+  }
+}
+
+.desktopOnly {
+  display: block;
+  width: 100%;
+  min-width: 0;
+  @include maxTablet {
+    display: none !important;
+  }
+}

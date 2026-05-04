@@ -1,0 +1,103 @@
+name: youth-council
+
+version: "3.8"
+
+services:
+  youth-council-landing-cms:
+    build:
+      context: ../
+      dockerfile: .deploy/Dockerfile.youth-council-landing.dev
+    image: youth-council-landing-cms:latest
+    container_name: youth-council-landing-cms
+    restart: unless-stopped
+    working_dir: /app
+    networks:
+      - traefik-network
+    env_file:
+      - env.traefik.prod
+      - env.web.prod
+    environment:
+      NODE_ENV: production
+      # Payload defaults (override via env.web.prod on the server)
+      PAYLOAD_SECRET: ${PAYLOAD_SECRET:-change-me}
+      DATABASE_URI: ${DATABASE_URI:-mongodb://mongo:27017/youth-council}
+      URL: ${CMS_URL:-http://youth-council-landing-cms:3001}
+      WEB_URL: ${NEXT_PUBLIC_URL:-http://youth-council-landing-web:3000}
+    depends_on:
+      - mongo
+      - minio
+    volumes:
+      - type: volume
+        source: pnpm_store
+        target: /pnpm-store
+      - type: volume
+        source: landing_deps_state
+        target: /deps
+    ports:
+      - "3101:3001"
+    command: ["sh", "-lc", "pnpm --filter @monorepo/cms start"]
+
+  youth-council-landing-web:
+    build:
+      context: ../
+      dockerfile: DockerfileWeb
+      args:
+        NEXT_PUBLIC_CMS_URL: ${NEXT_PUBLIC_CMS_URL}
+        NEXT_PUBLIC_URL: ${NEXT_PUBLIC_URL}
+        PAYLOAD_FETCH_ALLOW_INSECURE_TLS: ${PAYLOAD_FETCH_ALLOW_INSECURE_TLS:-0}
+    container_name: youth-council-landing-web
+    restart: unless-stopped
+    networks:
+      - traefik-network
+    env_file:
+      - env.traefik.prod
+      - env.web.prod
+    environment:
+      NODE_ENV: production
+      NEXT_PUBLIC_CMS_URL: ${NEXT_PUBLIC_CMS_URL}
+      NEXT_PUBLIC_URL: ${NEXT_PUBLIC_URL}
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.services.youth-council-landing-web.loadbalancer.server.port=3000"
+      - "traefik.http.routers.youth-council-landing-web.rule=Host(`${WEB_YOUTH_COUNCIL_LANDING_DOMAIN}`)"
+      - "traefik.http.routers.youth-council-landing-web.entrypoints=websecure"
+      - "traefik.http.routers.youth-council-landing-web.tls=true"
+      - "traefik.http.routers.youth-council-landing-web.tls.certresolver=letsencrypt"
+      - "traefik.http.routers.youth-council-landing-web.middlewares=security@file,rate-limit@file"
+
+  mongo:
+    image: mongo:7
+    container_name: youth-council-landing-mongo
+    restart: unless-stopped
+    networks:
+      - traefik-network
+    environment:
+      MONGO_INITDB_DATABASE: youth-council
+    volumes:
+      - mongo_data:/data/db
+
+  minio:
+    image: minio/minio:latest
+    container_name: youth-council-landing-minio
+    restart: unless-stopped
+    networks:
+      - traefik-network
+    environment:
+      MINIO_ROOT_USER: ${MINIO_ROOT_USER:-minioadmin}
+      MINIO_ROOT_PASSWORD: ${MINIO_ROOT_PASSWORD:-minioadmin}
+    command: ["server", "/data", "--console-address", ":9001"]
+    volumes:
+      - minio_data:/data
+    ports:
+      - "9100:9000"
+      - "9101:9001"
+
+networks:
+  traefik-network:
+    external: true
+
+volumes:
+  mongo_data:
+  minio_data:
+  pnpm_store:
+  landing_deps_state:

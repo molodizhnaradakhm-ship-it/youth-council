@@ -1,0 +1,292 @@
+.main {
+  @include page-wrapper;
+  position: relative;
+  z-index: 1;
+  background: var(--White, #fff);
+  padding-bottom: 48px;
+  @include laptop {
+    padding-bottom: 80px;
+  }
+  @include desktop {
+    padding-bottom: 120px;
+  }
+}
+
+/** Optional top strip — document layout has no hero overlay */
+.banner {
+  position: relative;
+  width: 100%;
+  max-height: 200px;
+  overflow: hidden;
+  @include laptop {
+    max-height: 240px;
+  }
+}
+
+.banner-image {
+  display: block;
+  width: 100%;
+  height: 100%;
+  min-height: 160px;
+  max-height: 240px;
+  object-fit: cover;
+}
+
+.privacy-text-section {
+  position: relative;
+}
+
+.heading {
+  /* Extra air under fixed header on small viewports (legal title block) */
+  padding-top: 48px;
+  padding-right: 0;
+  padding-bottom: 0;
+  padding-left: 0;
+  text-align: center;
+  @include laptop {
+    padding-top: 48px;
+    padding-right: 0;
+    padding-left: 0;
+  }
+  @include desktop {
+    padding-top: 56px;
+  }
+}
+
+/** Title block centered (Container 6 design) */
+.title-block {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.title {
+  font-family: var(--font-arimo);
+  font-weight: 600;
+  font-size: clamp(32px, 7vw, 72px);
+  line-height: 1.2; /* 120% */
+  letter-spacing: -0.02em; /* -2% */
+  text-align: center;
+  color: var(--Background-Dark) !important;
+}
+
+.last-updated {
+  flex-shrink: 0;
+  color: rgba(19, 5, 32, 0.55);
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  white-space: pre-wrap;
+  text-align: center;
+}
+
+.description {
+  margin-top: 16px;
+  max-width: 520px;
+  font-family: var(--font-arimo);
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 1.3; /* 130% */
+  letter-spacing: 0;
+  text-align: center;
+  color: var(--Background-Dark);
+}
+
+.content-wrapper {
+  padding-top: 48px;
+  @include laptop {
+    margin: 0 auto;
+    padding-top: 56px;
+    max-width: 960px;
+  }
+  @include desktop {
+    padding-top: 64px;
+    max-width: 1080px;
+  }
+}
+
+.richText {
+  @include richtext;
+  padding-right: 0;
+  padding-bottom: 48px;
+  padding-left: 0;
+  h2 {
+    margin-top: 32px;
+    margin-bottom: 20px;
+    color: var(--Background-Dark);
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    &:first-child {
+      margin-top: 0;
+    }
+  }
+  h3 {
+    margin-top: 24px;
+    margin-bottom: 16px;
+    color: var(--Background-Dark);
+  }
+  p {
+    margin-bottom: 16px;
+    color: var(--Background-Dark);
+    line-height: 1.55;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+  ol {
+    margin: 20px 0;
+    padding-left: 24px;
+    li {
+      margin-bottom: 12px;
+      padding-left: 4px;
+      line-height: 1.5;
+    }
+  }
+  ul {
+    margin: 20px 0;
+  }
+  @include laptop {
+    padding-right: 0;
+    padding-bottom: 64px;
+    padding-left: 0;
+    h2 {
+      margin-top: 40px;
+      margin-bottom: 20px;
+      &:first-child {
+        margin-top: 0;
+      }
+    }
+  }
+  @include desktop {
+    padding-bottom: 120px;
+    h2 {
+      margin-top: 48px;
+      margin-bottom: 24px;
+    }
+  }
+
+  /* Table: wrapper scroll comes from RichText `.tableScroll`; keep cell styles here */
+  table {
+    margin-top: 0;
+    margin-bottom: 0;
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+    line-height: 1.45;
+  }
+
+  th,
+  td {
+    padding: 8px 10px;
+    border: 1px solid rgba(19, 5, 32, 0.12);
+    vertical-align: top;
+  }
+
+  th {
+    font-weight: 600;
+    text-align: left;
+    background: rgba(19, 5, 32, 0.04);
+  }
+
+  @include laptop {
+    table {
+      font-size: inherit;
+      line-height: inherit;
+    }
+
+    th,
+    td {
+      padding: 10px 12px;
+    }
+  }
+
+  /* Inline images / figures from Lexical */
+  img {
+    max-width: 100%;
+    height: auto;
+    vertical-align: middle;
+  }
+
+  figure {
+    margin: 20px 0;
+    max-width: 100%;
+  }
+
+  pre {
+    overflow-x: auto;
+    margin: 16px 0;
+    padding: 12px 14px;
+    max-width: 100%;
+    border-radius: 8px;
+    background: rgba(19, 5, 32, 0.06);
+    font-size: 13px;
+    line-height: 1.5;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  code {
+    word-break: break-word;
+  }
+}
+
+.nav-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 48px;
+  padding-right: 0;
+  padding-left: 0;
+  @include laptop {
+    flex-direction: row;
+    justify-content: space-between;
+    padding-right: 0;
+    padding-left: 0;
+  }
+}
+
+.go-back {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  cursor: pointer;
+  p {
+    color: var(--Background-Dark);
+  }
+}
+
+.list-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.list-item {
+  display: flex;
+  align-items: center;
+
+  &:last-child {
+    svg {
+      display: none;
+    }
+  }
+}
+
+.link-text {
+  color: var(--Background-Dark, rgba(19, 5, 32, 0.25));
+  &.active {
+    color: var(--Background-Dark);
+  }
+}
+
+.slash {
+  padding-right: 12px;
+  padding-left: 12px;
+  @include laptop {
+    padding-right: 48px;
+    padding-left: 48px;
+    width: 8px;
+    height: 21px;
+  }
+}

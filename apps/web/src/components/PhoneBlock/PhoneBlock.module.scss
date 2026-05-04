@@ -1,0 +1,77 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.title {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.titleOnLight {
+  color: var(--ui-ink-muted);
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  align-self: flex-start;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+  font: inherit;
+  text-align: left;
+  color: inherit;
+
+  .copyAction {
+    flex-shrink: 0;
+    margin-left: 2px;
+    padding: 4px 10px;
+    border: 1px solid var(--ui-border-muted, rgb(255 255 255 / 22%));
+    border-radius: 8px;
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 1.2;
+    color: var(--ui-ink-muted, rgb(255 255 255 / 55%));
+    transition:
+      border-color 0.2s,
+      color 0.2s,
+      background 0.2s;
+  }
+
+  &.rowOnLight .copyAction {
+    border-color: rgb(15 23 42 / 18%);
+    color: var(--ui-ink-muted);
+  }
+
+  @include laptop {
+    &:hover .copyAction {
+      border-color: var(--Accent, #8b5cf6);
+      color: var(--Accent, #8b5cf6);
+      background: color-mix(in srgb, var(--Accent, #8b5cf6) 8%, transparent);
+    }
+  }
+}
+
+.phoneText {
+  transition: color 0.3s;
+
+  @include laptop {
+    &:hover {
+      color: var(--Accent);
+    }
+  }
+}
+
+.link {
+  align-self: flex-start;
+  text-decoration: none;
+  transition: opacity 0.2s ease;
+
+  &:hover {
+    opacity: 0.85;
+  }
+}

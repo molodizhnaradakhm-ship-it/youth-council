@@ -1,0 +1,214 @@
+name: Deploy
+
+on:
+  push:
+    branches: [dev, main]
+  workflow_dispatch:
+
+concurrency:
+  group: deploy-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  changes:
+    name: Detect changes
+    runs-on: ubuntu-latest
+    outputs:
+      landing_web: ${{ steps.filter.outputs.landing_web }}
+      landing_cms: ${{ steps.filter.outputs.landing_cms }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Filter paths
+        id: filter
+        uses: dorny/paths-filter@v3
+        with:
+          filters: |
+            landing_web:
+              - 'apps/web/**'
+              - 'package.json'
+              - 'pnpm-lock.yaml'
+              - 'pnpm-workspace.yaml'
+              - 'turbo.json'
+              - 'tsconfig*.json'
+              - '.deploy/**'
+              - '.github/workflows/deploy.yml'
+            landing_cms:
+              - 'apps/cms/**'
+              - 'package.json'
+              - 'pnpm-lock.yaml'
+              - 'pnpm-workspace.yaml'
+              - 'turbo.json'
+              - 'tsconfig*.json'
+              - '.deploy/**'
+              - '.github/workflows/deploy.yml'
+
+  deploy-landing-web:
+    name: Deploy landing web (youth-council-landing-web)
+    needs: [changes]
+    if: ${{ needs.changes.outputs.landing_web == 'true' }}
+    runs-on: ubuntu-latest
+    environment: ${{ github.ref_name == 'main' && 'production' || 'staging' }}
+    steps:
+      - name: Select target environment
+        id: env
+        shell: bash
+        run: |
+          if [ "${{ github.ref_name }}" = "main" ]; then
+            echo "ssh_host=${{ secrets.PROD_SSH_HOST }}" >> "$GITHUB_OUTPUT"
+            echo "ssh_username=${{ secrets.PROD_SSH_USERNAME }}" >> "$GITHUB_OUTPUT"
+            echo "ssh_port=${{ secrets.PROD_SSH_PORT }}" >> "$GITHUB_OUTPUT"
+            echo "ssh_private_key<<EOF" >> "$GITHUB_OUTPUT"
+            echo "${{ secrets.PROD_SSH_PRIVATE_KEY }}" >> "$GITHUB_OUTPUT"
+            echo "EOF" >> "$GITHUB_OUTPUT"
+            echo "deploy_path=${{ secrets.PROD_DEPLOY_PATH }}" >> "$GITHUB_OUTPUT"
+          else
+            echo "ssh_host=${{ secrets.STAGING_SSH_HOST }}" >> "$GITHUB_OUTPUT"
+            echo "ssh_username=${{ secrets.STAGING_SSH_USERNAME }}" >> "$GITHUB_OUTPUT"
+            echo "ssh_port=${{ secrets.STAGING_SSH_PORT }}" >> "$GITHUB_OUTPUT"
+            echo "ssh_private_key<<EOF" >> "$GITHUB_OUTPUT"
+            echo "${{ secrets.STAGING_SSH_PRIVATE_KEY }}" >> "$GITHUB_OUTPUT"
+            echo "EOF" >> "$GITHUB_OUTPUT"
+            echo "deploy_path=${{ secrets.STAGING_DEPLOY_PATH }}" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Validate required secrets
+        shell: bash
+        run: |
+          [ -z "${{ steps.env.outputs.ssh_host }}" ] && { echo "Missing SSH host secret for this branch"; exit 1; }
+          [ -z "${{ steps.env.outputs.ssh_username }}" ] && { echo "Missing SSH username secret for this branch"; exit 1; }
+          [ -z "${{ steps.env.outputs.ssh_private_key }}" ] && { echo "Missing SSH private key secret for this branch"; exit 1; }
+          [ -z "${{ steps.env.outputs.deploy_path }}" ] && { echo "Missing deploy path secret for this branch"; exit 1; }
+
+      - name: Setup SSH
+        uses: webfactory/ssh-agent@v0.9.0
+        with:
+          ssh-private-key: ${{ steps.env.outputs.ssh_private_key }}
+
+      - name: Add server to known hosts
+        shell: bash
+        run: |
+          mkdir -p ~/.ssh
+          ssh-keyscan -p "${{ steps.env.outputs.ssh_port || 22 }}" -t rsa,ecdsa,ed25519 "${{ steps.env.outputs.ssh_host }}" >> ~/.ssh/known_hosts
+          chmod 644 ~/.ssh/known_hosts
+
+      - name: Deploy landing web service
+        shell: bash
+        env:
+          BRANCH: ${{ github.ref_name }}
+        run: |
+          SSH_HOST="${{ steps.env.outputs.ssh_host }}"
+          SSH_USERNAME="${{ steps.env.outputs.ssh_username }}"
+          SSH_PORT="${{ steps.env.outputs.ssh_port || 22 }}"
+          DEPLOY_PATH="${{ steps.env.outputs.deploy_path }}"
+
+          ssh -p "$SSH_PORT" -o StrictHostKeyChecking=no "$SSH_USERNAME@$SSH_HOST" \
+            "DEPLOY_PATH='${DEPLOY_PATH}' BRANCH='${BRANCH}' bash -s" << 'REMOTE'
+            set -e
+
+            echo "Connected to server: $(hostname)"
+            cd "$DEPLOY_PATH" || { echo "Project directory not found: $DEPLOY_PATH"; exit 1; }
+            echo "Project directory: $(pwd)"
+
+            git pull origin "${BRANCH}"
+            cd .deploy || { echo ".deploy directory not found"; exit 1; }
+
+            COMPOSE_CMD="docker compose -f docker-compose.prod.yml --env-file env.traefik.prod --env-file env.web.prod"
+
+            echo "Building youth-council-landing-web..."
+            $COMPOSE_CMD build youth-council-landing-web
+            $COMPOSE_CMD up -d youth-council-landing-web
+
+            echo "Cleanup..."
+            docker builder prune -f
+            docker image prune -f
+
+            echo "Done."
+            $COMPOSE_CMD ps
+          REMOTE
+
+  deploy-landing-cms:
+    name: Deploy landing cms (youth-council-landing-cms)
+    needs: [changes]
+    if: ${{ needs.changes.outputs.landing_cms == 'true' }}
+    runs-on: ubuntu-latest
+    environment: ${{ github.ref_name == 'main' && 'production' || 'staging' }}
+    steps:
+      - name: Select target environment
+        id: env
+        shell: bash
+        run: |
+          if [ "${{ github.ref_name }}" = "main" ]; then
+            echo "ssh_host=${{ secrets.PROD_SSH_HOST }}" >> "$GITHUB_OUTPUT"
+            echo "ssh_username=${{ secrets.PROD_SSH_USERNAME }}" >> "$GITHUB_OUTPUT"
+            echo "ssh_port=${{ secrets.PROD_SSH_PORT }}" >> "$GITHUB_OUTPUT"
+            echo "ssh_private_key<<EOF" >> "$GITHUB_OUTPUT"
+            echo "${{ secrets.PROD_SSH_PRIVATE_KEY }}" >> "$GITHUB_OUTPUT"
+            echo "EOF" >> "$GITHUB_OUTPUT"
+            echo "deploy_path=${{ secrets.PROD_DEPLOY_PATH }}" >> "$GITHUB_OUTPUT"
+          else
+            echo "ssh_host=${{ secrets.STAGING_SSH_HOST }}" >> "$GITHUB_OUTPUT"
+            echo "ssh_username=${{ secrets.STAGING_SSH_USERNAME }}" >> "$GITHUB_OUTPUT"
+            echo "ssh_port=${{ secrets.STAGING_SSH_PORT }}" >> "$GITHUB_OUTPUT"
+            echo "ssh_private_key<<EOF" >> "$GITHUB_OUTPUT"
+            echo "${{ secrets.STAGING_SSH_PRIVATE_KEY }}" >> "$GITHUB_OUTPUT"
+            echo "EOF" >> "$GITHUB_OUTPUT"
+            echo "deploy_path=${{ secrets.STAGING_DEPLOY_PATH }}" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Validate required secrets
+        shell: bash
+        run: |
+          [ -z "${{ steps.env.outputs.ssh_host }}" ] && { echo "Missing SSH host secret for this branch"; exit 1; }
+          [ -z "${{ steps.env.outputs.ssh_username }}" ] && { echo "Missing SSH username secret for this branch"; exit 1; }
+          [ -z "${{ steps.env.outputs.ssh_private_key }}" ] && { echo "Missing SSH private key secret for this branch"; exit 1; }
+          [ -z "${{ steps.env.outputs.deploy_path }}" ] && { echo "Missing deploy path secret for this branch"; exit 1; }
+
+      - name: Setup SSH
+        uses: webfactory/ssh-agent@v0.9.0
+        with:
+          ssh-private-key: ${{ steps.env.outputs.ssh_private_key }}
+
+      - name: Add server to known hosts
+        shell: bash
+        run: |
+          mkdir -p ~/.ssh
+          ssh-keyscan -p "${{ steps.env.outputs.ssh_port || 22 }}" -t rsa,ecdsa,ed25519 "${{ steps.env.outputs.ssh_host }}" >> ~/.ssh/known_hosts
+          chmod 644 ~/.ssh/known_hosts
+
+      - name: Deploy landing cms service
+        shell: bash
+        env:
+          BRANCH: ${{ github.ref_name }}
+        run: |
+          SSH_HOST="${{ steps.env.outputs.ssh_host }}"
+          SSH_USERNAME="${{ steps.env.outputs.ssh_username }}"
+          SSH_PORT="${{ steps.env.outputs.ssh_port || 22 }}"
+          DEPLOY_PATH="${{ steps.env.outputs.deploy_path }}"
+
+          ssh -p "$SSH_PORT" -o StrictHostKeyChecking=no "$SSH_USERNAME@$SSH_HOST" \
+            "DEPLOY_PATH='${DEPLOY_PATH}' BRANCH='${BRANCH}' bash -s" << 'REMOTE'
+            set -e
+
+            echo "Connected to server: $(hostname)"
+            cd "$DEPLOY_PATH" || { echo "Project directory not found: $DEPLOY_PATH"; exit 1; }
+            echo "Project directory: $(pwd)"
+
+            git pull origin "${BRANCH}"
+            cd .deploy || { echo ".deploy directory not found"; exit 1; }
+
+            COMPOSE_CMD="docker compose -f docker-compose.prod.yml --env-file env.traefik.prod --env-file env.web.prod"
+
+            echo "Building youth-council-landing-cms..."
+            $COMPOSE_CMD build youth-council-landing-cms
+            $COMPOSE_CMD up -d youth-council-landing-cms
+
+            echo "Cleanup..."
+            docker builder prune -f
+            docker image prune -f
+
+            echo "Done."
+            $COMPOSE_CMD ps
+          REMOTE
+

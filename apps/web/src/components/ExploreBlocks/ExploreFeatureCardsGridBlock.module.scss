@@ -1,0 +1,23 @@
+.grid {
+  display: grid;
+  gap: 24px;
+  margin: 0 0 24px;
+  width: 100%;
+  grid-template-columns: 1fr;
+}
+
+.gridCols2 {
+  @include tablet {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.gridCols3 {
+  @include tablet {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  @include laptop {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}

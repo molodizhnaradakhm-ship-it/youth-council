@@ -1,0 +1,1 @@
+export { FooterNewsletter } from './FooterNewsletter';

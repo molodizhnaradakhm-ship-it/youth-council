@@ -1,0 +1,58 @@
+.wrapper {
+  &.onLight {
+    .text {
+      color: #080809;
+    }
+
+    .link {
+      color: #080809;
+    }
+
+    .listItem {
+      &:not(:last-child) {
+        &::after {
+          color: #080809;
+        }
+      }
+    }
+  }
+
+  .list {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .text {
+    color: #afa7cc;
+    // font-style: normal;
+    // font-weight: 400;
+    // font-size: 14px;
+    // line-height: 120%;
+    // letter-spacing: -0.28px;
+    text-wrap: balance;
+    word-wrap: break-word;
+  }
+
+  .link {
+    color: var(--brand-accent);
+  }
+
+  .listItem {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    &:not(:last-child) {
+      &::after {
+        content: '/';
+        color: var(--brand-accent);
+        font-style: normal;
+        font-weight: 400;
+        font-size: 14px;
+        line-height: 120%;
+        letter-spacing: -0.28px;
+      }
+    }
+  }
+}

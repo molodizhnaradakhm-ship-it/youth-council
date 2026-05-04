@@ -1,0 +1,37 @@
+.nav {
+  margin-top: 40px;
+}
+
+.controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  align-items: center;
+  justify-content: center;
+}
+
+.pageLink {
+  padding: 10px 18px;
+  border-radius: 10px;
+  font-weight: 600;
+  text-decoration: none;
+  color: var(--Accent, #8b5cf6);
+  background: color-mix(in srgb, var(--Accent, #8b5cf6) 10%, transparent);
+
+  &:hover {
+    background: color-mix(in srgb, var(--Accent, #8b5cf6) 18%, transparent);
+  }
+}
+
+.pageLinkDisabled {
+  padding: 10px 18px;
+  border-radius: 10px;
+  font-weight: 600;
+  color: var(--ui-ink-muted);
+  cursor: not-allowed;
+}
+
+.status {
+  font-size: 14px;
+  color: var(--ui-ink-muted);
+}

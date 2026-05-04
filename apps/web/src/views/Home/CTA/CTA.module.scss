@@ -1,0 +1,138 @@
+.wrapper {
+  position: relative;
+  overflow: hidden;
+  border-radius: 30px;
+  background: var(--ui-green-700);
+  padding: 48px 0;
+  color: #fff;
+}
+
+.wrapper::before,
+.wrapper::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+/* Geometric shards (CTA.svg). */
+.wrapper::before {
+  opacity: 1;
+  background:
+    linear-gradient(155deg, transparent 0 55%, var(--ui-green-700) 56% 70%, transparent 71%),
+    linear-gradient(28deg, transparent 0 42%, var(--ui-green-700) 43% 58%, transparent 59%),
+    linear-gradient(210deg, transparent 0 58%, var(--ui-green-700) 59% 73%, transparent 74%);
+  mix-blend-mode: normal;
+}
+
+.wrapper::after {
+  opacity: 0.24;
+  background: radial-gradient(1100px 420px at 75% 40%, rgba(255, 255, 255, 0.22) 0%, rgba(255, 255, 255, 0) 70%);
+}
+
+.inner {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  gap: 28px;
+  align-items: center;
+
+  @include laptop {
+    grid-template-columns: minmax(280px, 1fr) minmax(360px, 480px);
+    gap: 40px;
+  }
+}
+
+.copy {
+  min-width: 0;
+}
+
+.title {
+  margin: 0 0 14px;
+  font-family: var(--font-arimo), system-ui, sans-serif;
+  font-weight: 700;
+  font-size: clamp(32px, 4.2vw, 56px);
+  line-height: 1.12;
+  letter-spacing: -0.02em;
+  color: #fff;
+}
+
+.description {
+  margin: 0 0 24px;
+  max-width: 52ch;
+  font-family: var(--font-arimo), system-ui, sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 1.35;
+  letter-spacing: -0.01em;
+  color: rgba(255, 255, 255, 0.88);
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.actionLink {
+  text-decoration: none;
+  line-height: 0;
+}
+
+.actionBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  height: 56px;
+  padding: 0 22px;
+  border-radius: 24px;
+  background: var(--ui-surface-0);
+  color: var(--ui-ink);
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.3);
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease,
+    background 0.2s ease;
+
+  &:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.18);
+  }
+}
+
+.actionBtnPrimary {
+  background: #fff;
+}
+
+.actionIcon {
+  width: 18px;
+  height: 18px;
+  object-fit: contain;
+}
+
+.actionLabel {
+  font-family: var(--font-arimo), system-ui, sans-serif;
+  font-weight: 600;
+  font-size: 13px;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  white-space: nowrap;
+}
+
+.visual {
+  display: none;
+
+  @include laptop {
+    display: block;
+    justify-self: end;
+  }
+}
+
+.image {
+  width: 100%;
+  height: auto;
+  max-height: 520px;
+  object-fit: contain;
+}
+

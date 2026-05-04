@@ -1,0 +1,217 @@
+.wrapper {
+  padding: 50px 0;
+}
+
+.wrapper .title {
+  margin: 0 auto 30px;
+  max-width: 20ch;
+  text-align: center;
+  color: var(--ui-ink);
+  font-family: var(--font-arimo), system-ui, sans-serif;
+  font-weight: 700;
+  font-size: clamp(32px, 4.8vw, 64px);
+  line-height: 1.12;
+  letter-spacing: -0.02em;
+}
+
+.rows {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+
+  @include laptop {
+    gap: 40px;
+  }
+
+  @include desktop {
+    gap: 56px;
+  }
+}
+
+.row {
+  margin: 0;
+}
+
+.rowGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+  align-items: center;
+
+  @include laptop {
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+  }
+
+  @include desktop {
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+  }
+}
+
+.textCol {
+  min-width: 0;
+  order: 2;
+
+  @include laptop {
+    order: 1;
+  }
+}
+
+.textColRight {
+  @include laptop {
+    order: 2;
+  }
+}
+
+.imageCol {
+  display: flex;
+  justify-content: center;
+  min-width: 0;
+  order: 1;
+
+  @include laptop {
+    order: 2;
+  }
+}
+
+.imageColLeft {
+  @include laptop {
+    order: 1;
+  }
+}
+
+.imageFrame {
+  width: 100%;
+  max-width: 520px;
+  height: 320px;
+
+  @include tablet {
+    height: 380px;
+  }
+
+  @include laptop {
+    height: 460px;
+  }
+
+  @include desktop {
+    height: 520px;
+  }
+}
+
+.imageFrameFixed {
+  display: block;
+}
+
+.copyCard {
+  padding: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+.cardNumber {
+  width: 44px;
+  height: 44px;
+  border-radius: 999px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 0 18px;
+  background: #d8f3e9;
+  color: #080809;
+
+  font-family: var(--font-sf-pro), system-ui, sans-serif;
+  font-weight: 590;
+  font-size: 22px;
+  font-style: normal;
+  line-height: 1;
+  letter-spacing: -0.025em;
+  text-align: center;
+}
+
+.cardTitle {
+  position: relative;
+  z-index: 1;
+  margin: 0 0 14px;
+  font-family: var(--font-sf-pro), system-ui, sans-serif;
+  font-weight: 510;
+  font-style: normal;
+  font-size: 44px;
+  line-height: 1;
+  letter-spacing: -0.025em;
+  color: #080809;
+}
+
+.cardDescription {
+  position: relative;
+  z-index: 1;
+  margin: 0;
+  font-family: var(--font-sf-pro), system-ui, sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 16px;
+  line-height: 1.5;
+  letter-spacing: -0.025em;
+  color: rgba(8, 8, 9, 0.65);
+}
+
+.image {
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+}
+
+.imageBlock {
+  position: relative;
+  overflow: hidden;
+  border-radius: 28px;
+  width: 100%;
+  height: 100%;
+  background: #f7f7f7;
+  box-shadow:
+    0 18px 50px rgba(0, 0, 0, 0.06),
+    0 1px 0 rgba(0, 0, 0, 0.04);
+
+  @include tablet {
+    border-radius: 30px;
+  }
+}
+
+.bgMedia {
+  position: absolute;
+  inset: 0;
+  transform: translate(
+    calc(var(--sol-bg-off-x, 0px) + var(--sol-bg-off-x-pct, 0%)),
+    calc(var(--sol-bg-off-y, 0px) + var(--sol-bg-off-y-pct, 0%))
+  );
+}
+
+.imageBg {
+  object-fit: var(--sol-bg-fit, cover);
+  object-position: var(--sol-bg-pos, center);
+  opacity: 0.35;
+}
+
+.fgMedia {
+  position: absolute;
+  inset: 0;
+  padding: 28px;
+  box-sizing: border-box;
+  transform: translate(
+    calc(var(--sol-fg-off-x, 0px) + var(--sol-fg-off-x-pct, 0%)),
+    calc(var(--sol-fg-off-y, 0px) + var(--sol-fg-off-y-pct, 0%))
+  );
+}
+
+.imageFg {
+  object-fit: var(--sol-fg-fit, contain);
+  object-position: var(--sol-fg-pos, center);
+  z-index: 1;
+}
+
+.imageFrameFixed .imageFg {
+  height: 100%;
+}

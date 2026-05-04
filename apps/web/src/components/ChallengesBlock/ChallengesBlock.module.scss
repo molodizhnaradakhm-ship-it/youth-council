@@ -1,0 +1,164 @@
+.wrapper {
+  padding: 24px 0 56px;
+}
+
+.header {
+  margin-bottom: 18px;
+  max-width: 920px;
+}
+
+.title {
+  margin: 0;
+  font-family: var(--font-arimo), system-ui, sans-serif;
+  font-weight: 700;
+  font-size: 34px;
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+  color: #080809;
+
+  @include laptop {
+    font-size: 48px;
+  }
+}
+
+.description {
+  margin: 14px 0 0;
+  max-width: 640px;
+  font-family: var(--font-arimo), system-ui, sans-serif;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 1.35;
+  letter-spacing: -0.01em;
+  color: rgba(8, 8, 9, 0.65);
+
+  @include laptop {
+    font-size: 16px;
+  }
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 14px;
+
+  @include laptop {
+    grid-template-columns: 1fr 1fr;
+    gap: 18px;
+  }
+}
+
+.card {
+  position: relative;
+  overflow: hidden;
+  border-radius: 28px;
+  padding: 22px 20px 18px;
+  background: #f6f8f7;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  min-height: 260px;
+
+  @include laptop {
+    border-radius: 26px;
+    padding: 22px 20px;
+    min-height: 180px;
+  }
+}
+
+.card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.06) 0%, rgba(255, 255, 255, 0.22) 100%);
+  opacity: 0;
+}
+
+.card[style*='background-image']::after {
+  opacity: 1;
+}
+
+.cardCopy {
+  position: relative;
+  z-index: 1;
+  max-width: 34ch;
+
+  @include laptop {
+    max-width: 30ch;
+  }
+}
+
+.cardTitle {
+  margin: 0;
+  font-family: var(--font-arimo), system-ui, sans-serif;
+  font-weight: 700;
+  font-size: 24px;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  color: #080809;
+}
+
+.cardDescription {
+  margin: 12px 0 0;
+  font-family: var(--font-arimo), system-ui, sans-serif;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 1.4;
+  letter-spacing: -0.01em;
+  color: rgba(8, 8, 9, 0.65);
+}
+
+.cardImageWrap {
+  position: absolute;
+  left: 12px;
+  right: 12px;
+  bottom: 0;
+  top: auto;
+  height: 170px;
+  width: auto;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  z-index: 0;
+  pointer-events: none;
+
+  @include laptop {
+    top: 12px;
+    bottom: 12px;
+    left: auto;
+    right: auto;
+    height: auto;
+    width: 52%;
+  }
+}
+
+.cardImgRight .cardImageWrap {
+  justify-content: flex-end;
+
+  @include laptop {
+    right: 8px;
+    justify-content: center;
+  }
+}
+
+.cardImgLeft .cardImageWrap {
+  justify-content: flex-start;
+
+  @include laptop {
+    left: 8px;
+    justify-content: center;
+  }
+}
+
+.cardImage {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: var(--img-pos-x, 50%) var(--img-pos-y, 50%);
+}
+
+/* Dark/colored cards can still be done via Background color in CMS. */
+.card {
+  color: inherit;
+}
+

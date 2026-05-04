@@ -1,0 +1,44 @@
+.wrapper {
+  width: 100%;
+
+  .fieldsWrapper {
+    display: grid;
+    gap: 24px;
+  }
+
+  .submitBtnWrapper {
+    display: flex;
+    justify-content: flex-start;
+    margin-top: 32px;
+  }
+
+  @include tablet {
+  }
+
+  @include laptop {
+    .fieldsWrapper {
+      grid-template-columns: 1fr 1fr;
+      gap: 32px;
+
+      & > div {
+        &:nth-last-child(2),
+        &:last-child {
+          grid-column: span 2;
+        }
+      }
+    }
+
+    .submitBtnWrapper {
+      justify-content: flex-end;
+      margin-top: 48px;
+    }
+
+    .button {
+      border-radius: 16px;
+      height: 56px;
+    }
+  }
+
+  @include desktop {
+  }
+}

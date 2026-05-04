@@ -1,0 +1,134 @@
+.listRoot {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.listNested {
+  margin: 4px 0 0;
+  padding: 0 0 0 24px;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  border-left: none;
+}
+
+.rowParent,
+.rowParentActive,
+.rowLeaf,
+.rowLeafActive {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 36px;
+  padding: 6px 10px;
+  border-radius: 8px;
+}
+
+.rowParent {
+  background: transparent;
+}
+
+.rowParentActive {
+  background: transparent;
+}
+
+.rowLeaf {
+  background: transparent;
+}
+
+.rowLeafActive {
+  .rowLink {
+    font-weight: 600;
+    color: #080809;
+  }
+}
+
+.rowLink {
+  flex: 1;
+  min-width: 0;
+  padding: 0;
+  border-radius: 0;
+  font-size: 15px;
+  line-height: 1.25;
+  text-decoration: none;
+  color: #5f5f64;
+  font-weight: 500;
+
+  &:hover {
+    color: #080809;
+  }
+}
+
+.rowLinkButton {
+  flex: 1;
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border: none;
+  background: none;
+  cursor: pointer;
+  font: inherit;
+  font-size: 15px;
+  font-weight: 500;
+  text-align: left;
+  color: #5f5f64;
+
+  &:hover {
+    color: #080809;
+  }
+}
+
+.rowParentActive .rowLinkButton {
+  font-weight: 600;
+  color: #080809;
+}
+
+.openParent {
+  display: none;
+}
+
+.chevronBtn {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  border: none;
+  border-radius: 6px;
+  background: transparent;
+  cursor: pointer;
+  color: #5f5f64;
+
+  &:hover {
+    background: rgba(0, 0, 0, 0.05);
+    color: #080809;
+  }
+}
+
+.chevronClosed,
+.chevronOpen {
+  width: 8px;
+  height: 8px;
+  border-right: 2px solid currentColor;
+  border-bottom: 2px solid currentColor;
+  display: inline-block;
+  transform-origin: 50% 50%;
+  transition: transform 0.2s ease;
+}
+
+.chevronClosed {
+  transform: rotate(-135deg);
+  margin-top: 0;
+}
+
+.chevronOpen {
+  transform: rotate(45deg);
+  margin-top: 2px;
+}

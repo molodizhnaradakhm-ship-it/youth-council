@@ -1,0 +1,10 @@
+---
+description: Prefer English in repo artifacts (chat can be any language)
+alwaysApply: true
+---
+
+# Language policy
+
+- **Chat language**: can be any language the user prefers.
+- **Repo artifacts** (code, UI strings, documentation, file names, commit messages, PR text): prefer English unless the user explicitly requests otherwise for that specific artifact.
+

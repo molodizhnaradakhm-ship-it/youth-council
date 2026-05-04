@@ -1,0 +1,134 @@
+.wrapper {
+  position: fixed;
+  right: 15px;
+  bottom: 10px;
+  left: 15px;
+  z-index: 10;
+  border-radius: 10px;
+  background: #fff;
+  color: #000;
+  padding: 20px;
+  box-sizing: border-box;
+  width: auto;
+  max-width: calc(100vw - 30px);
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 1),
+    0 0 28px 12px rgba(255, 255, 255, 0.9),
+    0 8px 32px rgba(0, 0, 0, 0.08);
+
+  @include tablet {
+    bottom: 20px;
+    left: 30px;
+    right: 30px;
+    max-width: calc(100vw - 60px);
+  }
+  @include laptop {
+    bottom: 30px;
+    padding: 30px;
+    max-width: 520px;
+  }
+}
+
+.description {
+  padding-bottom: 20px;
+  color: #000;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 140%;
+  a {
+    color: inherit;
+    text-decoration: underline;
+  }
+}
+
+.btn-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: stretch;
+
+  button {
+    flex: 1 1 140px;
+    min-height: 44px;
+    padding: 0 16px;
+    width: auto;
+  }
+
+  span {
+    font-size: 16px;
+    letter-spacing: -0.02em;
+  }
+
+  @include tablet {
+    gap: 14px;
+
+    span {
+      font-size: 17px;
+    }
+  }
+}
+
+/* Primary: brand green (matches UI palette) */
+.btnAccept {
+  box-shadow: 0 1px 2px rgba(19, 5, 32, 0.06);
+
+  background: var(--ui-green-700) !important;
+  border-color: var(--ui-green-700) !important;
+
+  :global(span) {
+    color: #fff !important;
+  }
+
+  @include laptop {
+    transition:
+      background-color 0.2s ease,
+      border-color 0.2s ease,
+      transform 0.2s ease;
+
+    &:hover {
+      background: var(--ui-green-700) !important;
+      border-color: var(--ui-green-700) !important;
+      transform: translateY(-1px);
+    }
+
+    &:focus-visible {
+      outline: 2px solid rgba(14, 51, 71, 0.4);
+      outline-offset: 2px;
+    }
+  }
+}
+
+/*
+  On light surfaces, avoid using color="text" for large copy if you need strict black; default --Text is body gray.
+  рассчитан на тёмный фон. Явно тёмный текст и обводка.
+*/
+.btnDecline {
+  border-color: var(--ui-green-700) !important;
+  background: #fff !important;
+
+  :global(span) {
+    color: var(--ui-green-700) !important;
+  }
+
+  @include laptop {
+    transition:
+      background-color 0.2s ease,
+      border-color 0.2s ease,
+      color 0.2s ease;
+
+    &:hover {
+      border-color: var(--ui-green-600) !important;
+      background: #f5f3ff !important;
+
+      :global(span) {
+        color: var(--ui-green-700) !important;
+      }
+    }
+
+    &:focus-visible {
+      outline: 2px solid var(--brand-accent);
+      outline-offset: 2px;
+    }
+  }
+}

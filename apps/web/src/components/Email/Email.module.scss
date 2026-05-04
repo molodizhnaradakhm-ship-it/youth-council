@@ -1,0 +1,66 @@
+.wrapper {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  svg {
+    display: block;
+    width: 14px;
+    height: 14px;
+  }
+
+  .icon {
+    display: flex;
+    flex-shrink: 0;
+    align-items: center;
+    color: var(--ui-ink-muted, rgba(255, 255, 255, 0.45));
+  }
+
+  .copyAction {
+    flex-shrink: 0;
+    margin-left: 2px;
+    padding: 4px 10px;
+    border: 1px solid var(--ui-border-muted, rgba(255, 255, 255, 0.22));
+    border-radius: 8px;
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 1.2;
+    color: var(--ui-ink-muted, rgba(255, 255, 255, 0.55));
+    transition: border-color 0.2s, color 0.2s, background 0.2s;
+  }
+
+  &.wrapperOnLight {
+    .icon {
+      color: var(--ui-ink-muted);
+    }
+
+    .copyAction {
+      border-color: var(--ui-border-muted, rgba(15, 23, 42, 0.18));
+      color: var(--ui-ink-muted);
+    }
+  }
+
+  @include laptop {
+    &:hover .copyAction {
+      border-color: var(--Accent, #8b5cf6);
+      color: var(--Accent, #8b5cf6);
+      background: color-mix(in srgb, var(--Accent, #8b5cf6) 8%, transparent);
+    }
+  }
+  @include tablet {
+  }
+
+  @include laptop {
+  }
+
+  @include desktop {
+  }
+}
+
+.email-text {
+  transition: 0.3s;
+  @include laptop {
+    &:hover {
+      color: var(--Accent);
+    }
+  }
+}

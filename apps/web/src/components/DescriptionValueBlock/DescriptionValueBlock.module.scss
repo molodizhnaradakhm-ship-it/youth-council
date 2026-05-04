@@ -1,0 +1,58 @@
+.wrapper {
+  display: flex;
+  position: relative;
+  flex-direction: column;
+  gap: 16px;
+  border-radius: 16px;
+  background: var(--Glass-Box, rgba(24, 14, 47, 0.8));
+  padding: 32px 24px;
+  overflow: hidden;
+
+  &::before {
+    position: absolute;
+    opacity: 0.2;
+    z-index: 1;
+    filter: blur(32px);
+    border-radius: 50%;
+    background: var(--Accent);
+    width: 150px;
+    height: 150px;
+    content: '';
+  }
+
+  &.even {
+    &::before {
+      bottom: -77px;
+      left: -75px;
+    }
+  }
+
+  &.odd {
+    &::before {
+      right: -75px;
+      bottom: -114px;
+    }
+  }
+
+  .image {
+    display: block;
+    max-width: 120px;
+    height: auto;
+  }
+
+  @include tablet {
+  }
+
+  @include laptop {
+    gap: 32px;
+    padding: 32px;
+
+    &::before {
+      width: 193px;
+      height: 193px;
+    }
+  }
+
+  @include desktop {
+  }
+}

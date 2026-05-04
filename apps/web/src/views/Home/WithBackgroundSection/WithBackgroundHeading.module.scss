@@ -1,0 +1,35 @@
+.wrap {
+  padding: 48px 0 32px;
+
+  @include laptop {
+    padding: 72px 0 48px;
+  }
+}
+
+.inner {
+  text-align: center;
+}
+
+.title {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  margin: 0;
+  max-width: 920px;
+  margin-inline: auto;
+  font-family: var(--font-arimo, Arimo), ui-sans-serif, system-ui, sans-serif;
+  font-weight: 600;
+  font-size: clamp(28px, 5vw, 56px);
+  line-height: 1.12;
+  letter-spacing: -0.02em;
+  background: linear-gradient(90deg, #b8b8d1 0%, #3a3a3a 55%, #1a1a1a 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.line {
+  display: block;
+}
+

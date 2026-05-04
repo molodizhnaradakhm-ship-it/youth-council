@@ -1,0 +1,65 @@
+.card {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+}
+
+.inner {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border-radius: 14px;
+  background: var(--ui-surface-0, #fff);
+  box-shadow:
+    0 1px 2px rgb(15 23 42 / 6%),
+    0 8px 24px rgb(15 23 42 / 8%);
+  transition:
+    box-shadow 0.25s ease,
+    transform 0.25s ease;
+
+  @include laptop {
+    &:hover {
+      box-shadow:
+        0 2px 6px rgb(15 23 42 / 8%),
+        0 16px 40px rgb(15 23 42 / 12%);
+      transform: translateY(-2px);
+    }
+  }
+}
+
+.imageWrap {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  width: 100%;
+  overflow: hidden;
+  background: var(--ui-surface-1, #f4f4f5);
+}
+
+.image {
+  object-fit: cover;
+}
+
+.body {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 16px 18px 18px;
+  min-width: 0;
+}
+
+.title {
+  color: var(--ui-ink);
+}
+
+.excerpt {
+  display: -webkit-box;
+  margin: 0;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  overflow: hidden;
+  color: var(--ui-ink-muted);
+}
+
+.cta {
+  margin-top: 4px;
+}

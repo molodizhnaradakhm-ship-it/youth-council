@@ -1,0 +1,85 @@
+.wrapper {
+  .wrapperInner {
+    position: relative;
+    border-radius: 20px;
+    background: var(--Glass-Box, rgba(24, 14, 47, 0.8));
+    padding: 48px 24px 24px;
+    overflow: hidden;
+    text-align: center;
+
+    &::before {
+      position: absolute;
+      bottom: 53px;
+      left: 50%;
+      transform: translateX(-50%);
+      opacity: 0.15;
+      filter: blur(32px);
+      border-radius: 343px;
+      background: var(--Accent);
+      width: 343px;
+      height: 343px;
+      content: '';
+    }
+  }
+
+  .content {
+    display: flex;
+    position: relative;
+    flex-direction: column;
+    gap: 32px;
+  }
+
+  .logo {
+    display: block;
+    margin: 0 auto;
+    width: 32px;
+    height: 32px;
+  }
+
+  .buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  @include tablet {
+  }
+
+  @include laptop {
+    .wrapperInner {
+      border-radius: 40px;
+      padding: 64px 0;
+
+      &::before {
+        top: 21px;
+        bottom: auto;
+        width: 575px;
+        height: 575px;
+      }
+    }
+
+    .content {
+      gap: 40px;
+      margin: 0 auto;
+      max-width: 575px;
+    }
+
+    .buttons {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+    }
+  }
+
+  @include desktop {
+    .wrapperInner {
+      padding: 96px 0;
+    }
+
+    .content {
+      gap: 56px;
+      margin: 0 auto;
+      max-width: 650px;
+    }
+  }
+}

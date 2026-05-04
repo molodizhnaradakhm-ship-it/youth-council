@@ -1,0 +1,21 @@
+.wrapper.wrapper {
+  .textarea {
+    display: block;
+    padding: 16px;
+    height: auto;
+    min-height: 100px;
+    resize: horizontal;
+
+    // @include tablet {
+    //   padding: 18px 20px 0 0;
+    // }
+
+    @include laptop {
+      padding: 21px 24px;
+    }
+
+    // @include desktop {
+    //   padding: 18px 20px 0 0;
+    // }
+  }
+}

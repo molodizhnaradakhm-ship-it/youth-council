@@ -1,0 +1,86 @@
+/* Home blog strip — layout aligned with design (News.svg artboard 1143×1328): 2×2 cards, 24px gutters, bottom CTA */
+
+.wrapper {
+  background: #fff;
+  padding-top: 56px;
+  padding-bottom: 56px;
+
+  .heading {
+    margin: 0 auto 40px;
+    max-width: 920px;
+    text-align: center;
+  }
+
+  .title {
+    margin: 0;
+    color: #080809;
+    letter-spacing: -0.02em;
+  }
+
+  .list {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 24px;
+    margin: 0 auto;
+    padding: 0;
+    max-width: 1143px;
+    list-style: none;
+  }
+
+  .cardCell {
+    min-width: 0;
+  }
+
+  .ctaWrap {
+    display: flex;
+    justify-content: center;
+    margin-top: 40px;
+  }
+
+  .ctaLink {
+    display: inline-flex;
+  }
+
+  .sectionCta {
+    min-width: 189px;
+    height: 50px !important;
+    min-height: 50px;
+    padding: 0 28px !important;
+    border: 1px solid #080809 !important;
+    border-radius: 16px !important;
+    background: #080809 !important;
+
+    @include laptop {
+      height: 50px !important;
+      padding: 0 32px !important;
+    }
+
+    &:hover {
+      border-color: #1c1c1f !important;
+      background: #1c1c1f !important;
+    }
+  }
+
+  @include tablet {
+    .heading {
+      margin-bottom: 48px;
+    }
+
+    .list {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @include laptop {
+    padding-top: 88px;
+    padding-bottom: 96px;
+
+    .heading {
+      margin-bottom: 56px;
+    }
+
+    .ctaWrap {
+      margin-top: 48px;
+    }
+  }
+}

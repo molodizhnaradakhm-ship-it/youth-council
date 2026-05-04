@@ -1,0 +1,266 @@
+.wrapper {
+  position: relative;
+  padding: 0;
+  background: var(--ui-surface-0);
+  color: #0a0a0a;
+  overflow: hidden;
+
+  @include laptop {
+    padding: 0;
+  }
+}
+
+.top {
+  padding: 56px 0 40px;
+  width: 100%;
+
+  @include tablet {
+    gap: 24px 48px;
+  }
+
+  @include laptop {
+    padding: 72px 0 48px;
+  }
+}
+
+.topInner {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  flex-wrap: nowrap;
+  width: 100%;
+}
+
+.brand {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  min-width: 0;
+  align-items: flex-start;
+  flex: 0 1 520px;
+
+  @include tablet {
+    align-items: flex-start;
+  }
+}
+
+.footerDescription {
+  margin: 0;
+  max-width: 360px;
+  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'SF Pro Display', system-ui, sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 16px;
+  line-height: 1;
+  letter-spacing: -0.025em;
+  color: var(--ui-ink-muted);
+  text-align: left;
+}
+
+.logoLink {
+  display: inline-flex;
+  align-items: center;
+  max-width: 220px;
+  height: 44px;
+}
+
+.logo {
+  width: auto;
+  height: 44px;
+  max-width: 100%;
+  object-fit: contain;
+}
+
+.rightCol {
+  width: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 18px;
+  flex: 0 1 auto;
+
+  @include tablet {
+    align-items: flex-end;
+    gap: 20px;
+  }
+}
+
+.nav {
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+  min-width: 0;
+
+  @include tablet {
+    justify-content: flex-end;
+  }
+}
+
+.navList {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  gap: 12px 22px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+
+  @include laptop {
+    flex-wrap: nowrap;
+    gap: 32px;
+    justify-content: flex-end;
+  }
+}
+
+.navLink {
+  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'SF Pro Display', system-ui, sans-serif;
+  font-weight: 590;
+  font-style: normal;
+  font-size: 16px;
+  line-height: 1;
+  letter-spacing: -0.025em;
+  color: var(--ui-ink);
+  text-decoration: none;
+  transition: color 0.2s ease;
+  text-align: center;
+
+  &:hover {
+    color: #5c5c5c;
+  }
+}
+
+.socials {
+  display: flex;
+  justify-content: flex-start;
+  width: 100%;
+
+  @include laptop {
+    justify-content: flex-end;
+    width: auto;
+  }
+}
+
+.bottom {
+  background: var(--ui-green-700);
+  border-radius: 0;
+  padding: 16px 0;
+  margin-top: 0;
+  min-height: 65px;
+  display: flex;
+  align-items: center;
+}
+
+.bottomRow {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr;
+  justify-items: start;
+  gap: 10px;
+
+  @include tablet {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    gap: 12px 20px;
+  }
+}
+
+@mixin footerLegalText {
+  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'SF Pro Display', system-ui, sans-serif;
+  font-style: normal;
+  letter-spacing: -0.025em;
+  line-height: 1;
+}
+
+.copyright {
+  margin: 0;
+  color: rgba(255, 255, 255, 0.85);
+  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'SF Pro Display', system-ui, sans-serif;
+  font-weight: 510;
+  font-style: normal;
+  font-size: 14px;
+  line-height: 1;
+  letter-spacing: -0.025em;
+  @include tablet {
+    justify-self: start;
+  }
+}
+
+.legal {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0;
+  color: rgba(255, 255, 255, 0.85);
+  @include footerLegalText;
+  @include tablet {
+    flex-wrap: nowrap;
+    justify-self: end;
+  }
+}
+
+.legalSep {
+  margin: 0 6px;
+  color: rgba(255, 255, 255, 0.55);
+  user-select: none;
+  font-size: 14px;
+  line-height: 1;
+}
+
+.legalLink {
+  color: rgba(255, 255, 255, 0.92);
+  text-decoration: none;
+  white-space: nowrap;
+  font-weight: 510;
+  font-size: 14px;
+  text-align: center;
+  @include footerLegalText;
+
+  &:hover {
+    color: #ffffff;
+  }
+}
+
+.developedBy {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: nowrap;
+  justify-content: center;
+  margin-top: 0;
+
+  @include tablet {
+    justify-self: center;
+  }
+}
+
+.developedIcon {
+  flex-shrink: 0;
+  width: 18px;
+  height: 18px;
+  object-fit: contain;
+  filter: brightness(0) invert(1);
+}
+
+.developedText {
+  margin: 0;
+  color: rgba(255, 255, 255, 0.85);
+  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'SF Pro Display', system-ui, sans-serif;
+  font-weight: 510;
+  font-style: normal;
+  font-size: 14px;
+  line-height: 1;
+  letter-spacing: -0.025em;
+}
+
+.developedBrand {
+  font-weight: 510;
+  text-decoration: none;
+  font-size: 14px;
+  line-height: 1;
+  letter-spacing: -0.025em;
+}

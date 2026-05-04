@@ -1,0 +1,120 @@
+.wrapper {
+  display: flex;
+  position: relative;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+  padding-bottom: 5px;
+
+  .groupItem {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    width: max-content;
+  }
+
+  .item {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    cursor: pointer;
+  }
+
+  .checkbox {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: all 0.3s ease;
+    border: 1px solid var(--black);
+    border-radius: 3px;
+    background: var(--white);
+    width: 15px;
+    height: 15px;
+
+    &[data-state='checked'] {
+      background: var(--Button---Dark);
+    }
+  }
+
+  .indicator {
+    padding: 2px;
+    color: white;
+  }
+
+  .disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+
+  .icon {
+    display: block;
+    max-width: 100%;
+  }
+
+  .extra {
+    margin-top: 15px;
+    padding-left: 40px;
+    width: 100%;
+  }
+
+  .options {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px 20px;
+    padding: 0 8px;
+  }
+
+  .labelGroup {
+    padding-left: 8px;
+  }
+
+  .errorMessage {
+    position: absolute;
+    bottom: -18px;
+    margin: 0;
+    padding: 0;
+    padding-left: 8px;
+    color: var(--color-error);
+    font-style: normal;
+  }
+
+  .label {
+    padding-top: 2px;
+  }
+
+  @include laptop {
+    .options {
+      gap: 20px 30px;
+    }
+
+    .label {
+      transition: color 0.3s;
+    }
+
+    .item {
+      &:hover {
+        .checkbox {
+          background: var(--Button---Dark);
+        }
+        .label {
+          color: var(--Accent);
+        }
+      }
+    }
+
+    .errorMessage {
+      bottom: -20px;
+    }
+  }
+
+  @include desktop {
+    .checkbox {
+      width: 20px;
+      height: 20px;
+    }
+    .extra {
+      margin-top: 18px;
+      padding-left: 45px;
+    }
+  }
+}

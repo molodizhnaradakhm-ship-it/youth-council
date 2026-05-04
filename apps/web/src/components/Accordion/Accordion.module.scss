@@ -1,0 +1,54 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  padding: 0;
+
+  .AccordionTrigger {
+    @include reset-btn;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    justify-content: space-between;
+    padding-left: 32px;
+    padding-right: 32px;
+  }
+
+  .AccordionContent {
+    overflow: hidden;
+  }
+
+  @include tablet {
+  }
+
+  @include laptop {
+  }
+
+  @include desktop {
+  }
+}
+
+.AccordionContent[data-state='open'] {
+  animation: slideDown 300ms linear;
+}
+.AccordionContent[data-state='closed'] {
+  animation: slideUp 300ms linear;
+}
+
+@keyframes slideDown {
+  from {
+    height: 0;
+  }
+  to {
+    height: var(--radix-accordion-content-height);
+  }
+}
+
+@keyframes slideUp {
+  from {
+    height: var(--radix-accordion-content-height);
+  }
+  to {
+    height: 0;
+  }
+}

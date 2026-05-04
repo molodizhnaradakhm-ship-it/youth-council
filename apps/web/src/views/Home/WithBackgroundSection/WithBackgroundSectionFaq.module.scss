@@ -1,0 +1,183 @@
+/* Dark canvas: light text; card contrasts like subscriptions FAQ but inverted */
+.section {
+  padding: 48px 0 72px;
+  color: #f5f5f7;
+
+  @include laptop {
+    padding: 64px 0 96px;
+  }
+}
+
+.title {
+  margin: 0 auto 28px;
+  max-width: 720px;
+  text-align: center;
+  letter-spacing: -0.02em;
+
+  @include laptop {
+    margin-bottom: 40px;
+  }
+}
+
+.cardWrap {
+  width: 100%;
+}
+
+.faqListCard {
+  width: 100%;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 24px;
+  background: rgba(12, 12, 16, 0.85);
+  padding: 32px 20px 36px;
+  color: #f5f5f7;
+
+  @include laptop {
+    padding: 44px 48px 52px;
+  }
+}
+
+.accordion {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  max-width: 1120px;
+  margin: 0 auto;
+  background: transparent;
+}
+
+.faqItem {
+  overflow: hidden;
+  width: 100%;
+  border: none;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+
+  &:last-of-type {
+    border-bottom: none;
+  }
+}
+
+.trigger {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 24px 0;
+  text-align: left;
+  transition: background 0.15s ease;
+  color: inherit;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.03);
+  }
+
+  &[data-state='open'] {
+    background: transparent;
+  }
+
+  &[data-state='open'] .icon::after {
+    transform: translate(-50%, -50%) scaleY(0);
+  }
+
+  @include laptop {
+    padding: 28px 0;
+  }
+}
+
+.triggerInner {
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  gap: 16px;
+  width: 100%;
+}
+
+.icon {
+  position: relative;
+  flex-shrink: 0;
+  width: 18px;
+  height: 18px;
+  margin-top: 3px;
+  opacity: 0.85;
+
+  &::before,
+  &::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    background: var(--faq-icon-color, #f5f5f7);
+    transform: translate(-50%, -50%);
+    border-radius: 2px;
+  }
+
+  &::before {
+    width: 12px;
+    height: 2px;
+  }
+
+  &::after {
+    width: 2px;
+    height: 12px;
+    transition: transform 0.18s ease;
+  }
+}
+
+.question {
+  flex: 1;
+  font-family: var(--font-arimo, Arimo), ui-sans-serif, system-ui, sans-serif;
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 1.25;
+  letter-spacing: -0.02em;
+
+  @include laptop {
+    font-size: 20px;
+  }
+}
+
+.answer {
+  margin: 0;
+  padding: 4px 0 28px 40px;
+  font-family: var(--font-arimo, Arimo), ui-sans-serif, system-ui, sans-serif;
+  font-weight: 400;
+  font-size: 15px;
+  line-height: 1.5;
+  letter-spacing: -0.02em;
+  color: rgba(245, 245, 247, 0.65);
+
+  @include laptop {
+    padding: 6px 0 32px 44px;
+    font-size: 16px;
+  }
+}
+
+.still {
+  margin: 40px auto 0;
+  max-width: 560px;
+  padding: 0 12px;
+  text-align: center;
+  color: rgba(245, 245, 247, 0.75);
+
+  @include laptop {
+    margin-top: 48px;
+  }
+}
+
+.stillTitle {
+  margin: 0 0 10px;
+  color: #f5f5f7;
+}
+
+.stillBody {
+  margin: 0;
+  line-height: 1.6;
+
+  p {
+    margin: 0;
+  }
+}
+

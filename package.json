@@ -1,0 +1,54 @@
+{
+  "name": "monorepo",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "private": true,
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "turbo dev",
+    "new": "pnpm --filter @monorepo/web new",
+    "dev:cms": "turbo dev --filter=@monorepo/cms",
+    "dev:web": "turbo dev --filter=@monorepo/web",
+    "build:web": "turbo build --filter=@monorepo/web",
+    "build:cms": "turbo build --filter=@monorepo/cms",
+    "format": "prettier . --check",
+    "format:fix": "prettier . --write",
+    "lint": "eslint . --ext .ts,.tsx",
+    "lint:fix": "eslint . --ext .ts,.tsx --fix",
+    "typecheck": "pnpm -r typecheck",
+    "seed:backup": "node .deploy/seed/seed.mjs backup",
+    "seed:restore": "node .deploy/seed/seed.mjs seed --yes"
+  },
+  "devDependencies": {
+    "@next/eslint-plugin-next": "^15.5.2",
+    "@types/eslint": "^9.6.1",
+    "@typescript-eslint/eslint-plugin": "^8.42.0",
+    "@typescript-eslint/parser": "^8.42.0",
+    "eslint": "^9.34.0",
+    "eslint-plugin-import": "^2.32.0",
+    "eslint-plugin-perfectionist": "^4.15.0",
+    "eslint-plugin-simple-import-sort": "^12.1.1",
+    "prettier": "^3.3.3",
+    "prettier-plugin-css-order": "^2.1.2",
+    "prettier-plugin-tailwindcss": "^0.6.9",
+    "sort-package-json": "^2.12.0",
+    "turbo": "^2.3.3",
+    "typescript": "5.7.2"
+  },
+  "packageManager": "pnpm@10.11.0",
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "sharp"
+    ],
+    "overrides": {
+      "sharp": "0.33.5"
+    }
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@eslint/eslintrc": "^3.3.1"
+  }
+}

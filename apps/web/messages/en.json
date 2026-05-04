@@ -1,0 +1,192 @@
+{
+  "home": {
+    "test": "Static test translations EN"
+  },
+  "not_found": {
+    "description": "Page not found",
+    "cta": "Return to homepage"
+  },
+  "common": {
+    "all": "All",
+    "copied": "Copied",
+    "go_back": "Back",
+    "go_back_button": "Go Back",
+    "shared_text": "Share the news:",
+    "news_not_found": "News posts not found",
+    "blog_not_found": "Blog posts not found",
+    "pade_not_found": "Page not found",
+    "to_main_page": "To the main page",
+    "authors_publications": "Author's Publications",
+    "author": "Author:",
+    "explore_more": "Explore more",
+    "email_address": "Email Address",
+    "social_media": "Social Media",
+    "office_address": "Office Address",
+    "min_read": "min. read",
+    "read_more": "Read more",
+    "show_filters": "Show filters",
+    "hide_filters": "Hide filters",
+    "filter_author": "Author",
+    "filter_theme": "Theme",
+    "filter_year": "Year",
+    "filters_panel_label": "Filters",
+    "copy_email": "Copy",
+    "copy_phone": "Copy",
+    "field_number": "Phone",
+    "latest_posts": "Latest posts"
+  },
+  "form": {
+    "incorrect_phone": "Incorrect phone",
+    "incorrect_email": "Incorrect email",
+    "required_filed": "The field is required",
+    "name_min_length": "Use at least {min} characters",
+    "name_max_length": "Use at most {max} characters",
+    "description_min_length": "Use at least {min} characters"
+  },
+  "details": {
+    "choose_item": "Select an item on the left to view details.",
+    "explore_sections_nav": "Explore sections",
+    "page_title": "Explore",
+    "tab_billing": "Billing & Refunds",
+    "tab_features": "Features",
+    "tab_in_development": "In development",
+    "tab_updates": "Updates",
+    "external_links_empty": "No links to display.",
+    "explore_tabs_list_label": "Page sections",
+    "explore_tab_empty": "No blocks in this tab yet."
+  },
+  "language": {
+    "sheet_title": "Select language",
+    "close": "Close"
+  },
+  "footer": {
+    "copyright": "© 2026 Youth Council",
+    "email_invalid": "Email must be a valid email address",
+    "newsletter_title_fallback": "Subscribe to our updates",
+    "subscription_success_title": "Subscription successful",
+    "subscription_api_unavailable": "Could not sync subscription with the app"
+  },
+  "subscriptions": {
+    "title": "Flexible pricing plans",
+    "intro": "Choose a plan that fits your needs, with flexible options and transparent pricing.",
+    "coach": "Coach",
+    "sportsman": "Sportsman",
+    "monthly": "Monthly",
+    "yearly": "Yearly",
+    "save_yearly": "Save 20% on yearly",
+    "price_suffix_month": " /per month",
+    "aria_role_tabs": "Audience",
+    "aria_billing_tabs": "Billing period",
+    "whats_included": "What's included",
+    "cta": "Get started",
+    "faq_title": "FAQs",
+    "faq_still_title": "Still have questions?",
+    "faq_still_body": "Can't find the answer you're looking for? Please chat to our team at gogym@example.com",
+    "faq_1_q": "What is GoGym?",
+    "faq_1_a": "GoGym is your all-in-one platform for sports: find coaches, book sessions, and track progress in one place.",
+    "faq_2_q": "How do I change or cancel my subscription?",
+    "faq_2_a": "You can manage your subscription in the app under account settings. Changes apply to the next billing period unless stated otherwise.",
+    "faq_3_q": "How does yearly billing work?",
+    "faq_3_a": "Yearly billing applies a 20% discount compared to paying monthly. The price shown is the equivalent monthly rate when billed annually.",
+    "faq_4_q": "What payment methods do you accept?",
+    "faq_4_a": "We support major cards and local payment options available in your region. Exact methods are shown at checkout in the app.",
+    "faq_5_q": "Coach vs Sportsman — what's the difference?",
+    "faq_5_a": "Coach plans are for professionals listing and managing clients. Sportsman plans are for athletes booking sessions and using the app as a client.",
+    "faq_6_q": "How do I contact support?",
+    "faq_6_a": "Email us at gogym@example.com or use in-app chat. We usually respond within one business day."
+  },
+  "blog": {
+    "subtitle": "Releases, insights, and announcements",
+    "latest_stories": "Our latest stories"
+  },
+  "contacts": {
+    "our_links_heading": "Our links",
+    "page_title": "Contact Us",
+    "page_subtitle": "Follow us for the latest updates, tips, and exclusive content!",
+    "card_heading": "Got Questions or Feedback?",
+    "card_description": "We'd love to hear from you! Drop us a message, and we'll get back to you soon",
+    "field_name": "Name",
+    "field_surname": "Surname",
+    "field_number": "Number",
+    "field_email": "Email",
+    "field_message": "Message",
+    "message_placeholder": "Your message here...",
+    "terms_checkbox": "I accept the terms of the <terms>User Agreement</terms>.",
+    "terms_href": "/privacy-policy",
+    "send_message": "Send Message",
+    "sending": "Sending...",
+    "feedback_success_title": "Thank you",
+    "feedback_success_body": "Your message has been sent. We'll get back to you soon.",
+    "feedback_api_unavailable": "Could not sync with the app",
+    "validation_email": "Please enter a valid email address.",
+    "validation_email_required": "Email is required.",
+    "validation_message_min": "Please enter at least 10 characters.",
+    "validation_message_max": "Message must be at most 2000 characters.",
+    "validation_message_required": "Message is required.",
+    "validation_terms": "You must accept the User Agreement.",
+    "form_heading": "Got questions or feedback?",
+    "form_subheading": "We'd love to hear from you. Send us a message and we'll get back to you soon.",
+    "form_not_configured": "The form is not linked correctly. Please check the Contacts page in the admin.",
+    "payment_heading": "Payment information",
+    "payment_column_local": "Local",
+    "payment_column_international": "International"
+  },
+  "under_development": {
+    "title": "This section is under development.",
+    "description": "We're currently working on this section. It will be available soon with all the necessary information. Thank you for your patience.",
+    "cta": "Return to homepage"
+  },
+  "legal": {
+    "last_updated_prefix": "Last updated:",
+    "public_offer_coaches": {
+      "meta_title": "Public offer for coaches — GoGym",
+      "meta_description": "Public offer (agreement) for trainers using the GoGym marketplace app. Editorial version as of March 20, 2026; the text may be revised.",
+      "title": "Public offer for coaches",
+      "subtitle": "Terms for trainers using the GoGym mobile app marketplace.",
+      "updated": "Editorial version as of March 20, 2026. The text may be revised by legal counsel.",
+      "language_note": "The full legal text of the offer is published in Russian. The official wording may be updated."
+    }
+  },
+  "open_app": {
+    "meta_title": "Open in app — GoGym",
+    "meta_description": "Continue to the GoGym mobile app from a shared link. Not indexed for search.",
+    "lead": "You are about to follow the link",
+    "cta_open": "Open the {appName} app",
+    "cta_app_store": "Download {appName} on the App Store",
+    "cta_play_store": "Download {appName} on Google Play"
+  },
+  "participants": {
+    "title": "Participants",
+    "meta_title": "Participants",
+    "meta_description": "Browse council members, roles, and focus areas.",
+    "search_placeholder": "Search by name, specialization, or keyword",
+    "search_aria": "Search participants",
+    "search_submit": "Search",
+    "open": "View participant",
+    "empty": "No participants match your search.",
+    "page_status": "Page {current} of {total}",
+    "prev": "Previous",
+    "next": "Next",
+    "pagination_aria": "Participants pagination",
+    "workplaces": "Workplaces",
+    "reception_hours": "Reception hours",
+    "random_heading": "Participants"
+  },
+  "projects": {
+    "title": "Projects",
+    "meta_title": "Projects",
+    "meta_description": "Council initiatives and ongoing projects.",
+    "open": "View project",
+    "empty": "No projects yet.",
+    "page_status": "Page {current} of {total}",
+    "prev": "Previous",
+    "next": "Next",
+    "pagination_aria": "Projects pagination"
+  },
+  "cookies": {
+    "description": "We use cookies to ensure that we give you the best experience on our website. By continuing to browse the site, you are agreeing to our use of",
+    "link": "cookies",
+    "accept": "Accept all",
+    "decline": "Decline"
+  }
+}

@@ -1,0 +1,75 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+
+  .list {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+  }
+
+  .icon {
+    display: block;
+    max-width: 100%;
+    height: auto;
+  }
+
+  .title {
+    color: rgba(255, 255, 255, 0.5);
+  }
+
+  .titleOnLight {
+    color: var(--ui-ink-muted);
+  }
+
+  &.footerVariant {
+    gap: 20px;
+
+    .title {
+      color: #6b6b6b;
+    }
+
+    .list {
+      gap: 10px;
+    }
+
+    .list a {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+      border-radius: 12px;
+      background: var(--ui-mint-200);
+      transition:
+        background 0.2s ease,
+        box-shadow 0.2s ease,
+        transform 0.2s ease;
+      box-shadow: 0 0 0 0.75px rgba(0, 0, 0, 0.06);
+
+      &:hover {
+        background: rgba(216, 242, 229, 0.75);
+        transform: translateY(-1px);
+      }
+    }
+
+    .icon {
+      max-width: 20px;
+      max-height: 20px;
+    }
+  }
+
+  @include tablet {
+  }
+
+  @include laptop {
+    .list {
+      gap: 16px;
+    }
+  }
+
+  @include desktop {
+  }
+}
+

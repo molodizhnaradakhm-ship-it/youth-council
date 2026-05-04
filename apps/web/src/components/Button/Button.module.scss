@@ -1,0 +1,78 @@
+.wrapper {
+  @include reset-btn;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+  border: 1px solid transparent;
+  border-radius: 5px;
+  padding-right: 25px;
+  padding-left: 25px;
+  width: fit-content;
+  height: 42px;
+  text-align: center;
+
+  .text-button {
+    line-height: 1;
+  }
+
+  &.fullWidth {
+    width: 100%;
+    max-width: 100%;
+  }
+  &:disabled {
+    pointer-events: none;
+  }
+
+  &.violet {
+    background: var(--Pure-violet);
+  }
+
+  &.dark {
+    background: var(--Button---Dark);
+  }
+
+  &.rounded {
+    border: 1px solid var(--color-white-solid, #fff);
+  }
+
+  @include tablet {
+  }
+
+  @include laptop {
+    transition:
+      background-color 0.3s,
+      color 0.3s,
+      border-color 0.3s;
+    padding: 0 48px;
+    height: 56px;
+
+    &:hover {
+      &.violet,
+      &.rounded {
+        border-color: var(--ui-green-700);
+        background: var(--ui-green-700);
+      }
+
+      &.dark {
+        border-color: rgba(var(--brand-accent-rgb), 0.55);
+        background: transparent;
+      }
+    }
+  }
+
+  @include desktop {
+    height: 62px;
+  }
+}
+
+.text-button {
+  font-style: normal;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 120%; /* 21.6px */
+  letter-spacing: -0.36px;
+  @include desktop {
+    font-size: 24px;
+  }
+}

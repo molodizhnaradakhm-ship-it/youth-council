@@ -1,0 +1,1 @@
+export { OpenAppLink } from './OpenAppLink';

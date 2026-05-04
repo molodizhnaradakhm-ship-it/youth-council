@@ -1,0 +1,246 @@
+import type { Block } from 'payload';
+
+export const SolutionBlock: Block = {
+  fields: [
+    {
+      label: 'Title',
+      localized: true,
+      name: 'title',
+      type: 'text',
+    },
+    {
+      fields: [
+        {
+          label: 'Title',
+          name: 'title',
+          required: true,
+          localized: true,
+          type: 'text',
+        },
+        {
+          admin: {
+            description: 'Optional background image for the visual block.',
+          },
+          label: 'Background image',
+          name: 'backgroundImage',
+          relationTo: 'media',
+          localized: true,
+          required: false,
+          type: 'upload',
+        },
+        {
+          admin: {
+            description: 'Controls background image sizing and position inside the visual block.',
+          },
+          fields: [
+            {
+              defaultValue: 'cover',
+              label: 'Background fit',
+              name: 'bgObjectFit',
+              options: [
+                { label: 'Cover', value: 'cover' },
+                { label: 'Contain', value: 'contain' },
+              ],
+              required: true,
+              type: 'select',
+            },
+            {
+              defaultValue: 'center',
+              label: 'Background position',
+              name: 'bgObjectPosition',
+              options: [
+                { label: 'Center', value: 'center' },
+                { label: 'Top', value: 'top' },
+                { label: 'Bottom', value: 'bottom' },
+                { label: 'Left', value: 'left' },
+                { label: 'Right', value: 'right' },
+                { label: 'Top left', value: 'top left' },
+                { label: 'Top right', value: 'top right' },
+                { label: 'Bottom left', value: 'bottom left' },
+                { label: 'Bottom right', value: 'bottom right' },
+              ],
+              required: true,
+              type: 'select',
+            },
+            {
+              defaultValue: 0,
+              label: 'Background offset X (px)',
+              name: 'bgOffsetXPx',
+              type: 'number',
+            },
+            {
+              defaultValue: 0,
+              label: 'Background offset Y (px)',
+              name: 'bgOffsetYPx',
+              type: 'number',
+            },
+            {
+              defaultValue: 0,
+              label: 'Background offset X (%)',
+              name: 'bgOffsetXPercent',
+              type: 'number',
+            },
+            {
+              defaultValue: 0,
+              label: 'Background offset Y (%)',
+              name: 'bgOffsetYPercent',
+              type: 'number',
+            },
+          ],
+          label: 'Background layout',
+          name: 'backgroundLayout',
+          type: 'group',
+        },
+        {
+          label: 'Foreground image',
+          name: 'foregroundImage',
+          relationTo: 'media',
+          localized: true,
+          required: false,
+          type: 'upload',
+        },
+        {
+          admin: {
+            description: 'Controls foreground image sizing and position inside the visual block.',
+          },
+          fields: [
+            {
+              admin: { description: 'Max width of the image inside the visual block.' },
+              label: 'Image max width (px)',
+              name: 'imageMaxWidthPx',
+              type: 'number',
+            },
+            {
+              admin: { description: 'Max height of the image inside the visual block.' },
+              label: 'Image max height (px)',
+              name: 'imageMaxHeightPx',
+              type: 'number',
+            },
+            {
+              defaultValue: 'contain',
+              label: 'Image fit',
+              name: 'imageObjectFit',
+              options: [
+                { label: 'Contain', value: 'contain' },
+                { label: 'Cover', value: 'cover' },
+              ],
+              required: true,
+              type: 'select',
+            },
+            {
+              defaultValue: 'center',
+              label: 'Image position',
+              name: 'imageObjectPosition',
+              options: [
+                { label: 'Center', value: 'center' },
+                { label: 'Top', value: 'top' },
+                { label: 'Bottom', value: 'bottom' },
+                { label: 'Left', value: 'left' },
+                { label: 'Right', value: 'right' },
+                { label: 'Top left', value: 'top left' },
+                { label: 'Top right', value: 'top right' },
+                { label: 'Bottom left', value: 'bottom left' },
+                { label: 'Bottom right', value: 'bottom right' },
+              ],
+              required: true,
+              type: 'select',
+            },
+            {
+              defaultValue: 0,
+              label: 'Image offset X (px)',
+              name: 'imageOffsetXPx',
+              type: 'number',
+            },
+            {
+              defaultValue: 0,
+              label: 'Image offset Y (px)',
+              name: 'imageOffsetYPx',
+              type: 'number',
+            },
+            {
+              defaultValue: 0,
+              label: 'Image offset X (%)',
+              name: 'imageOffsetXPercent',
+              type: 'number',
+            },
+            {
+              defaultValue: 0,
+              label: 'Image offset Y (%)',
+              name: 'imageOffsetYPercent',
+              type: 'number',
+            },
+          ],
+          label: 'Image layout',
+          name: 'imageLayout',
+          type: 'group',
+        },
+        {
+          admin: {
+            description: 'Legacy field. Use "Foreground image" instead.',
+          },
+          label: 'Legacy image',
+          name: 'image',
+          relationTo: 'media',
+          localized: true,
+          required: false,
+          type: 'upload',
+        },
+        {
+          admin: {
+            description:
+              'Controls the visual size of the image. If "Auto" is used, the image height is derived from the original file proportions (can vary between cards).',
+          },
+          defaultValue: 'auto',
+          label: 'Image aspect ratio',
+          name: 'imageAspectRatio',
+          options: [
+            { label: 'Auto (use image proportions)', value: 'auto' },
+            { label: '1:1', value: '1:1' },
+            { label: '4:3', value: '4:3' },
+            { label: '16:9', value: '16:9' },
+            { label: '3:4', value: '3:4' },
+            { label: '9:16', value: '9:16' },
+          ],
+          required: true,
+          type: 'select',
+        },
+        {
+          label: 'Description',
+          name: 'description',
+          type: 'textarea',
+          localized: true,
+          required: true,
+        },
+        {
+          admin: {
+            description: 'Text card position relative to the centered image.',
+          },
+          defaultValue: 'left',
+          label: 'Text position',
+          name: 'textPosition',
+          options: [
+            { label: 'Text left, empty right', value: 'left' },
+            { label: 'Text right, empty left', value: 'right' },
+          ],
+          required: true,
+          type: 'select',
+        },
+      ],
+      label: 'Cards',
+      labels: {
+        plural: 'Cards',
+        singular: 'Card',
+      },
+      required: true,
+      name: 'cards',
+      type: 'array',
+    },
+  ],
+  imageURL: '/admin-static/home-solution.jpg',
+  interfaceName: 'SolutionsBlockFields',
+  labels: {
+    plural: 'Solutions block',
+    singular: 'Solutions block',
+  },
+  slug: 'solutions-block',
+};

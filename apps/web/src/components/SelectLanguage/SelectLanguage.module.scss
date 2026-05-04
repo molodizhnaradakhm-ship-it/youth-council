@@ -1,0 +1,310 @@
+.wrapper {
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: stretch;
+  gap: 0;
+  width: max-content;
+  max-width: 100%;
+  text-transform: uppercase;
+}
+
+.wrapper > a {
+  display: flex;
+  align-items: center;
+}
+
+.wrapper > a:not(:first-child) {
+  border-left: 1px solid rgba(255, 255, 255, 0.32);
+}
+
+.wrapperToneLight > a:not(:first-child) {
+  border-left-color: rgba(0, 0, 0, 0.14);
+}
+
+/* Beats `Button_wrapper` horizontal padding (25px / 48px on laptop) + fixed height */
+.wrapper > a .wrapper__item {
+  gap: 0;
+  align-self: center;
+  border-radius: 0;
+  padding: 2px 8px;
+  height: auto;
+  min-height: 28px;
+  background: transparent;
+
+  &:not(.active):hover {
+    opacity: 0.9;
+  }
+
+  @include laptop {
+    padding: 3px 10px;
+    min-height: 30px;
+  }
+
+  @include desktop {
+    min-height: 32px;
+  }
+}
+
+.wrapper > a:first-child .wrapper__item {
+  border-radius: 6px 0 0 6px;
+}
+
+.wrapper > a:last-child .wrapper__item {
+  border-radius: 0 6px 6px 0;
+}
+
+.wrapper > a:only-child .wrapper__item {
+  border-radius: 6px;
+}
+
+.active {
+  background: rgba(var(--brand-accent-rgb), 0.18);
+}
+
+/* `Text` / `.p2` sets font-weight 400 — win over module order with !important */
+.wrapper > a .wrapper__item.active > span {
+  font-weight: 800 !important;
+}
+
+/* Неактивна мова — трохи сіріша за рахунок opacity (окремо для світлого хедера) */
+.wrapper > a .wrapper__item:not(.active) > span {
+  opacity: 0.62;
+}
+
+.wrapperToneLight > a .wrapper__item:not(.active) > span {
+  opacity: 0.55;
+}
+
+/* Тригер compact: як колишній summary, для <button> */
+.compactTrigger {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin: 0;
+  border: none;
+  padding: 0;
+  background: transparent;
+  cursor: pointer;
+  list-style: none;
+  font: inherit;
+  font-size: 14px;
+  line-height: 140%;
+  letter-spacing: -0.28px;
+  color: var(--white);
+  font-weight: 600;
+
+  @include desktop {
+    font-size: 18px;
+    letter-spacing: -0.36px;
+  }
+
+  .summaryInner {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  &::after {
+    content: '';
+    display: block;
+    border-right: 2px solid currentColor;
+    border-bottom: 2px solid currentColor;
+    width: 5px;
+    height: 5px;
+    transform: rotate(45deg) translateY(-2px);
+    margin-left: 2px;
+  }
+}
+
+.summaryOnLight {
+  color: #7c7c82;
+}
+
+.flag {
+  display: inline-flex;
+  width: 22px;
+  justify-content: center;
+  font-size: 18px;
+  line-height: 1;
+}
+
+.summaryLabel {
+  white-space: nowrap;
+  text-transform: uppercase;
+}
+
+/* Bottom sheet (макет Bottom-sheet) */
+.sheetOverlay {
+  position: fixed;
+  z-index: 10000;
+  inset: 0;
+  animation: sheetOverlayIn 0.35s ease;
+  background: rgba(0, 0, 0, 0.55);
+}
+
+@keyframes sheetOverlayIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+.sheetContent {
+  position: fixed;
+  z-index: 10001;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  display: flex;
+  flex-direction: column;
+  max-height: min(88dvh, 640px);
+  overflow: hidden;
+  border-radius: 20px 20px 0 0;
+  background: #121212;
+  padding: 0 0 env(safe-area-inset-bottom, 0);
+  outline: none;
+  box-shadow: 0 -8px 40px rgba(0, 0, 0, 0.45);
+  animation: sheetPanelIn 0.38s cubic-bezier(0.32, 0.72, 0, 1);
+}
+
+@keyframes sheetPanelIn {
+  from {
+    transform: translateY(100%);
+  }
+
+  to {
+    transform: translateY(0);
+  }
+}
+
+.sheetHeader {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px 16px 14px;
+}
+
+.sheetTitle {
+  margin: 0;
+  color: #f5f5f7;
+  font-weight: 600;
+  font-size: 17px;
+  line-height: 130%;
+  letter-spacing: -0.02em;
+}
+
+.sheetClose {
+  display: flex;
+  flex-shrink: 0;
+  justify-content: center;
+  align-items: center;
+  margin: 0;
+  border: none;
+  padding: 0;
+  border-radius: 999px;
+  background: #1b1b1d;
+  width: 40px;
+  height: 40px;
+  color: #f5f5f7;
+  cursor: pointer;
+  transition: background 0.2s ease;
+
+  &:hover {
+    background: #252527;
+  }
+}
+
+.sheetCloseIcon {
+  display: block;
+  margin-top: -2px;
+  font-size: 22px;
+  line-height: 1;
+  font-weight: 400;
+}
+
+.sheetList {
+  flex: 1;
+  margin: 0;
+  padding: 4px 12px 20px;
+  overflow: auto;
+  list-style: none;
+  -webkit-overflow-scrolling: touch;
+}
+
+.sheetRow {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  width: 100%;
+  border-radius: 12px;
+  padding: 14px 10px;
+  text-align: left;
+  text-decoration: none;
+  color: #f5f5f7;
+  font-size: 16px;
+  line-height: 130%;
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  transition:
+    color 0.2s ease,
+    opacity 0.2s ease;
+
+  &:active {
+    background: rgba(255, 255, 255, 0.06);
+  }
+}
+
+.sheetRowMuted {
+  opacity: 0.42;
+}
+
+.sheetFlagWrap {
+  display: flex;
+  flex-shrink: 0;
+  justify-content: center;
+  align-items: center;
+  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.06);
+  width: 36px;
+  height: 28px;
+  overflow: hidden;
+}
+
+.sheetFlag {
+  font-size: 20px;
+  line-height: 1;
+}
+
+.sheetLabel {
+  flex: 1;
+  min-width: 0;
+}
+
+.sheetRadio {
+  display: flex;
+  flex-shrink: 0;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+  border: 1.5px solid rgba(255, 255, 255, 0.35);
+  border-radius: 50%;
+  width: 22px;
+  height: 22px;
+  background: transparent;
+}
+
+.sheetRow:not(.sheetRowMuted) .sheetRadio {
+  border-color: rgba(255, 255, 255, 0.55);
+}
+
+.sheetRadioDot {
+  display: block;
+  border-radius: 50%;
+  width: 10px;
+  height: 10px;
+  background: #f5f5f7;
+}

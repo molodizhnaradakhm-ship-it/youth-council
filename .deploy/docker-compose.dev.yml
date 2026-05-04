@@ -1,0 +1,125 @@
+name: youth-council-dev
+
+version: "3.8"
+
+services:
+  youth-council-landing-cms:
+    build:
+      context: ../
+      dockerfile: .deploy/Dockerfile.youth-council-landing.dev
+    image: youth-council-dev-landing:latest
+    container_name: youth-council-landing-cms-dev
+    working_dir: /app
+    environment:
+      PAYLOAD_SECRET: ${PAYLOAD_SECRET:-dev-secret-change-me}
+      WEB_URL: ${NEXT_PUBLIC_URL:-http://localhost:3000}
+      DATABASE_URI: ${DATABASE_URI:-mongodb://mongo:27017/smarty-landing}
+      URL: ${CMS_URL:-http://localhost:3001}
+      S3_BUCKET: ${S3_BUCKET-}
+      S3_ACCESS_KEY_ID: ${S3_ACCESS_KEY_ID-}
+      S3_SECRET_ACCESS_KEY: ${S3_SECRET_ACCESS_KEY-}
+      S3_ENDPOINT: ${S3_ENDPOINT-}
+      S3_REGION: ${S3_REGION-}
+      S3_PUBLIC_URL: ${S3_PUBLIC_URL-}
+      S3_FORCE_PATH_STYLE: ${S3_FORCE_PATH_STYLE-}
+      S3_ACL: ${S3_ACL-}
+      PNPM_STORE_DIR: /pnpm-store
+      LANDING_DEPS_STATE_DIR: /deps
+      # Next.js (watchpack) polling for Windows bind mounts
+      WATCHPACK_POLLING: "true"
+    depends_on:
+      - mongo
+      - minio
+    volumes:
+      - type: bind
+        source: ../
+        target: /app
+      - type: volume
+        source: landing_node_modules
+        target: /app/node_modules
+      - type: volume
+        source: pnpm_store
+        target: /pnpm-store
+      - type: volume
+        source: landing_deps_state
+        target: /deps
+    ports:
+      - "3101:3001"
+    command:
+      [
+        "sh",
+        "-lc",
+        "pnpm --filter @monorepo/cms dev",
+      ]
+
+  youth-council-landing-web:
+    build:
+      context: ../
+      dockerfile: .deploy/Dockerfile.youth-council-landing.dev
+    image: youth-council-dev-landing:latest
+    container_name: youth-council-landing-dev
+    working_dir: /app
+    environment:
+      NEXT_PUBLIC_CMS_URL: ${NEXT_PUBLIC_CMS_URL:-http://youth-council-landing-cms:3001}
+      NEXT_PUBLIC_URL: ${NEXT_PUBLIC_URL:-http://localhost:3000}
+      PAYLOAD_FETCH_ALLOW_INSECURE_TLS: ${PAYLOAD_FETCH_ALLOW_INSECURE_TLS:-0}
+      NEXT_IMAGE_UNOPTIMIZED: ${NEXT_IMAGE_UNOPTIMIZED:-true}
+      PNPM_STORE_DIR: /pnpm-store
+      LANDING_DEPS_STATE_DIR: /deps
+      # Next.js (watchpack) polling for Windows bind mounts
+      WATCHPACK_POLLING: "true"
+    depends_on:
+      - youth-council-landing-cms
+    volumes:
+      - type: bind
+        source: ../
+        target: /app
+      - type: volume
+        source: landing_node_modules
+        target: /app/node_modules
+      - type: volume
+        source: pnpm_store
+        target: /pnpm-store
+      - type: volume
+        source: landing_deps_state
+        target: /deps
+    ports:
+      - "3100:3000"
+    command:
+      [
+        "sh",
+        "-lc",
+        "pnpm --filter @monorepo/web dev:docker",
+      ]
+
+  mongo:
+    image: mongo:7
+    container_name: youth-council-landing-mongo-dev
+    restart: unless-stopped
+    environment:
+      MONGO_INITDB_DATABASE: youth-council
+    volumes:
+      - mongo_data:/data/db
+    ports:
+      - "27018:27017"
+
+  minio:
+    image: minio/minio:latest
+    container_name: youth-council-landing-minio-dev
+    restart: unless-stopped
+    environment:
+      MINIO_ROOT_USER: ${MINIO_ROOT_USER:-minioadmin}
+      MINIO_ROOT_PASSWORD: ${MINIO_ROOT_PASSWORD:-minioadmin}
+    command: ["server", "/data", "--console-address", ":9001"]
+    volumes:
+      - minio_data:/data
+    ports:
+      - "9100:9000"
+      - "9101:9001"
+
+volumes:
+  landing_node_modules:
+  mongo_data:
+  minio_data:
+  pnpm_store:
+  landing_deps_state:

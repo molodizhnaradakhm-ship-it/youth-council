@@ -1,0 +1,2 @@
+export { FeaturesBentoBlock } from './FeaturesBentoBlockImpl';
+

@@ -1,0 +1,166 @@
+/* Gray pill (#EBEBEC) only for the selected section; others are transparent + #5F5F64 */
+
+.root {
+  margin-bottom: 0;
+  padding-bottom: 0;
+  border-bottom: none;
+}
+
+.list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.item {
+  margin: 0;
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  box-sizing: border-box;
+  min-height: 36px;
+  padding: 0 4px 0 8px;
+  border-radius: 8px;
+  background: transparent;
+  color: #5f5f64;
+  transition:
+    background 0.2s ease,
+    color 0.2s ease;
+}
+
+.rowExpandable {
+  padding-right: 2px;
+}
+
+.rowMuted {
+  background: transparent;
+  color: #5f5f64;
+}
+
+/* Selected section (current URL) — #EBEBEC pill + black text/icons */
+.rowSectionSelected {
+  background-color: #ebebec;
+  color: #000;
+}
+
+.sectionLink {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 6px 8px 6px 4px;
+  border-radius: 0;
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 1.2;
+  text-decoration: none;
+  color: inherit;
+  transition: opacity 0.2s ease;
+
+  &:hover {
+    opacity: 0.92;
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--brand-accent);
+    outline-offset: 2px;
+  }
+}
+
+.iconWrap {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 6px;
+  background: #d4d4d9;
+}
+
+.rowMuted .iconWrap {
+  background: #d0d0d5;
+}
+
+.rowMuted .iconImg {
+  opacity: 0.88;
+}
+
+.rowSectionSelected .iconWrap {
+  background: #d4d4d9;
+}
+
+.iconImg {
+  display: block;
+  width: 18px;
+  height: 18px;
+  object-fit: contain;
+}
+
+.iconFallback {
+  flex-shrink: 0;
+  width: 28px;
+  height: 28px;
+  border-radius: 6px;
+  background: #c8c8ce;
+}
+
+.rowMuted .iconFallback {
+  background: #c0c0c8;
+}
+
+.sectionTitle {
+  min-width: 0;
+}
+
+.chevronBtn {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  margin-left: auto;
+  padding: 0;
+  border: none;
+  border-radius: 6px;
+  background: transparent;
+  cursor: pointer;
+  color: inherit;
+
+  &:hover {
+    background: rgba(0, 0, 0, 0.06);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--brand-accent);
+    outline-offset: 1px;
+  }
+}
+
+.caretIcon {
+  display: block;
+  flex-shrink: 0;
+  transition: transform 0.2s ease;
+}
+
+.caretIconCollapsed {
+  transform: rotate(-90deg);
+}
+
+.caretIconOpen {
+  transform: rotate(0deg);
+}
+
+.panel {
+  margin: 8px 0 0;
+  padding: 0 0 0 16px;
+  border-left: none;
+}
