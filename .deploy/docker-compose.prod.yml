@@ -3,6 +3,43 @@ name: youth-council
 version: "3.8"
 
 services:
+  traefik:
+    image: traefik:v3.1
+    container_name: youth-council-traefik
+    restart: unless-stopped
+    networks:
+      - traefik-network
+    ports:
+      - "80:80"
+      - "443:443"
+      - "127.0.0.1:8080:8080"
+    command:
+      - "--api.dashboard=true"
+      - "--api.insecure=false"
+      - "--log.level=INFO"
+      - "--providers.docker=true"
+      - "--providers.docker.exposedbydefault=false"
+      - "--providers.file.directory=/etc/traefik/dynamic"
+      - "--providers.file.watch=true"
+      - "--entrypoints.web.address=:80"
+      - "--entrypoints.websecure.address=:443"
+      - "--certificatesresolvers.letsencrypt.acme.httpchallenge=true"
+      - "--certificatesresolvers.letsencrypt.acme.httpchallenge.entrypoint=web"
+      - "--certificatesresolvers.letsencrypt.acme.email=${TRAEFIK_ACME_EMAIL}"
+      - "--certificatesresolvers.letsencrypt.acme.storage=/acme/acme.json"
+    volumes:
+      - type: bind
+        source: /var/run/docker.sock
+        target: /var/run/docker.sock
+        read_only: true
+      - type: bind
+        source: ./traefik
+        target: /etc/traefik/dynamic
+        read_only: true
+      - type: volume
+        source: traefik_acme
+        target: /acme
+
   youth-council-landing-cms:
     build:
       context: ../
@@ -33,8 +70,14 @@ services:
       - type: volume
         source: landing_deps_state
         target: /deps
-    ports:
-      - "3101:3001"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.services.youth-council-landing-cms.loadbalancer.server.port=3001"
+      - "traefik.http.routers.youth-council-landing-cms.rule=Host(`${WEB_CMS_DOMAIN}`)"
+      - "traefik.http.routers.youth-council-landing-cms.entrypoints=websecure"
+      - "traefik.http.routers.youth-council-landing-cms.tls=true"
+      - "traefik.http.routers.youth-council-landing-cms.tls.certresolver=letsencrypt"
+      - "traefik.http.routers.youth-council-landing-cms.middlewares=security@file,rate-limit@file"
     command: ["sh", "-lc", "pnpm --filter @monorepo/cms start"]
 
   youth-council-landing-web:
@@ -88,16 +131,32 @@ services:
     command: ["server", "/data", "--console-address", ":9001"]
     volumes:
       - minio_data:/data
-    ports:
-      - "9100:9000"
-      - "9101:9001"
+    labels:
+      - "traefik.enable=true"
+      # S3 API
+      - "traefik.http.services.youth-council-minio-api.loadbalancer.server.port=9000"
+      - "traefik.http.routers.youth-council-minio-api.rule=Host(`${WEB_MINIO_S3_DOMAIN}`)"
+      - "traefik.http.routers.youth-council-minio-api.entrypoints=websecure"
+      - "traefik.http.routers.youth-council-minio-api.tls=true"
+      - "traefik.http.routers.youth-council-minio-api.tls.certresolver=letsencrypt"
+      - "traefik.http.routers.youth-council-minio-api.service=youth-council-minio-api"
+      - "traefik.http.routers.youth-council-minio-api.middlewares=security@file,rate-limit@file"
+      # Console UI
+      - "traefik.http.services.youth-council-minio-console.loadbalancer.server.port=9001"
+      - "traefik.http.routers.youth-council-minio-console.rule=Host(`${WEB_MINIO_CONSOLE_DOMAIN}`)"
+      - "traefik.http.routers.youth-council-minio-console.entrypoints=websecure"
+      - "traefik.http.routers.youth-council-minio-console.tls=true"
+      - "traefik.http.routers.youth-council-minio-console.tls.certresolver=letsencrypt"
+      - "traefik.http.routers.youth-council-minio-console.service=youth-council-minio-console"
+      - "traefik.http.routers.youth-council-minio-console.middlewares=security@file,rate-limit@file"
 
 networks:
   traefik-network:
-    external: true
+    name: traefik-network
 
 volumes:
   mongo_data:
   minio_data:
   pnpm_store:
   landing_deps_state:
+  traefik_acme:

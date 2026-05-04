@@ -19,7 +19,7 @@ echo ""
 echo "Setup complete."
 echo ""
 echo "Next steps:"
-echo "  1. Edit .deploy/env.traefik.prod — set WEB_DOMAIN (host only, no https://)"
+echo "  1. Edit .deploy/env.traefik.prod — set WEB_* domains + TRAEFIK_ACME_EMAIL (host only, no https://)"
 echo "  2. Edit .deploy/env.web.prod     — set web public vars"
 echo "  3. Run docker compose (see .deploy/README.md)"
 
