@@ -182,8 +182,25 @@ export function serializeLexical({
               </Text>
             );
           }
+          case 'autolink': {
+            return (
+              <Text key={index} tag='span' type={textType} color={textColor}>
+                {serializedChildren}
+              </Text>
+            );
+          }
           case 'link': {
             const fields = node.fields;
+            const customUrl =
+              fields?.linkType === 'custom' ? String(fields.url ?? '').toLowerCase() : '';
+
+            if (customUrl.includes('t.me/') || customUrl.includes('telegram.me/')) {
+              return (
+                <Text key={index} tag='span' type={textType} color={textColor}>
+                  {serializedChildren}
+                </Text>
+              );
+            }
 
             const linkTypes = fields.linkType === 'internal' ? 'reference' : 'custom';
 

@@ -71,5 +71,17 @@ export default async function ProjectSinglePage({ params, searchParams }: Props)
         }
       : null;
 
-  return <SingleProject {...page} relatedPosts={relatedPosts} />;
+  const contacts = await payload.findGlobal({
+    depth: 0,
+    slug: 'contacts',
+  });
+
+  const projectJoinEmail =
+    typeof page.joinEmail === 'string' && page.joinEmail.trim()
+      ? page.joinEmail.trim()
+      : typeof contacts?.email === 'string'
+        ? contacts.email.trim()
+        : '';
+
+  return <SingleProject {...page} joinEmail={projectJoinEmail} relatedPosts={relatedPosts} />;
 }

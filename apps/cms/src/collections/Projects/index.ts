@@ -40,6 +40,21 @@ export const Projects: CollectionConfig = {
               required: true,
               type: 'textarea',
             },
+            {
+              admin: {
+                description:
+                  'Email for the “Join project” button. Leave empty to use Contacts → Email.',
+              },
+              label: 'Join project email',
+              name: 'joinEmail',
+              type: 'text',
+            },
+            {
+              defaultValue: true,
+              label: 'Show “Join project” button',
+              name: 'showJoinButton',
+              type: 'checkbox',
+            },
           ],
           label: 'Main',
         },

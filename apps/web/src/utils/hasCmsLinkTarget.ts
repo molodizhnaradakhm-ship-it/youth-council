@@ -6,7 +6,14 @@ export function hasCmsLinkTarget(link: CMSLinkType | null | undefined): boolean 
     return false;
   }
   if (link.type === 'reference') {
-    return link.reference != null && link.reference !== '';
+    const value = link.reference?.value;
+    if (value == null) {
+      return false;
+    }
+    if (typeof value === 'string') {
+      return value.trim() !== '';
+    }
+    return true;
   }
   if (link.type === 'custom') {
     return Boolean(String(link.url ?? '').trim());

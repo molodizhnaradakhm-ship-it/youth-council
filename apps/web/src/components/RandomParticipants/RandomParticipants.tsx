@@ -39,7 +39,7 @@ export async function RandomParticipants({ className, limit = 6, showTitle = tru
     depth: 1,
     limit: fetchLimit,
     locale: locale as Config['locale'],
-    sort: 'title',
+    sort: '_order',
   });
 
   const docs = (res.docs ?? []) as Participant[];

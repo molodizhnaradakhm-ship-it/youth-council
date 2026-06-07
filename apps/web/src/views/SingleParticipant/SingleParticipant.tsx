@@ -24,17 +24,18 @@ type Props = Participant & {
 export async function SingleParticipant({
   contentBlocks,
   contentPhoto,
+  fullName,
   receptionHours,
   relatedPosts,
   socList,
   specialization,
-  title,
   workplaces,
   phone,
 }: Props) {
   const t = await getTranslations('participants');
   const phoneStr = typeof phone === 'string' ? phone.trim() : '';
   const hoursStr = typeof receptionHours === 'string' ? receptionHours.trim() : '';
+  const specializationLabel = typeof specialization === 'string' ? specialization.trim() : '';
   const blocks = contentBlocks ?? [];
   const hasBlocks = blocks.length > 0;
   const socials = (socList ?? []).filter(
@@ -86,11 +87,13 @@ export async function SingleParticipant({
             </div>
             <div className={styles.introRight}>
               <InViewAnimation className={styles.nameBlock} effect='y'>
-                <Text className={styles.specializationLabel} color='inherit' type='d2'>
-                  {specialization}
-                </Text>
+                {specializationLabel ? (
+                  <Text className={styles.specializationLabel} color='inherit' type='d2'>
+                    {specializationLabel}
+                  </Text>
+                ) : null}
                 <Text className={styles.nameTitle} color='inherit' tag='h1' type='h1'>
-                  {title}
+                  {fullName}
                 </Text>
               </InViewAnimation>
             </div>

@@ -2381,7 +2381,15 @@ export interface BlogAuthor {
  */
 export interface Participant {
   id: string;
-  title: string;
+  _order?: string | null;
+  /**
+   * Shown on participant cards in the listing.
+   */
+  shortName: string;
+  /**
+   * Shown as the main heading on the participant profile page.
+   */
+  fullName: string;
   /**
    * Large photo on the participant profile page (left column).
    */
@@ -2390,7 +2398,7 @@ export interface Participant {
    * Used in participant cards on the listing. Recommended: 1200×900 px (4:3 aspect ratio). JPG or WebP, under 500 KB.
    */
   thumbnail: string | Media;
-  specialization: string;
+  specialization?: string | null;
   excerpt: string;
   keywords?:
     | {
@@ -2504,6 +2512,11 @@ export interface Project {
   title: string;
   cover: string | Media;
   excerpt: string;
+  /**
+   * Email for the “Join project” button. Leave empty to use Contacts → Email.
+   */
+  joinEmail?: string | null;
+  showJoinButton?: boolean | null;
   /**
    * Page body. Add «Post description (rich text)» for the main text, plus images, headings, tables, etc.
    */
@@ -4422,7 +4435,9 @@ export interface BlogAuthorsSelect<T extends boolean = true> {
  * via the `definition` "participants_select".
  */
 export interface ParticipantsSelect<T extends boolean = true> {
-  title?: T;
+  _order?: T;
+  shortName?: T;
+  fullName?: T;
   contentPhoto?: T;
   thumbnail?: T;
   specialization?: T;
@@ -4519,6 +4534,8 @@ export interface ProjectsSelect<T extends boolean = true> {
   title?: T;
   cover?: T;
   excerpt?: T;
+  joinEmail?: T;
+  showJoinButton?: T;
   contentBlocks?:
     | T
     | {

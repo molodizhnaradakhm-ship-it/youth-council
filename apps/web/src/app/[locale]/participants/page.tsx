@@ -37,7 +37,7 @@ export default async function ParticipantsPage({ params, searchParams }: Props) 
     limit: PAGE_SIZE,
     locale,
     page: currentPage,
-    sort: 'title',
+    sort: '_order',
     ...(Object.keys(where).length > 0 ? { where: where as never } : {}),
   });
 

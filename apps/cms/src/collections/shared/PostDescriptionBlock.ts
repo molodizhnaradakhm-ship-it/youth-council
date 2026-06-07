@@ -3,6 +3,7 @@ import type { Block } from 'payload';
 import {
   EXPERIMENTAL_TableFeature,
   lexicalEditor,
+  LinkFeature,
   UploadFeature,
 } from '@payloadcms/richtext-lexical';
 
@@ -12,7 +13,14 @@ export const PostDescriptionBlock: Block = {
     {
       editor: lexicalEditor({
         features: ({ rootFeatures }) => {
-          return [...rootFeatures, EXPERIMENTAL_TableFeature(), UploadFeature()];
+          const featuresWithoutLink = rootFeatures.filter((feature) => feature.key !== 'link');
+
+          return [
+            ...featuresWithoutLink,
+            LinkFeature({ disableAutoLinks: true }),
+            EXPERIMENTAL_TableFeature(),
+            UploadFeature(),
+          ];
         },
       }),
       label: 'Text',

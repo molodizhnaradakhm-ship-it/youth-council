@@ -11,9 +11,10 @@ export const Participants: CollectionConfig = {
     read: () => true,
   },
   admin: {
+    defaultColumns: ['shortName', 'fullName', 'slug'],
     group: 'Content',
     preview: ({ slug }) => `${process.env.WEB_URL}/participants/${slug}`,
-    useAsTitle: 'title',
+    useAsTitle: 'shortName',
   },
   fields: [
     {
@@ -21,9 +22,22 @@ export const Participants: CollectionConfig = {
         {
           fields: [
             {
-              label: 'Name',
+              admin: {
+                description: 'Shown on participant cards in the listing.',
+              },
+              label: 'Short name',
               localized: true,
-              name: 'title',
+              name: 'shortName',
+              required: true,
+              type: 'text',
+            },
+            {
+              admin: {
+                description: 'Shown as the main heading on the participant profile page.',
+              },
+              label: 'Full name',
+              localized: true,
+              name: 'fullName',
               required: true,
               type: 'text',
             },
@@ -52,7 +66,7 @@ export const Participants: CollectionConfig = {
               label: 'Specialization',
               localized: true,
               name: 'specialization',
-              required: true,
+              required: false,
               type: 'text',
             },
             {
@@ -172,7 +186,7 @@ export const Participants: CollectionConfig = {
       ],
       type: 'tabs',
     },
-    ...slugField(),
+    ...slugField('shortName'),
   ],
   hooks: {
     beforeRead: [slugBeforeReadCollection],
@@ -181,5 +195,6 @@ export const Participants: CollectionConfig = {
     plural: 'Participants',
     singular: 'Participant',
   },
+  orderable: true,
   slug: 'participants',
 };

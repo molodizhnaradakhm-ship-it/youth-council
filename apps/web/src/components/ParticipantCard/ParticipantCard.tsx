@@ -10,10 +10,10 @@ import styles from './ParticipantCard.module.scss';
 export type ParticipantCardModel = {
   contentPhoto?: Media | string;
   excerpt: string;
+  shortName: string;
   slug: string;
-  specialization: string;
+  specialization?: string | null;
   thumbnail: Media | string;
-  title: string;
 };
 
 type Props = {
@@ -40,10 +40,15 @@ function resolveCardModel(p: Participant | ParticipantCardModel): ParticipantCar
   return {
     contentPhoto: 'contentPhoto' in p ? p.contentPhoto : undefined,
     excerpt: p.excerpt,
+    shortName:
+      'shortName' in p && p.shortName
+        ? p.shortName
+        : 'title' in p
+          ? String((p as { title?: string }).title ?? '')
+          : '',
     slug,
     specialization: p.specialization,
     thumbnail: thumbnail ?? '',
-    title: p.title,
   };
 }
 
@@ -53,9 +58,10 @@ export function ParticipantCard({ className, locale, openLabel, participant }: P
     return null;
   }
 
-  const { excerpt, slug, specialization, thumbnail, title } = model;
+  const { excerpt, shortName, slug, specialization, thumbnail } = model;
   const excerptShort =
     excerpt.length > 160 ? `${excerpt.slice(0, 157).trim()}…` : excerpt;
+  const specializationLabel = typeof specialization === 'string' ? specialization.trim() : '';
 
   return (
     <Link className={clsx(styles.card, className)} href={`/${locale}/participants/${slug}`}>
@@ -74,11 +80,13 @@ export function ParticipantCard({ className, locale, openLabel, participant }: P
         </div>
         <div className={styles.body}>
           <Text className={styles.title} color='inherit' type='h4' tag='h2'>
-            {title}
+            {shortName}
           </Text>
-          <Text className={styles.specialization} color='inherit' type='d2'>
-            {specialization}
-          </Text>
+          {specializationLabel ? (
+            <Text className={styles.specialization} color='inherit' type='d2'>
+              {specializationLabel}
+            </Text>
+          ) : null}
           {excerptShort ? (
             <Text className={styles.excerpt} color='inherit' type='p2' tag='p'>
               {excerptShort}
