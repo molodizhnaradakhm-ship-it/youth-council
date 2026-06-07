@@ -21,7 +21,7 @@ export async function up({ payload }: MigrationArgs): Promise<void> {
       break;
     }
 
-    for (const doc of res.docs as AnyDoc[]) {
+    for (const doc of res.docs as unknown as AnyDoc[]) {
       const legacyTitle = doc.title;
       const patch: AnyDoc = {};
 

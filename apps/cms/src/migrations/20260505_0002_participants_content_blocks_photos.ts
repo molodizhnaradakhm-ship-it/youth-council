@@ -28,7 +28,7 @@ export async function up({ payload }: MigrationArgs): Promise<void> {
       break;
     }
 
-    for (const doc of res.docs as AnyDoc[]) {
+    for (const doc of res.docs as unknown as AnyDoc[]) {
       const patch: AnyDoc = {};
       const legacyPhoto = doc.photo;
       const contentPhoto = doc.contentPhoto ?? legacyPhoto;

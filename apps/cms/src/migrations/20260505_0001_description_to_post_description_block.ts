@@ -27,7 +27,7 @@ async function migrateCollectionDescriptionToBlock(payload: Payload, collection:
       break;
     }
 
-    for (const doc of res.docs as AnyDoc[]) {
+    for (const doc of res.docs as unknown as AnyDoc[]) {
       const description = doc.description;
       if (!description) {
         continue;

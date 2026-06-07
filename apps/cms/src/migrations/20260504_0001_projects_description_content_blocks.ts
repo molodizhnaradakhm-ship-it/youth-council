@@ -21,14 +21,14 @@ export async function up({ payload }: MigrationArgs): Promise<void> {
       break;
     }
 
-    for (const doc of res.docs as AnyDoc[]) {
+    for (const doc of res.docs as unknown as AnyDoc[]) {
       const about = doc.about;
       const description = doc.description;
       if (about && !description) {
         await payload.update({
           collection: 'projects',
           id: String(doc.id),
-          data: { description: about },
+          data: { description: about } as Record<string, unknown>,
           depth: 0,
         });
       }

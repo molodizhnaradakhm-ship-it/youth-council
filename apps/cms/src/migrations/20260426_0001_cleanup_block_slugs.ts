@@ -110,7 +110,7 @@ async function migrateCollectionBlocks(
 
     if (!res.docs.length) break;
 
-    for (const doc of res.docs as AnyDoc[]) {
+    for (const doc of res.docs as unknown as AnyDoc[]) {
       const patch: AnyDoc = {};
       let changed = false;
 

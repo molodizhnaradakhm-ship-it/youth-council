@@ -26,7 +26,7 @@ export async function up({ payload }: MigrationArgs): Promise<void> {
       page,
     });
 
-    docs.push(...(res.docs as AnyDoc[]));
+    docs.push(...(res.docs as unknown as AnyDoc[]));
 
     if (res.docs.length < limit) {
       break;
