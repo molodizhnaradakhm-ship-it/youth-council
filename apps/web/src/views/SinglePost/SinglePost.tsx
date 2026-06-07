@@ -4,18 +4,15 @@ import clsx from 'clsx';
 import { useLocale, useTranslations } from 'next-intl';
 
 import { BackButton } from '@/components/BackButton';
-import { CMSMedia } from '@/components/CMSMedia';
 import { Container } from '@/components/Container';
 import { InViewAnimation } from '@/components/InViewAnimation';
 import { LocalizedLink } from '@/components/LocalizedLink';
 import { RenderBlocks } from '@/components/RenderBlocks';
 import { unifiedBlocksMapper } from '@/components/RenderBlocks/unifiedBlocksMapper';
-import RichText from '@/components/RichText';
 import { Tag } from '@/components/Tag';
 import { Text } from '@/components/Text';
 import { formatDateLong } from '@/utils/common';
-import type { RichTextType } from '@/utils/customTypes';
-import type { Blog, BlogAuthor, BlogCategory, Media } from '@monorepo/cms/src/payload-types';
+import type { Blog, BlogAuthor, BlogCategory } from '@monorepo/cms/src/payload-types';
 
 import { PostCard } from '../News/PostCard';
 
@@ -25,10 +22,7 @@ type Props = {
   title: string;
   shortDescription: string;
   readTime?: number;
-  description?: RichTextType | null;
-  /** Same block types as Explore — when non-empty, replaces rich text body */
   contentBlocks?: Blog['contentBlocks'] | null;
-  thumbnail: string | Media;
   category: BlogCategory;
   slug?: string | null;
   author?: string | BlogAuthor;
@@ -40,9 +34,7 @@ export const SinglePost = ({
   title,
   shortDescription,
   publishedOn,
-  thumbnail,
   category,
-  description,
   contentBlocks,
   author,
   otherPosts,
@@ -111,23 +103,13 @@ export const SinglePost = ({
         </div>
         <div className={clsx(styles.postArticle, styles.postArticleBlog)}>
           <Container className={styles.container}>
-            <InViewAnimation>
-              <CMSMedia className={styles.thumbnail} resource={thumbnail} />
-            </InViewAnimation>
-            <InViewAnimation threshold={0}>
-              {contentBlocks && contentBlocks.length > 0 ? (
+            {contentBlocks && contentBlocks.length > 0 ? (
+              <InViewAnimation threshold={0}>
                 <div className={styles.contentBlocks}>
                   <RenderBlocks blocks={contentBlocks as never} mapper={unifiedBlocksMapper} />
                 </div>
-              ) : description ? (
-                <RichText
-                  className={clsx(styles.richText, styles.richTextBlog)}
-                  content={description}
-                  textColor='inherit'
-                  textType='p2'
-                />
-              ) : null}
-            </InViewAnimation>
+              </InViewAnimation>
+            ) : null}
 
             <InViewAnimation className={styles.postArticleBottom}>
               <BackButton />
@@ -151,7 +133,7 @@ export const SinglePost = ({
                     {...post}
                     categoryTitle={(post.category as BlogCategory).title}
                     url='blog'
-                    variant='blog'
+                    variant='grid'
                   />
                 </li>
               ))}

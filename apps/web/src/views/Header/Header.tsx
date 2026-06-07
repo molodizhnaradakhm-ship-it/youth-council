@@ -205,11 +205,26 @@ export const Header = () => {
   const hasStoreMobile = hasContactUsMobile;
 
   useEffect(() => {
+    let ticking = false;
+    let lastScrolled = window.scrollY > 50;
+
     const handleScroll = () => {
-      setScroll(window.scrollY > 50);
+      if (ticking) {
+        return;
+      }
+      ticking = true;
+      requestAnimationFrame(() => {
+        const nextScrolled = window.scrollY > 50;
+        if (nextScrolled !== lastScrolled) {
+          lastScrolled = nextScrolled;
+          setScroll(nextScrolled);
+        }
+        ticking = false;
+      });
     };
+
     handleScroll();
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener('scroll', handleScroll, { passive: true });
     return () => {
       window.removeEventListener('scroll', handleScroll);
     };

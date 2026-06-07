@@ -30,6 +30,7 @@ type Props = {
 export async function RandomParticipants({ className, limit = 6, showTitle = true }: Props) {
   const locale = await getLocale();
   const t = await getTranslations('participants');
+  const openLabel = t('open');
 
   const fetchLimit = Math.min(120, Math.max(40, limit * 10));
 
@@ -59,7 +60,11 @@ export async function RandomParticipants({ className, limit = 6, showTitle = tru
         <ul className={styles.grid}>
           {picked.map((p) => (
             <li key={p.id} className={styles.gridItem}>
-              <ParticipantCard participant={p} />
+              <ParticipantCard
+                locale={locale as Config['locale']}
+                openLabel={openLabel}
+                participant={p}
+              />
             </li>
           ))}
         </ul>

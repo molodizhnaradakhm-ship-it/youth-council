@@ -1,25 +1,25 @@
-'use client';
-
 import clsx from 'clsx';
-import { useTranslations } from 'next-intl';
+import Link from 'next/link';
 
 import { CMSMedia } from '@/components/CMSMedia';
-import { LocalizedLink } from '@/components/LocalizedLink';
 import { Text } from '@/components/Text';
-import type { Media, Participant } from '@monorepo/cms/src/payload-types';
+import type { Config, Media, Participant } from '@monorepo/cms/src/payload-types';
 
 import styles from './ParticipantCard.module.scss';
 
 export type ParticipantCardModel = {
+  contentPhoto?: Media | string;
   excerpt: string;
-  photo: Media | string;
   slug: string;
   specialization: string;
+  thumbnail: Media | string;
   title: string;
 };
 
 type Props = {
   className?: string;
+  locale: Config['locale'];
+  openLabel: string;
   participant: Participant | ParticipantCardModel;
 };
 
@@ -28,36 +28,46 @@ function resolveCardModel(p: Participant | ParticipantCardModel): ParticipantCar
   if (!slug) {
     return null;
   }
+  const thumbnail =
+    'thumbnail' in p && p.thumbnail
+      ? p.thumbnail
+      : 'contentPhoto' in p && p.contentPhoto
+        ? p.contentPhoto
+        : 'photo' in p
+          ? (p as { photo?: Media | string }).photo
+          : undefined;
+
   return {
+    contentPhoto: 'contentPhoto' in p ? p.contentPhoto : undefined,
     excerpt: p.excerpt,
-    photo: p.photo,
     slug,
     specialization: p.specialization,
+    thumbnail: thumbnail ?? '',
     title: p.title,
   };
 }
 
-export function ParticipantCard({ className, participant }: Props) {
-  const t = useTranslations('participants');
+export function ParticipantCard({ className, locale, openLabel, participant }: Props) {
   const model = resolveCardModel(participant);
   if (!model) {
     return null;
   }
 
-  const { excerpt, photo, slug, specialization, title } = model;
+  const { excerpt, slug, specialization, thumbnail, title } = model;
   const excerptShort =
     excerpt.length > 160 ? `${excerpt.slice(0, 157).trim()}…` : excerpt;
 
   return (
-    <LocalizedLink className={clsx(styles.card, className)} href={`/participants/${slug}`}>
+    <Link className={clsx(styles.card, className)} href={`/${locale}/participants/${slug}`}>
       <article className={styles.inner}>
         <div className={styles.imageWrap}>
-          {photo && typeof photo === 'object' ? (
+          {thumbnail && typeof thumbnail === 'object' ? (
             <CMSMedia
               className={styles.image}
               fill
-              resource={photo}
-              size='(max-width: 768px) 100vw, 320px'
+              quality={75}
+              resource={thumbnail}
+              size='(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 320px'
               withBlur={false}
             />
           ) : null}
@@ -76,11 +86,11 @@ export function ParticipantCard({ className, participant }: Props) {
           ) : null}
           <span className={styles.cta}>
             <Text color='main-violet' type='p2' tag='span'>
-              {t('open')}
+              {openLabel}
             </Text>
           </span>
         </div>
       </article>
-    </LocalizedLink>
+    </Link>
   );
 }

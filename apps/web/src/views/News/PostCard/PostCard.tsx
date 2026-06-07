@@ -25,9 +25,9 @@ type Props = {
   url: string;
   /** Optional per-page/per-block override (CMS). */
   readMoreLabel?: string | null;
-  /** Light card grid (blog index) */
+  /** Participant-style grid card (blog index) */
   /** Compact light cards (home landing grid) */
-  variant?: 'blog' | 'default' | 'home' | 'blogHome';
+  variant?: 'blog' | 'default' | 'home' | 'blogHome' | 'grid';
   rest?: unknown;
 };
 
@@ -55,6 +55,53 @@ export const PostCard = ({
   const bodyColor = isLightCard ? 'blue-23' : 'text';
   const useVioletCta = variant === 'blog';
   const readMoreText = readMoreLabel || t('read_more');
+
+  if (variant === 'grid') {
+    const excerptShort =
+      shortDescription.length > 160 ? `${shortDescription.slice(0, 157).trim()}…` : shortDescription;
+    const metaParts = [
+      categoryTitle?.trim() || '',
+      publishedOn ? formatDateString(publishedOn as string, locale) : '',
+    ].filter(Boolean);
+
+    return (
+      <LocalizedLink className={styles.gridCard} href={`/${url}/${slug}`}>
+        <article className={styles.gridInner}>
+          <div className={styles.gridImageWrap}>
+            {thumbnail ? (
+              <CMSMedia
+                className={styles.gridImage}
+                fill
+                resource={thumbnail}
+                size='(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 400px'
+                withBlur={false}
+              />
+            ) : null}
+          </div>
+          <div className={styles.gridBody}>
+            <Text className={styles.gridTitle} color='inherit' tag='h2' type='h4'>
+              {title}
+            </Text>
+            {metaParts.length > 0 ? (
+              <Text className={styles.gridMeta} color='inherit' tag='p' type='d2'>
+                {metaParts.join(' · ')}
+              </Text>
+            ) : null}
+            {excerptShort ? (
+              <Text className={styles.gridExcerpt} color='inherit' tag='p' type='p2'>
+                {excerptShort}
+              </Text>
+            ) : null}
+            <span className={styles.gridCta}>
+              <Text color='main-violet' tag='span' type='p2'>
+                {readMoreText}
+              </Text>
+            </span>
+          </div>
+        </article>
+      </LocalizedLink>
+    );
+  }
 
   return (
     <div

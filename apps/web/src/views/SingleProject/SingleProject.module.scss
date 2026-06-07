@@ -48,9 +48,21 @@
     color: var(--ui-ink);
   }
 
-  .about {
+  .content {
+    padding: 0 0 72px;
+    background: var(--ui-surface-0, #fff);
+  }
+
+  .contentBlocks {
+    margin: 0 auto;
+    max-width: 820px;
+    color: var(--ui-ink);
+  }
+
+  .description {
     @include richtext;
-    max-width: 960px;
+    margin: 0 auto;
+    max-width: 820px;
     color: var(--ui-ink-muted);
   }
 
@@ -75,6 +87,10 @@
     .nameBlock {
       gap: 16px;
       margin-bottom: 24px;
+    }
+
+    .content {
+      padding-bottom: 80px;
     }
   }
 

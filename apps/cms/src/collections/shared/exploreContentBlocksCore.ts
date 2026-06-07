@@ -9,11 +9,13 @@ import { ExploreSubtitleBlock } from '../ExplorePages/blocks/ExploreSubtitleBloc
 import { ExploreTableBlock } from '../ExplorePages/blocks/ExploreTableBlock';
 import { ExploreTitleBlock } from '../ExplorePages/blocks/ExploreTitleBlock';
 import { HintBlock } from '../Pages/blocks/shared/HintBlock';
+import { PostDescriptionBlock } from './PostDescriptionBlock';
 import { buildResponsiveBlocksBlock } from './ResponsiveBlocks';
 
 /** Content blocks without `explore-tabs` — used inside tab panels to avoid circular imports. */
 const exploreContentBlocksCoreBase: Block[] = [
   HintBlock,
+  PostDescriptionBlock,
   ExploreFeatureCardBlock,
   ExploreFeatureCardsGridBlock,
   ExploreHtmlBlock,

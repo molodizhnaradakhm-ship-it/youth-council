@@ -47,6 +47,7 @@ export default async function ParticipantsPage({ params, searchParams }: Props) 
   return (
     <ParticipantsView
       currentPage={currentPage}
+      locale={locale}
       pageSize={PAGE_SIZE}
       participants={participants}
       query={q}

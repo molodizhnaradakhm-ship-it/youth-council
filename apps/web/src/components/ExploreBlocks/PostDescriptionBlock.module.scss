@@ -1,0 +1,4 @@
+.body {
+  @include richtext;
+  color: var(--ui-ink);
+}

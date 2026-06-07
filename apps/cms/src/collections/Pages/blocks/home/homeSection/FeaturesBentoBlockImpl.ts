@@ -1,5 +1,7 @@
 import type { Block } from 'payload';
 
+import { link } from '@/fields/link';
+
 /**
  * Features bento block (home section).
  */
@@ -199,6 +201,16 @@ export const FeaturesBentoBlock: Block = {
               required: true,
               type: 'select',
             },
+            link({
+              disableLabel: true,
+              optional: true,
+              overrides: {
+                admin: {
+                  description:
+                    'Optional. Internal page or custom URL — the whole card becomes clickable when set.',
+                },
+              },
+            }),
           ],
           label: 'Cards',
           labels: { plural: 'Cards', singular: 'Card' },

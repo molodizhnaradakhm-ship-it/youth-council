@@ -64,6 +64,18 @@
     font-weight: 600;
   }
 
+  .orgLink {
+    display: inline-block;
+    text-decoration: none;
+    color: inherit;
+
+    &:hover,
+    &:focus-visible {
+      color: var(--main-violet);
+      text-decoration: underline;
+    }
+  }
+
   .note {
     margin: 4px 0 0;
     color: var(--ui-ink-muted);
@@ -90,9 +102,14 @@
     color: var(--ui-ink);
   }
 
-  .about {
-    @include richtext;
-    max-width: 960px;
+  .content {
+    padding: 0 0 72px;
+    background: var(--ui-surface-0, #fff);
+  }
+
+  .contentBlocks {
+    margin: 0 auto;
+    max-width: 820px;
     color: var(--ui-ink-muted);
   }
 

@@ -23,8 +23,34 @@ type Props = {
 
 export const SocialsBlock = ({ className, hideTitle, socList, variant = 'default' }: Props) => {
   const t = useTranslations('common');
+  const useFixedIcon = variant === 'onLight';
+
+  const renderIcon = (icon: string | Media) => {
+    const media = (
+      <CMSMedia
+        className={styles.icon}
+        fill={useFixedIcon}
+        resource={icon}
+        withBlur={false}
+      />
+    );
+
+    if (useFixedIcon) {
+      return <span className={styles.iconWrap}>{media}</span>;
+    }
+
+    return media;
+  };
+
   return (
-    <div className={clsx(styles.wrapper, variant === 'footer' && styles.footerVariant, className)}>
+    <div
+      className={clsx(
+        styles.wrapper,
+        variant === 'footer' && styles.footerVariant,
+        variant === 'onLight' && styles.onLightVariant,
+        className,
+      )}
+    >
       {!hideTitle && (
         <Text className={variant === 'onLight' ? styles.titleOnLight : styles.title} type='t1'>
           {t('social_media')}
@@ -35,12 +61,10 @@ export const SocialsBlock = ({ className, hideTitle, socList, variant = 'default
           <li key={id}>
             {typeof link === 'string' && link.trim() !== '' ? (
               <a href={link} rel='noopener noreferrer' target='_blank'>
-                <CMSMedia className={styles.icon} resource={icon} />
+                {renderIcon(icon)}
               </a>
             ) : (
-              <span aria-hidden>
-                <CMSMedia className={styles.icon} resource={icon} />
-              </span>
+              <span aria-hidden>{renderIcon(icon)}</span>
             )}
           </li>
         ))}

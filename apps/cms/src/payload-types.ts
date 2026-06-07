@@ -306,6 +306,7 @@ export interface ExplorePage {
         | ForgetQuizzesBlockFields
         | ChallengesBlockFields
         | HintBlockFields
+        | PostDescriptionBlockFields
         | ExploreFeatureCardBlockFields
         | ExploreFeatureCardsGridBlockFields
         | ExploreHtmlBlockFields
@@ -518,6 +519,7 @@ export interface Page {
         | ForgetQuizzesBlockFields
         | ChallengesBlockFields
         | HintBlockFields
+        | PostDescriptionBlockFields
         | ExploreFeatureCardBlockFields
         | ExploreFeatureCardsGridBlockFields
         | ExploreHtmlBlockFields
@@ -579,6 +581,7 @@ export interface Page {
         | ForgetQuizzesBlockFields
         | ChallengesBlockFields
         | HintBlockFields
+        | PostDescriptionBlockFields
         | ExploreFeatureCardBlockFields
         | ExploreFeatureCardsGridBlockFields
         | ExploreHtmlBlockFields
@@ -664,6 +667,7 @@ export interface Page {
         | ForgetQuizzesBlockFields
         | ChallengesBlockFields
         | HintBlockFields
+        | PostDescriptionBlockFields
         | ExploreFeatureCardBlockFields
         | ExploreFeatureCardsGridBlockFields
         | ExploreHtmlBlockFields
@@ -724,6 +728,7 @@ export interface Page {
           | ForgetQuizzesBlockFields
           | ChallengesBlockFields
           | HintBlockFields
+          | PostDescriptionBlockFields
           | ExploreFeatureCardBlockFields
           | ExploreFeatureCardsGridBlockFields
           | ExploreHtmlBlockFields
@@ -818,6 +823,7 @@ export interface Page {
           | ForgetQuizzesBlockFields
           | ChallengesBlockFields
           | HintBlockFields
+          | PostDescriptionBlockFields
           | ExploreFeatureCardBlockFields
           | ExploreFeatureCardsGridBlockFields
           | ExploreHtmlBlockFields
@@ -953,6 +959,19 @@ export interface FeaturesBentoBlockFields {
        * Background tone for the card.
        */
       tone: 'darkGreen' | 'lightGreen' | 'grey';
+      /**
+       * Optional. Internal page or custom URL — the whole card becomes clickable when set.
+       */
+      link?: {
+        type?: ('reference' | 'custom' | 'form') | null;
+        newTab?: boolean | null;
+        reference?: {
+          relationTo: 'pages';
+          value: string | Page;
+        } | null;
+        url?: string | null;
+        form?: (string | null) | Form;
+      };
       id?: string | null;
     }[];
     id?: string | null;
@@ -960,6 +979,121 @@ export interface FeaturesBentoBlockFields {
   id?: string | null;
   blockName?: string | null;
   blockType: 'features-bento-block';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "forms".
+ */
+export interface Form {
+  id: string;
+  title: string;
+  /**
+   * Where should submissions be duplicated to (in addition to Form submissions)?
+   */
+  submissionKind?: ('none' | 'contact' | 'newsletter') | null;
+  fields: (
+    | {
+        name: string;
+        label?: string | null;
+        placeholder?: string | null;
+        isRequired: boolean;
+        id?: string | null;
+        blockName?: string | null;
+        blockType: 'text';
+      }
+    | {
+        name: string;
+        label?: string | null;
+        placeholder?: string | null;
+        isRequired: boolean;
+        id?: string | null;
+        blockName?: string | null;
+        blockType: 'email';
+      }
+    | {
+        name: string;
+        label: string;
+        placeholder?: string | null;
+        isRequired: boolean;
+        id?: string | null;
+        blockName?: string | null;
+        blockType: 'phone-number';
+      }
+    | {
+        name: string;
+        label?: string | null;
+        placeholder?: string | null;
+        isRequired: boolean;
+        id?: string | null;
+        blockName?: string | null;
+        blockType: 'message';
+      }
+    | {
+        name: string;
+        label?: string | null;
+        selectList: {
+          name: string;
+          id?: string | null;
+        }[];
+        isRequired: boolean;
+        id?: string | null;
+        blockName?: string | null;
+        blockType: 'checkboxGroup';
+      }
+  )[];
+  submitButtonLabel: string;
+  successMessage: string;
+  /**
+   * e.g. newsletter: reject if this email already submitted this form. Configure duplicate messages below.
+   */
+  preventDuplicateEmail?: boolean | null;
+  duplicateEmailTitle?: string | null;
+  duplicateEmailMessage?: string | null;
+  /**
+   * Use for Threatscape report form
+   */
+  downloadReport?: (string | null) | Media;
+  /**
+   * Send custom emails when the form submits. Use comma separated lists to send the same email to multiple recipients. To reference a value from this form, wrap that field's name with double curly brackets, i.e. {{firstName}}.
+   */
+  emails?:
+    | {
+        /**
+         * For multiple values, separate them with a comma, for example: emailToSend1@gmail.com,emailToSend2@gmail.com
+         */
+        emailTo: string;
+        cc?: string | null;
+        bcc?: string | null;
+        replyTo?: string | null;
+        emailFrom: string;
+        subject: string;
+        message: {
+          root: {
+            type: string;
+            children: {
+              type: any;
+              version: number;
+              [k: string]: unknown;
+            }[];
+            direction: ('ltr' | 'rtl') | null;
+            format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+            indent: number;
+            version: number;
+          };
+          [k: string]: unknown;
+        };
+        id?: string | null;
+      }[]
+    | null;
+  telegramChatIds?:
+    | {
+        chatId: string;
+        message: string;
+        id?: string | null;
+      }[]
+    | null;
+  updatedAt: string;
+  createdAt: string;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1050,6 +1184,7 @@ export interface ResponsiveBlocksBlockFields {
         | ForgetQuizzesBlockFields
         | ChallengesBlockFields
         | HintBlockFields
+        | PostDescriptionBlockFields
         | ExploreFeatureCardBlockFields
         | ExploreFeatureCardsGridBlockFields
         | ExploreHtmlBlockFields
@@ -1092,6 +1227,7 @@ export interface ResponsiveBlocksBlockFields {
         | ForgetQuizzesBlockFields
         | ChallengesBlockFields
         | HintBlockFields
+        | PostDescriptionBlockFields
         | ExploreFeatureCardBlockFields
         | ExploreFeatureCardsGridBlockFields
         | ExploreHtmlBlockFields
@@ -1250,121 +1386,6 @@ export interface CTABlockFields {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "forms".
- */
-export interface Form {
-  id: string;
-  title: string;
-  /**
-   * Where should submissions be duplicated to (in addition to Form submissions)?
-   */
-  submissionKind?: ('none' | 'contact' | 'newsletter') | null;
-  fields: (
-    | {
-        name: string;
-        label?: string | null;
-        placeholder?: string | null;
-        isRequired: boolean;
-        id?: string | null;
-        blockName?: string | null;
-        blockType: 'text';
-      }
-    | {
-        name: string;
-        label?: string | null;
-        placeholder?: string | null;
-        isRequired: boolean;
-        id?: string | null;
-        blockName?: string | null;
-        blockType: 'email';
-      }
-    | {
-        name: string;
-        label: string;
-        placeholder?: string | null;
-        isRequired: boolean;
-        id?: string | null;
-        blockName?: string | null;
-        blockType: 'phone-number';
-      }
-    | {
-        name: string;
-        label?: string | null;
-        placeholder?: string | null;
-        isRequired: boolean;
-        id?: string | null;
-        blockName?: string | null;
-        blockType: 'message';
-      }
-    | {
-        name: string;
-        label?: string | null;
-        selectList: {
-          name: string;
-          id?: string | null;
-        }[];
-        isRequired: boolean;
-        id?: string | null;
-        blockName?: string | null;
-        blockType: 'checkboxGroup';
-      }
-  )[];
-  submitButtonLabel: string;
-  successMessage: string;
-  /**
-   * e.g. newsletter: reject if this email already submitted this form. Configure duplicate messages below.
-   */
-  preventDuplicateEmail?: boolean | null;
-  duplicateEmailTitle?: string | null;
-  duplicateEmailMessage?: string | null;
-  /**
-   * Use for Threatscape report form
-   */
-  downloadReport?: (string | null) | Media;
-  /**
-   * Send custom emails when the form submits. Use comma separated lists to send the same email to multiple recipients. To reference a value from this form, wrap that field's name with double curly brackets, i.e. {{firstName}}.
-   */
-  emails?:
-    | {
-        /**
-         * For multiple values, separate them with a comma, for example: emailToSend1@gmail.com,emailToSend2@gmail.com
-         */
-        emailTo: string;
-        cc?: string | null;
-        bcc?: string | null;
-        replyTo?: string | null;
-        emailFrom: string;
-        subject: string;
-        message: {
-          root: {
-            type: string;
-            children: {
-              type: any;
-              version: number;
-              [k: string]: unknown;
-            }[];
-            direction: ('ltr' | 'rtl') | null;
-            format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-            indent: number;
-            version: number;
-          };
-          [k: string]: unknown;
-        };
-        id?: string | null;
-      }[]
-    | null;
-  telegramChatIds?:
-    | {
-        chatId: string;
-        message: string;
-        id?: string | null;
-      }[]
-    | null;
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "CommentsBlockFields".
  */
 export interface CommentsBlockFields {
@@ -1462,25 +1483,7 @@ export interface Blog {
   shortDescription: string;
   readTime: number;
   /**
-   * Legacy body. Optional if you use Content blocks below — then blocks replace this on the site.
-   */
-  description?: {
-    root: {
-      type: string;
-      children: {
-        type: any;
-        version: number;
-        [k: string]: unknown;
-      }[];
-      direction: ('ltr' | 'rtl') | null;
-      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-      indent: number;
-      version: number;
-    };
-    [k: string]: unknown;
-  } | null;
-  /**
-   * Same blocks as Explore pages: titles, paragraphs, images, tables, HTML, hints. If any block is added, the article body shows these blocks instead of the rich text field.
+   * Page body. Add «Post description (rich text)» for the main text, plus images, headings, tables, etc.
    */
   contentBlocks?:
     | (
@@ -1505,6 +1508,7 @@ export interface Blog {
         | ForgetQuizzesBlockFields
         | ChallengesBlockFields
         | HintBlockFields
+        | PostDescriptionBlockFields
         | ExploreFeatureCardBlockFields
         | ExploreFeatureCardsGridBlockFields
         | ExploreHtmlBlockFields
@@ -1533,6 +1537,9 @@ export interface Blog {
    * Automatically generated or edit manually
    */
   publishedOn?: string | null;
+  /**
+   * Used in blog lists and cards. Recommended: 1200×900 px (4:3 aspect ratio). JPG or WebP, under 500 KB.
+   */
   thumbnail: string | Media;
   category: string | BlogCategory;
   author: string | BlogAuthor;
@@ -1880,6 +1887,30 @@ export interface HintBlockFields {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "PostDescriptionBlockFields".
+ */
+export interface PostDescriptionBlockFields {
+  content: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'post-description-block';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "ExploreFeatureCardBlockFields".
  */
 export interface ExploreFeatureCardBlockFields {
@@ -2061,6 +2092,7 @@ export interface ExploreTabsBlockFields {
     blocks?:
       | (
           | HintBlockFields
+          | PostDescriptionBlockFields
           | ExploreFeatureCardBlockFields
           | ExploreFeatureCardsGridBlockFields
           | ExploreHtmlBlockFields
@@ -2350,7 +2382,14 @@ export interface BlogAuthor {
 export interface Participant {
   id: string;
   title: string;
-  photo: string | Media;
+  /**
+   * Large photo on the participant profile page (left column).
+   */
+  contentPhoto: string | Media;
+  /**
+   * Used in participant cards on the listing. Recommended: 1200×900 px (4:3 aspect ratio). JPG or WebP, under 500 KB.
+   */
+  thumbnail: string | Media;
   specialization: string;
   excerpt: string;
   keywords?:
@@ -2362,6 +2401,19 @@ export interface Participant {
   workplaces?:
     | {
         organization: string;
+        /**
+         * Optional. Internal page, custom URL, or form — the organization name becomes clickable when set.
+         */
+        organizationLink?: {
+          type?: ('reference' | 'custom' | 'form') | null;
+          newTab?: boolean | null;
+          reference?: {
+            relationTo: 'pages';
+            value: string | Page;
+          } | null;
+          url?: string | null;
+          form?: (string | null) | Form;
+        };
         /**
          * Optional details (address, department, etc.)
          */
@@ -2377,21 +2429,59 @@ export interface Participant {
    * Displayed as a tel: link on the participant page.
    */
   phone?: string | null;
-  about: {
-    root: {
-      type: string;
-      children: {
-        type: any;
-        version: number;
-        [k: string]: unknown;
-      }[];
-      direction: ('ltr' | 'rtl') | null;
-      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-      indent: number;
-      version: number;
-    };
-    [k: string]: unknown;
-  };
+  socList?:
+    | {
+        icon: string | Media;
+        /**
+         * Full URL to the social profile (opens in a new tab).
+         */
+        link: string;
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * Page body. Add «Post description (rich text)» for the main text, plus images, headings, tables, etc.
+   */
+  contentBlocks?:
+    | (
+        | HeroScrollBlockFields
+        | Hero2BlockFields
+        | HomeSectionBlockFields
+        | HeadingBlockFields
+        | FeaturesBentoBlockFields
+        | LaunchMapBlockFields
+        | SectionFaqBlockFields
+        | QuotesBlockFields
+        | SolutionsBlockFields
+        | CTABlockFields
+        | CommentsBlockFields
+        | LaunchRegionsBlockFields
+        | BlogBlockFields
+        | SubscribeBlockFields
+        | FaqBlockFields
+        | DownloadAppBlockFields
+        | PlayBigBlockFields
+        | PeekInsideBlockFields
+        | ForgetQuizzesBlockFields
+        | ChallengesBlockFields
+        | HintBlockFields
+        | PostDescriptionBlockFields
+        | ExploreFeatureCardBlockFields
+        | ExploreFeatureCardsGridBlockFields
+        | ExploreHtmlBlockFields
+        | ExploreImageBlockFields
+        | ExploreTitleBlockFields
+        | ExploreSubtitleBlockFields
+        | ExploreParagraphBlockFields
+        | ExploreTableBlockFields
+        | ResponsiveBlocksBlockFields
+        | ExploreTabsBlockFields
+        | ContactsOurLinksBlockFields
+        | ContactsFormBlockFields
+        | ContactsOfficeBlockFields
+        | ContactsPaymentBlockFields
+      )[]
+    | null;
   meta?: {
     title?: string | null;
     /**
@@ -2414,21 +2504,49 @@ export interface Project {
   title: string;
   cover: string | Media;
   excerpt: string;
-  about: {
-    root: {
-      type: string;
-      children: {
-        type: any;
-        version: number;
-        [k: string]: unknown;
-      }[];
-      direction: ('ltr' | 'rtl') | null;
-      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-      indent: number;
-      version: number;
-    };
-    [k: string]: unknown;
-  };
+  /**
+   * Page body. Add «Post description (rich text)» for the main text, plus images, headings, tables, etc.
+   */
+  contentBlocks?:
+    | (
+        | HeroScrollBlockFields
+        | Hero2BlockFields
+        | HomeSectionBlockFields
+        | HeadingBlockFields
+        | FeaturesBentoBlockFields
+        | LaunchMapBlockFields
+        | SectionFaqBlockFields
+        | QuotesBlockFields
+        | SolutionsBlockFields
+        | CTABlockFields
+        | CommentsBlockFields
+        | LaunchRegionsBlockFields
+        | BlogBlockFields
+        | SubscribeBlockFields
+        | FaqBlockFields
+        | DownloadAppBlockFields
+        | PlayBigBlockFields
+        | PeekInsideBlockFields
+        | ForgetQuizzesBlockFields
+        | ChallengesBlockFields
+        | HintBlockFields
+        | PostDescriptionBlockFields
+        | ExploreFeatureCardBlockFields
+        | ExploreFeatureCardsGridBlockFields
+        | ExploreHtmlBlockFields
+        | ExploreImageBlockFields
+        | ExploreTitleBlockFields
+        | ExploreSubtitleBlockFields
+        | ExploreParagraphBlockFields
+        | ExploreTableBlockFields
+        | ResponsiveBlocksBlockFields
+        | ExploreTabsBlockFields
+        | ContactsOurLinksBlockFields
+        | ContactsFormBlockFields
+        | ContactsOfficeBlockFields
+        | ContactsPaymentBlockFields
+      )[]
+    | null;
   meta?: {
     title?: string | null;
     /**
@@ -2473,6 +2591,7 @@ export interface SubscriptionsPageFields {
         | ForgetQuizzesBlockFields
         | ChallengesBlockFields
         | HintBlockFields
+        | PostDescriptionBlockFields
         | ExploreFeatureCardBlockFields
         | ExploreFeatureCardsGridBlockFields
         | ExploreHtmlBlockFields
@@ -2891,6 +3010,7 @@ export interface ExplorePagesSelect<T extends boolean = true> {
         'forget-quizzes-block'?: T | ForgetQuizzesBlockFieldsSelect<T>;
         'challenges-block'?: T | ChallengesBlockFieldsSelect<T>;
         'hint-block'?: T | HintBlockFieldsSelect<T>;
+        'post-description-block'?: T | PostDescriptionBlockFieldsSelect<T>;
         'explore-feature-card'?: T | ExploreFeatureCardBlockFieldsSelect<T>;
         'explore-feature-cards'?: T | ExploreFeatureCardsGridBlockFieldsSelect<T>;
         'explore-html'?: T | ExploreHtmlBlockFieldsSelect<T>;
@@ -3059,6 +3179,15 @@ export interface FeaturesBentoBlockFieldsSelect<T extends boolean = true> {
               heightPreset?: T;
               heightCustomPx?: T;
               tone?: T;
+              link?:
+                | T
+                | {
+                    type?: T;
+                    newTab?: T;
+                    reference?: T;
+                    url?: T;
+                    form?: T;
+                  };
               id?: T;
             };
         id?: T;
@@ -3134,6 +3263,7 @@ export interface ResponsiveBlocksBlockFieldsSelect<T extends boolean = true> {
         'forget-quizzes-block'?: T | ForgetQuizzesBlockFieldsSelect<T>;
         'challenges-block'?: T | ChallengesBlockFieldsSelect<T>;
         'hint-block'?: T | HintBlockFieldsSelect<T>;
+        'post-description-block'?: T | PostDescriptionBlockFieldsSelect<T>;
         'explore-feature-card'?: T | ExploreFeatureCardBlockFieldsSelect<T>;
         'explore-feature-cards'?: T | ExploreFeatureCardsGridBlockFieldsSelect<T>;
         'explore-html'?: T | ExploreHtmlBlockFieldsSelect<T>;
@@ -3173,6 +3303,7 @@ export interface ResponsiveBlocksBlockFieldsSelect<T extends boolean = true> {
         'forget-quizzes-block'?: T | ForgetQuizzesBlockFieldsSelect<T>;
         'challenges-block'?: T | ChallengesBlockFieldsSelect<T>;
         'hint-block'?: T | HintBlockFieldsSelect<T>;
+        'post-description-block'?: T | PostDescriptionBlockFieldsSelect<T>;
         'explore-feature-card'?: T | ExploreFeatureCardBlockFieldsSelect<T>;
         'explore-feature-cards'?: T | ExploreFeatureCardsGridBlockFieldsSelect<T>;
         'explore-html'?: T | ExploreHtmlBlockFieldsSelect<T>;
@@ -3571,6 +3702,15 @@ export interface HintBlockFieldsSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "PostDescriptionBlockFields_select".
+ */
+export interface PostDescriptionBlockFieldsSelect<T extends boolean = true> {
+  content?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "ExploreFeatureCardBlockFields_select".
  */
 export interface ExploreFeatureCardBlockFieldsSelect<T extends boolean = true> {
@@ -3695,6 +3835,7 @@ export interface ExploreTabsBlockFieldsSelect<T extends boolean = true> {
           | T
           | {
               'hint-block'?: T | HintBlockFieldsSelect<T>;
+              'post-description-block'?: T | PostDescriptionBlockFieldsSelect<T>;
               'explore-feature-card'?: T | ExploreFeatureCardBlockFieldsSelect<T>;
               'explore-feature-cards'?: T | ExploreFeatureCardsGridBlockFieldsSelect<T>;
               'explore-html'?: T | ExploreHtmlBlockFieldsSelect<T>;
@@ -3861,6 +4002,7 @@ export interface PagesSelect<T extends boolean = true> {
         'forget-quizzes-block'?: T | ForgetQuizzesBlockFieldsSelect<T>;
         'challenges-block'?: T | ChallengesBlockFieldsSelect<T>;
         'hint-block'?: T | HintBlockFieldsSelect<T>;
+        'post-description-block'?: T | PostDescriptionBlockFieldsSelect<T>;
         'explore-feature-card'?: T | ExploreFeatureCardBlockFieldsSelect<T>;
         'explore-feature-cards'?: T | ExploreFeatureCardsGridBlockFieldsSelect<T>;
         'explore-html'?: T | ExploreHtmlBlockFieldsSelect<T>;
@@ -3902,6 +4044,7 @@ export interface PagesSelect<T extends boolean = true> {
         'forget-quizzes-block'?: T | ForgetQuizzesBlockFieldsSelect<T>;
         'challenges-block'?: T | ChallengesBlockFieldsSelect<T>;
         'hint-block'?: T | HintBlockFieldsSelect<T>;
+        'post-description-block'?: T | PostDescriptionBlockFieldsSelect<T>;
         'explore-feature-card'?: T | ExploreFeatureCardBlockFieldsSelect<T>;
         'explore-feature-cards'?: T | ExploreFeatureCardsGridBlockFieldsSelect<T>;
         'explore-html'?: T | ExploreHtmlBlockFieldsSelect<T>;
@@ -3955,6 +4098,7 @@ export interface PagesSelect<T extends boolean = true> {
         'forget-quizzes-block'?: T | ForgetQuizzesBlockFieldsSelect<T>;
         'challenges-block'?: T | ChallengesBlockFieldsSelect<T>;
         'hint-block'?: T | HintBlockFieldsSelect<T>;
+        'post-description-block'?: T | PostDescriptionBlockFieldsSelect<T>;
         'explore-feature-card'?: T | ExploreFeatureCardBlockFieldsSelect<T>;
         'explore-feature-cards'?: T | ExploreFeatureCardsGridBlockFieldsSelect<T>;
         'explore-html'?: T | ExploreHtmlBlockFieldsSelect<T>;
@@ -4000,6 +4144,7 @@ export interface PagesSelect<T extends boolean = true> {
               'forget-quizzes-block'?: T | ForgetQuizzesBlockFieldsSelect<T>;
               'challenges-block'?: T | ChallengesBlockFieldsSelect<T>;
               'hint-block'?: T | HintBlockFieldsSelect<T>;
+              'post-description-block'?: T | PostDescriptionBlockFieldsSelect<T>;
               'explore-feature-card'?: T | ExploreFeatureCardBlockFieldsSelect<T>;
               'explore-feature-cards'?: T | ExploreFeatureCardsGridBlockFieldsSelect<T>;
               'explore-html'?: T | ExploreHtmlBlockFieldsSelect<T>;
@@ -4075,6 +4220,7 @@ export interface PagesSelect<T extends boolean = true> {
               'forget-quizzes-block'?: T | ForgetQuizzesBlockFieldsSelect<T>;
               'challenges-block'?: T | ChallengesBlockFieldsSelect<T>;
               'hint-block'?: T | HintBlockFieldsSelect<T>;
+              'post-description-block'?: T | PostDescriptionBlockFieldsSelect<T>;
               'explore-feature-card'?: T | ExploreFeatureCardBlockFieldsSelect<T>;
               'explore-feature-cards'?: T | ExploreFeatureCardsGridBlockFieldsSelect<T>;
               'explore-html'?: T | ExploreHtmlBlockFieldsSelect<T>;
@@ -4134,6 +4280,7 @@ export interface SubscriptionsPageFieldsSelect<T extends boolean = true> {
         'forget-quizzes-block'?: T | ForgetQuizzesBlockFieldsSelect<T>;
         'challenges-block'?: T | ChallengesBlockFieldsSelect<T>;
         'hint-block'?: T | HintBlockFieldsSelect<T>;
+        'post-description-block'?: T | PostDescriptionBlockFieldsSelect<T>;
         'explore-feature-card'?: T | ExploreFeatureCardBlockFieldsSelect<T>;
         'explore-feature-cards'?: T | ExploreFeatureCardsGridBlockFieldsSelect<T>;
         'explore-html'?: T | ExploreHtmlBlockFieldsSelect<T>;
@@ -4169,7 +4316,6 @@ export interface BlogSelect<T extends boolean = true> {
   title?: T;
   shortDescription?: T;
   readTime?: T;
-  description?: T;
   contentBlocks?:
     | T
     | {
@@ -4194,6 +4340,7 @@ export interface BlogSelect<T extends boolean = true> {
         'forget-quizzes-block'?: T | ForgetQuizzesBlockFieldsSelect<T>;
         'challenges-block'?: T | ChallengesBlockFieldsSelect<T>;
         'hint-block'?: T | HintBlockFieldsSelect<T>;
+        'post-description-block'?: T | PostDescriptionBlockFieldsSelect<T>;
         'explore-feature-card'?: T | ExploreFeatureCardBlockFieldsSelect<T>;
         'explore-feature-cards'?: T | ExploreFeatureCardsGridBlockFieldsSelect<T>;
         'explore-html'?: T | ExploreHtmlBlockFieldsSelect<T>;
@@ -4276,7 +4423,8 @@ export interface BlogAuthorsSelect<T extends boolean = true> {
  */
 export interface ParticipantsSelect<T extends boolean = true> {
   title?: T;
-  photo?: T;
+  contentPhoto?: T;
+  thumbnail?: T;
   specialization?: T;
   excerpt?: T;
   keywords?:
@@ -4289,12 +4437,68 @@ export interface ParticipantsSelect<T extends boolean = true> {
     | T
     | {
         organization?: T;
+        organizationLink?:
+          | T
+          | {
+              type?: T;
+              newTab?: T;
+              reference?: T;
+              url?: T;
+              form?: T;
+            };
         note?: T;
         id?: T;
       };
   receptionHours?: T;
   phone?: T;
-  about?: T;
+  socList?:
+    | T
+    | {
+        icon?: T;
+        link?: T;
+        id?: T;
+      };
+  contentBlocks?:
+    | T
+    | {
+        'hero-scroll-block'?: T | HeroScrollBlockFieldsSelect<T>;
+        'hero-2-block'?: T | Hero2BlockFieldsSelect<T>;
+        'home-section-block'?: T | HomeSectionBlockFieldsSelect<T>;
+        'heading-block'?: T | HeadingBlockFieldsSelect<T>;
+        'features-bento-block'?: T | FeaturesBentoBlockFieldsSelect<T>;
+        'launch-map-block'?: T | LaunchMapBlockFieldsSelect<T>;
+        'section-faq-block'?: T | SectionFaqBlockFieldsSelect<T>;
+        'quotes-block'?: T | QuotesBlockFieldsSelect<T>;
+        'solutions-block'?: T | SolutionsBlockFieldsSelect<T>;
+        'cta-block'?: T | CTABlockFieldsSelect<T>;
+        'comments-block'?: T | CommentsBlockFieldsSelect<T>;
+        'launch-regions-block'?: T | LaunchRegionsBlockFieldsSelect<T>;
+        'blog-home-block'?: T | BlogBlockFieldsSelect<T>;
+        'subscribe-block'?: T | SubscribeBlockFieldsSelect<T>;
+        'faq-block'?: T | FaqBlockFieldsSelect<T>;
+        'download-app-block'?: T | DownloadAppBlockFieldsSelect<T>;
+        'our-team-block'?: T | PlayBigBlockFieldsSelect<T>;
+        'peek-inside-block'?: T | PeekInsideBlockFieldsSelect<T>;
+        'forget-quizzes-block'?: T | ForgetQuizzesBlockFieldsSelect<T>;
+        'challenges-block'?: T | ChallengesBlockFieldsSelect<T>;
+        'hint-block'?: T | HintBlockFieldsSelect<T>;
+        'post-description-block'?: T | PostDescriptionBlockFieldsSelect<T>;
+        'explore-feature-card'?: T | ExploreFeatureCardBlockFieldsSelect<T>;
+        'explore-feature-cards'?: T | ExploreFeatureCardsGridBlockFieldsSelect<T>;
+        'explore-html'?: T | ExploreHtmlBlockFieldsSelect<T>;
+        'explore-image'?: T | ExploreImageBlockFieldsSelect<T>;
+        'explore-title'?: T | ExploreTitleBlockFieldsSelect<T>;
+        'explore-subtitle'?: T | ExploreSubtitleBlockFieldsSelect<T>;
+        'explore-paragraph'?: T | ExploreParagraphBlockFieldsSelect<T>;
+        'explore-table'?: T | ExploreTableBlockFieldsSelect<T>;
+        'responsive-blocks-panel'?: T | ResponsiveBlocksBlockFieldsSelect<T>;
+        'explore-tabs'?: T | ExploreTabsBlockFieldsSelect<T>;
+        'contacts-our-links-block'?: T | ContactsOurLinksBlockFieldsSelect<T>;
+        'contacts-form-block'?: T | ContactsFormBlockFieldsSelect<T>;
+        'contacts-office-block'?: T | ContactsOfficeBlockFieldsSelect<T>;
+        'contacts-payment-block'?: T | ContactsPaymentBlockFieldsSelect<T>;
+        'responsive-blocks-unified'?: T | ResponsiveBlocksBlockFieldsSelect<T>;
+      };
   meta?:
     | T
     | {
@@ -4315,7 +4519,47 @@ export interface ProjectsSelect<T extends boolean = true> {
   title?: T;
   cover?: T;
   excerpt?: T;
-  about?: T;
+  contentBlocks?:
+    | T
+    | {
+        'hero-scroll-block'?: T | HeroScrollBlockFieldsSelect<T>;
+        'hero-2-block'?: T | Hero2BlockFieldsSelect<T>;
+        'home-section-block'?: T | HomeSectionBlockFieldsSelect<T>;
+        'heading-block'?: T | HeadingBlockFieldsSelect<T>;
+        'features-bento-block'?: T | FeaturesBentoBlockFieldsSelect<T>;
+        'launch-map-block'?: T | LaunchMapBlockFieldsSelect<T>;
+        'section-faq-block'?: T | SectionFaqBlockFieldsSelect<T>;
+        'quotes-block'?: T | QuotesBlockFieldsSelect<T>;
+        'solutions-block'?: T | SolutionsBlockFieldsSelect<T>;
+        'cta-block'?: T | CTABlockFieldsSelect<T>;
+        'comments-block'?: T | CommentsBlockFieldsSelect<T>;
+        'launch-regions-block'?: T | LaunchRegionsBlockFieldsSelect<T>;
+        'blog-home-block'?: T | BlogBlockFieldsSelect<T>;
+        'subscribe-block'?: T | SubscribeBlockFieldsSelect<T>;
+        'faq-block'?: T | FaqBlockFieldsSelect<T>;
+        'download-app-block'?: T | DownloadAppBlockFieldsSelect<T>;
+        'our-team-block'?: T | PlayBigBlockFieldsSelect<T>;
+        'peek-inside-block'?: T | PeekInsideBlockFieldsSelect<T>;
+        'forget-quizzes-block'?: T | ForgetQuizzesBlockFieldsSelect<T>;
+        'challenges-block'?: T | ChallengesBlockFieldsSelect<T>;
+        'hint-block'?: T | HintBlockFieldsSelect<T>;
+        'post-description-block'?: T | PostDescriptionBlockFieldsSelect<T>;
+        'explore-feature-card'?: T | ExploreFeatureCardBlockFieldsSelect<T>;
+        'explore-feature-cards'?: T | ExploreFeatureCardsGridBlockFieldsSelect<T>;
+        'explore-html'?: T | ExploreHtmlBlockFieldsSelect<T>;
+        'explore-image'?: T | ExploreImageBlockFieldsSelect<T>;
+        'explore-title'?: T | ExploreTitleBlockFieldsSelect<T>;
+        'explore-subtitle'?: T | ExploreSubtitleBlockFieldsSelect<T>;
+        'explore-paragraph'?: T | ExploreParagraphBlockFieldsSelect<T>;
+        'explore-table'?: T | ExploreTableBlockFieldsSelect<T>;
+        'responsive-blocks-panel'?: T | ResponsiveBlocksBlockFieldsSelect<T>;
+        'explore-tabs'?: T | ExploreTabsBlockFieldsSelect<T>;
+        'contacts-our-links-block'?: T | ContactsOurLinksBlockFieldsSelect<T>;
+        'contacts-form-block'?: T | ContactsFormBlockFieldsSelect<T>;
+        'contacts-office-block'?: T | ContactsOfficeBlockFieldsSelect<T>;
+        'contacts-payment-block'?: T | ContactsPaymentBlockFieldsSelect<T>;
+        'responsive-blocks-unified'?: T | ResponsiveBlocksBlockFieldsSelect<T>;
+      };
   meta?:
     | T
     | {

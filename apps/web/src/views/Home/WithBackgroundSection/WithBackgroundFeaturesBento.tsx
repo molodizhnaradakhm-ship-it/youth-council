@@ -4,10 +4,12 @@ import type { CSSProperties } from 'react';
 import clsx from 'clsx';
 
 import { Container } from '@/components/Container';
+import { CMSLink, type CMSLinkType } from '@/components/CMSLink';
 import { InViewAnimation } from '@/components/InViewAnimation';
 import { Text } from '@/components/Text';
 import { aspectRatioTokenToCss } from '@/utils/aspectRatioTokenToCss';
 import { cssUrl } from '@/utils/cssUrl';
+import { hasCmsLinkTarget } from '@/utils/hasCmsLinkTarget';
 import { resolvePayloadMediaUrl } from '@/utils/resolvePayloadMediaUrl';
 import type { Media } from '@monorepo/cms/src/payload-types';
 
@@ -160,6 +162,58 @@ export const WithBackgroundFeaturesBento = ({
 
                   const globalIndex = colIndex * 100 + cardIndex;
 
+                  const cardLink = card.link as CMSLinkType | undefined;
+                  const isLinked = hasCmsLinkTarget(cardLink);
+                  const linkAriaLabel =
+                    card.kicker?.trim() || card.description?.trim()?.slice(0, 80) || 'Feature';
+
+                  const cellNode = (
+                    <div
+                      className={clsx(
+                        styles.cell,
+                        toneClass[tone as keyof typeof toneClass],
+                        heightClass,
+                        imageLayer === 'cardBackground' && styles.cellCardBg,
+                      )}
+                      style={cellCombinedStyle}
+                    >
+                      {card.image && imageLayer === 'cardBackground' && imgUrl ? (
+                        <div className={styles.cellBgLayer} style={bgStyle} role='img' aria-label={altText} />
+                      ) : null}
+                      <div className={styles.cellText}>
+                        {card.kicker?.trim() ? (
+                          <Text className={styles.cellKicker} color='text' tag='p' type='p2'>
+                            {card.kicker}
+                          </Text>
+                        ) : null}
+                        {card.description?.trim() ? (
+                          <Text className={styles.cellBody} color='inherit' tag='p' type='p2'>
+                            {card.description}
+                          </Text>
+                        ) : null}
+                      </div>
+                      {card.image && imageLayer !== 'cardBackground' ? (
+                        <div
+                          className={clsx(
+                            styles.cellMedia,
+                            hasFixedAspect && styles.cellMediaFixedRatio,
+                            isMediaFill && styles.cellMediaFillArea,
+                          )}
+                          style={aspectCss ? { aspectRatio: aspectCss } : undefined}
+                        >
+                          <div
+                            className={styles.cellMediaFrame}
+                            style={{ width: isMediaFill ? '100%' : `${widthPct}%` }}
+                          >
+                            {imgUrl ? (
+                              <div className={styles.cellMediaBg} style={bgStyle} role='img' aria-label={altText} />
+                            ) : null}
+                          </div>
+                        </div>
+                      ) : null}
+                    </div>
+                  );
+
                   return (
                     <InViewAnimation
                       key={card?.id ?? `card-${colIndex}-${cardIndex}`}
@@ -169,50 +223,21 @@ export const WithBackgroundFeaturesBento = ({
                       delay={globalIndex * 0.02}
                       tagType='div'
                     >
-                      <div
-                        className={clsx(
-                          styles.cell,
-                          toneClass[tone as keyof typeof toneClass],
-                          heightClass,
-                          imageLayer === 'cardBackground' && styles.cellCardBg,
-                        )}
-                        style={cellCombinedStyle}
-                      >
-                        {card.image && imageLayer === 'cardBackground' && imgUrl ? (
-                          <div className={styles.cellBgLayer} style={bgStyle} role='img' aria-label={altText} />
-                        ) : null}
-                        <div className={styles.cellText}>
-                          {card.kicker?.trim() ? (
-                            <Text className={styles.cellKicker} color='text' tag='p' type='p2'>
-                              {card.kicker}
-                            </Text>
-                          ) : null}
-                          {card.description?.trim() ? (
-                            <Text className={styles.cellBody} color='inherit' tag='p' type='p2'>
-                              {card.description}
-                            </Text>
-                          ) : null}
-                        </div>
-                        {card.image && imageLayer !== 'cardBackground' ? (
-                          <div
-                            className={clsx(
-                              styles.cellMedia,
-                              hasFixedAspect && styles.cellMediaFixedRatio,
-                              isMediaFill && styles.cellMediaFillArea,
-                            )}
-                            style={aspectCss ? { aspectRatio: aspectCss } : undefined}
-                          >
-                            <div
-                              className={styles.cellMediaFrame}
-                              style={{ width: isMediaFill ? '100%' : `${widthPct}%` }}
-                            >
-                              {imgUrl ? (
-                                <div className={styles.cellMediaBg} style={bgStyle} role='img' aria-label={altText} />
-                              ) : null}
-                            </div>
-                          </div>
-                        ) : null}
-                      </div>
+                      {isLinked && cardLink ? (
+                        <CMSLink
+                          aria-label={linkAriaLabel}
+                          className={styles.cellLink}
+                          form={cardLink.form}
+                          newTab={cardLink.newTab}
+                          reference={cardLink.reference}
+                          type={cardLink.type}
+                          url={cardLink.url}
+                        >
+                          {cellNode}
+                        </CMSLink>
+                      ) : (
+                        cellNode
+                      )}
                     </InViewAnimation>
                   );
                 })}

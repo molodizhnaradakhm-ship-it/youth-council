@@ -49,9 +49,9 @@ export const SingleAuthor = ({
         <Container className={styles.container}>
           <div className={styles.introRow}>
             <div className={styles.introLeft}>
-              <InViewAnimation animateImage className={styles.photoWrap}>
+              <div className={styles.photoWrap}>
                 <CMSMedia resource={photo} className={styles.photo} />
-              </InViewAnimation>
+              </div>
               <InViewAnimation className={styles.contacts} effect='y' delay={0.4}>
                 <SocialsBlock variant='onLight' socList={socList} />
                 {phoneStr ? <PhoneBlock variant='onLight' phone={phoneStr} /> : null}

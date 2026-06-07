@@ -1,5 +1,7 @@
 import type { CollectionConfig } from 'payload';
 
+import { articleContentFields } from '@/fields/articleContentFields';
+import { link } from '@/fields/link';
 import { seoFields } from '@/fields/seo';
 import { slugField } from '@/fields/slug';
 import { slugBeforeReadCollection } from '@/hooks/getSlugs';
@@ -26,7 +28,22 @@ export const Participants: CollectionConfig = {
               type: 'text',
             },
             {
-              name: 'photo',
+              admin: {
+                description: 'Large photo on the participant profile page (left column).',
+              },
+              label: 'Content photo',
+              name: 'contentPhoto',
+              relationTo: 'media',
+              required: true,
+              type: 'upload',
+            },
+            {
+              admin: {
+                description:
+                  'Used in participant cards on the listing. Recommended: 1200×900 px (4:3 aspect ratio). JPG or WebP, under 500 KB.',
+              },
+              label: 'Thumbnail',
+              name: 'thumbnail',
               relationTo: 'media',
               required: true,
               type: 'upload',
@@ -71,6 +88,19 @@ export const Participants: CollectionConfig = {
                   required: true,
                   type: 'text',
                 },
+                link({
+                  appearances: false,
+                  disableLabel: true,
+                  optional: true,
+                  overrides: {
+                    admin: {
+                      description:
+                        'Optional. Internal page, custom URL, or form — the organization name becomes clickable when set.',
+                    },
+                    label: 'Organization link',
+                    name: 'organizationLink',
+                  },
+                }),
                 {
                   admin: {
                     description: 'Optional details (address, department, etc.)',
@@ -105,19 +135,37 @@ export const Participants: CollectionConfig = {
               name: 'phone',
               type: 'text',
             },
+            {
+              fields: [
+                {
+                  label: 'Icon',
+                  name: 'icon',
+                  relationTo: 'media',
+                  required: true,
+                  type: 'upload',
+                },
+                {
+                  admin: {
+                    description: 'Full URL to the social profile (opens in a new tab).',
+                  },
+                  label: 'Link',
+                  name: 'link',
+                  required: true,
+                  type: 'text',
+                },
+              ],
+              labels: {
+                plural: 'Social networks',
+                singular: 'Social network',
+              },
+              name: 'socList',
+              type: 'array',
+            },
           ],
           label: 'Main',
         },
         {
-          fields: [
-            {
-              label: 'About',
-              localized: true,
-              name: 'about',
-              required: true,
-              type: 'richText',
-            },
-          ],
+          fields: articleContentFields,
           label: 'Content',
         },
         seoFields,

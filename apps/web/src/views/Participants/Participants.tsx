@@ -5,7 +5,7 @@ import { ParticipantCard } from '@/components/ParticipantCard';
 import { ParticipantsPagination } from '@/components/ParticipantsPagination';
 import { ParticipantsSearchBar } from '@/components/ParticipantsSearchBar';
 import { Text } from '@/components/Text';
-import type { Participant } from '@monorepo/cms/src/payload-types';
+import type { Config, Participant } from '@monorepo/cms/src/payload-types';
 
 import styles from './Participants.module.scss';
 
@@ -15,6 +15,7 @@ type Props = {
   headingTitle?: string | null;
   /** URL segment for pagination/search (no locale). Default `participants`. */
   listPath?: string;
+  locale: Config['locale'];
   pageSize: number;
   participants: Participant[];
   query: string;
@@ -25,6 +26,7 @@ export async function ParticipantsView({
   currentPage,
   headingTitle,
   listPath = 'participants',
+  locale,
   pageSize,
   participants,
   query,
@@ -33,6 +35,7 @@ export async function ParticipantsView({
   const t = await getTranslations('participants');
   const totalPages = Math.max(1, Math.ceil(totalDocs / pageSize));
   const titleText = headingTitle?.trim() || t('title');
+  const openLabel = t('open');
 
   return (
     <main className={styles.wrapper}>
@@ -54,7 +57,7 @@ export async function ParticipantsView({
             <ul className={styles.grid}>
               {participants.map((p) => (
                 <li key={p.id} className={styles.gridItem}>
-                  <ParticipantCard participant={p} />
+                  <ParticipantCard locale={locale} openLabel={openLabel} participant={p} />
                 </li>
               ))}
             </ul>

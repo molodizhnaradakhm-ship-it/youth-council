@@ -5,7 +5,8 @@ import {
   EntityRelatedPostsSection,
 } from '@/components/EntityRelatedPostsSection';
 import { InViewAnimation } from '@/components/InViewAnimation';
-import RichText from '@/components/RichText';
+import { RenderBlocks } from '@/components/RenderBlocks';
+import { unifiedBlocksMapper } from '@/components/RenderBlocks/unifiedBlocksMapper';
 import { Text } from '@/components/Text';
 import type { Project } from '@monorepo/cms/src/payload-types';
 
@@ -15,8 +16,10 @@ type Props = Project & {
   relatedPosts?: EntityRelatedPostsProps | null;
 };
 
-export function SingleProject({ about, cover, excerpt, relatedPosts, title }: Props) {
+export function SingleProject({ contentBlocks, cover, excerpt, relatedPosts, title }: Props) {
   const excerptStr = excerpt?.trim() ?? '';
+  const blocks = contentBlocks ?? [];
+  const hasBlocks = blocks.length > 0;
 
   return (
     <main className={styles.wrapper}>
@@ -24,9 +27,9 @@ export function SingleProject({ about, cover, excerpt, relatedPosts, title }: Pr
         <Container className={styles.container}>
           <div className={styles.introRow}>
             <div className={styles.introLeft}>
-              <InViewAnimation animateImage className={styles.coverWrap}>
+              <div className={styles.coverWrap}>
                 <CMSMedia className={styles.cover} resource={cover} />
-              </InViewAnimation>
+              </div>
             </div>
             <div className={styles.introRight}>
               <InViewAnimation className={styles.nameBlock} effect='y'>
@@ -39,18 +42,19 @@ export function SingleProject({ about, cover, excerpt, relatedPosts, title }: Pr
                   {title}
                 </Text>
               </InViewAnimation>
-              <InViewAnimation delay={0.1} effect='y'>
-                <RichText
-                  className={styles.about}
-                  content={about}
-                  textColor='inherit'
-                  textType='p2'
-                />
-              </InViewAnimation>
             </div>
           </div>
         </Container>
       </section>
+      {hasBlocks ? (
+        <section className={styles.content}>
+          <Container>
+            <div className={styles.contentBlocks}>
+              <RenderBlocks blocks={blocks as never} mapper={unifiedBlocksMapper} />
+            </div>
+          </Container>
+        </section>
+      ) : null}
       {relatedPosts ? (
         <EntityRelatedPostsSection
           categories={relatedPosts.categories}

@@ -1,17 +1,10 @@
 import type { CollectionConfig } from 'payload';
 
 import { dateField } from '@/fields/date';
+import { articleContentFields } from '@/fields/articleContentFields';
 import { seoFields } from '@/fields/seo';
 import { slugField } from '@/fields/slug';
 import { slugBeforeReadCollection } from '@/hooks/getSlugs';
-
-import { exploreContentBlocks } from '../shared/exploreContentBlocks';
-
-import {
-  EXPERIMENTAL_TableFeature,
-  lexicalEditor,
-  UploadFeature,
-} from '@payloadcms/richtext-lexical';
 
 export const Blog: CollectionConfig = {
   access: {
@@ -52,39 +45,7 @@ export const Blog: CollectionConfig = {
           label: 'Main',
         },
         {
-          fields: [
-            {
-              admin: {
-                description:
-                  'Legacy body. Optional if you use Content blocks below — then blocks replace this on the site.',
-              },
-              editor: lexicalEditor({
-                features: ({ rootFeatures }) => {
-                  return [...rootFeatures, EXPERIMENTAL_TableFeature(), UploadFeature()];
-                },
-              }),
-              label: 'Post description (rich text)',
-              localized: true,
-              name: 'description',
-              required: false,
-              type: 'richText',
-            },
-            {
-              admin: {
-                description:
-                  'Same blocks as Explore pages: titles, paragraphs, images, tables, HTML, hints. If any block is added, the article body shows these blocks instead of the rich text field.',
-              },
-              blocks: exploreContentBlocks,
-              label: 'Content blocks',
-              labels: {
-                plural: 'Blocks',
-                singular: 'Block',
-              },
-              localized: true,
-              name: 'contentBlocks',
-              type: 'blocks',
-            },
-          ],
+          fields: articleContentFields,
           label: 'Content',
         },
         seoFields,
@@ -93,6 +54,8 @@ export const Blog: CollectionConfig = {
     dateField(),
     {
       admin: {
+        description:
+          'Used in blog lists and cards. Recommended: 1200×900 px (4:3 aspect ratio). JPG or WebP, under 500 KB.',
         position: 'sidebar',
       },
       name: 'thumbnail',

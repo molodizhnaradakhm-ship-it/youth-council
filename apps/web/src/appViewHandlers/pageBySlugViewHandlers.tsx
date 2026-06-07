@@ -243,6 +243,7 @@ export async function renderParticipants({
       currentPage={currentPage}
       headingTitle={page.title}
       listPath={slugSegment}
+      locale={locale}
       pageSize={PARTICIPANTS_PAGE_SIZE}
       participants={res.docs ?? []}
       query={q}

@@ -7,6 +7,7 @@ import { ExploreFeatureCardsGridBlock } from '@/components/ExploreBlocks/Explore
 import { ExploreHtmlBlock } from '@/components/ExploreBlocks/ExploreHtmlBlock';
 import { ExploreImageBlock } from '@/components/ExploreBlocks/ExploreImageBlock';
 import { ExploreParagraphBlock } from '@/components/ExploreBlocks/ExploreParagraphBlock';
+import { PostDescriptionBlock } from '@/components/ExploreBlocks/PostDescriptionBlock';
 import { ExploreSubtitleBlock } from '@/components/ExploreBlocks/ExploreSubtitleBlock';
 import { ExploreTableBlock } from '@/components/ExploreBlocks/ExploreTableBlock';
 import { ExploreTitleBlock } from '@/components/ExploreBlocks/ExploreTitleBlock';
@@ -21,6 +22,7 @@ import type {
   ExploreTableBlockFields,
   ExploreTitleBlockFields,
   HintBlockFields,
+  PostDescriptionBlockFields,
 } from '@monorepo/cms/src/payload-types';
 
 export const exploreTabPanelMapper = {
@@ -31,6 +33,7 @@ export const exploreTabPanelMapper = {
   'explore-html': (props: ExploreHtmlBlockFields) => <ExploreHtmlBlock {...props} />,
   'explore-image': (props: ExploreImageBlockFields) => <ExploreImageBlock {...props} />,
   'explore-paragraph': (props: ExploreParagraphBlockFields) => <ExploreParagraphBlock {...props} />,
+  'post-description-block': (props: PostDescriptionBlockFields) => <PostDescriptionBlock {...props} />,
   'explore-subtitle': (props: ExploreSubtitleBlockFields) => <ExploreSubtitleBlock {...props} />,
   'explore-table': (props: ExploreTableBlockFields) => <ExploreTableBlock {...props} />,
   'explore-title': (props: ExploreTitleBlockFields) => <ExploreTitleBlock {...props} />,

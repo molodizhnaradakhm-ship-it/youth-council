@@ -1,5 +1,6 @@
 import type { CollectionConfig } from 'payload';
 
+import { articleContentFields } from '@/fields/articleContentFields';
 import { seoFields } from '@/fields/seo';
 import { slugField } from '@/fields/slug';
 import { slugBeforeReadCollection } from '@/hooks/getSlugs';
@@ -43,15 +44,7 @@ export const Projects: CollectionConfig = {
           label: 'Main',
         },
         {
-          fields: [
-            {
-              label: 'About',
-              localized: true,
-              name: 'about',
-              required: true,
-              type: 'richText',
-            },
-          ],
+          fields: articleContentFields,
           label: 'Content',
         },
         seoFields,

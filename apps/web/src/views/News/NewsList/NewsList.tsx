@@ -18,8 +18,7 @@ export const NewsList = ({
   readMoreLabel?: string | null;
 }) => {
   const t = useTranslations('common');
-  // Blog index should use the same card styling as the homepage grid
-  const cardVariant = url === 'blog' ? 'blogHome' : 'default';
+  const cardVariant = url === 'blog' ? 'grid' : 'default';
 
   if (!list || list.length === 0) {
     const notFoundKey = url === 'blog' ? 'blog_not_found' : 'news_not_found';
@@ -29,15 +28,17 @@ export const NewsList = ({
   return (
     <ul className={styles.list}>
       {list.map((post) => (
-        <InViewAnimation key={post.id}>
-          <PostCard
-            {...post}
-            categoryTitle={(post.category as BlogCategory)?.title ?? ''}
-            url={url}
-            variant={cardVariant}
-            readMoreLabel={readMoreLabel}
-          />
-        </InViewAnimation>
+        <li key={post.id} className={styles.listItem}>
+          <InViewAnimation>
+            <PostCard
+              {...post}
+              categoryTitle={(post.category as BlogCategory)?.title ?? ''}
+              url={url}
+              variant={cardVariant}
+              readMoreLabel={readMoreLabel}
+            />
+          </InViewAnimation>
+        </li>
       ))}
     </ul>
   );

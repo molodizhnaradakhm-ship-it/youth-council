@@ -8,21 +8,25 @@ import {
 } from '@/components/EntityRelatedPostsSection';
 import { InViewAnimation } from '@/components/InViewAnimation';
 import { PhoneBlock } from '@/components/PhoneBlock';
-import RichText from '@/components/RichText';
+import { RenderBlocks } from '@/components/RenderBlocks';
+import { unifiedBlocksMapper } from '@/components/RenderBlocks/unifiedBlocksMapper';
+import { SocialsBlock } from '@/components/SocialsBlock';
 import { Text } from '@/components/Text';
 import type { Participant } from '@monorepo/cms/src/payload-types';
 
 import styles from './SingleParticipant.module.scss';
+import { WorkplaceOrganization } from './WorkplaceOrganization';
 
 type Props = Participant & {
   relatedPosts?: EntityRelatedPostsProps | null;
 };
 
 export async function SingleParticipant({
-  about,
-  photo,
+  contentBlocks,
+  contentPhoto,
   receptionHours,
   relatedPosts,
+  socList,
   specialization,
   title,
   workplaces,
@@ -31,6 +35,11 @@ export async function SingleParticipant({
   const t = await getTranslations('participants');
   const phoneStr = typeof phone === 'string' ? phone.trim() : '';
   const hoursStr = typeof receptionHours === 'string' ? receptionHours.trim() : '';
+  const blocks = contentBlocks ?? [];
+  const hasBlocks = blocks.length > 0;
+  const socials = (socList ?? []).filter(
+    (item) => item?.icon && typeof item.link === 'string' && item.link.trim() !== '',
+  );
 
   return (
     <main className={styles.wrapper}>
@@ -38,9 +47,9 @@ export async function SingleParticipant({
         <Container className={styles.container}>
           <div className={styles.introRow}>
             <div className={styles.introLeft}>
-              <InViewAnimation animateImage className={styles.photoWrap}>
-                <CMSMedia resource={photo} className={styles.photo} />
-              </InViewAnimation>
+              <div className={styles.photoWrap}>
+                <CMSMedia resource={contentPhoto} className={styles.photo} />
+              </div>
               <InViewAnimation className={styles.sideMeta} delay={0.4} effect='y'>
                 {workplaces?.length ? (
                   <div className={styles.block}>
@@ -50,9 +59,7 @@ export async function SingleParticipant({
                     <ul className={styles.workplaceList}>
                       {workplaces.map((w) => (
                         <li key={w.id ?? `${w.organization}-${w.note ?? ''}`}>
-                          <Text className={styles.org} color='inherit' type='p2'>
-                            {w.organization}
-                          </Text>
+                          <WorkplaceOrganization workplace={w} />
                           {w.note?.trim() ? (
                             <Text className={styles.note} color='inherit' type='p2' tag='p'>
                               {w.note.trim()}
@@ -74,6 +81,7 @@ export async function SingleParticipant({
                   </div>
                 ) : null}
                 {phoneStr ? <PhoneBlock phone={phoneStr} variant='onLight' /> : null}
+                {socials.length ? <SocialsBlock socList={socials} variant='onLight' /> : null}
               </InViewAnimation>
             </div>
             <div className={styles.introRight}>
@@ -85,18 +93,19 @@ export async function SingleParticipant({
                   {title}
                 </Text>
               </InViewAnimation>
-              <InViewAnimation delay={0.1} effect='y'>
-                <RichText
-                  className={styles.about}
-                  content={about}
-                  textColor='inherit'
-                  textType='p2'
-                />
-              </InViewAnimation>
             </div>
           </div>
         </Container>
       </section>
+      {hasBlocks ? (
+        <section className={styles.content}>
+          <Container>
+            <div className={styles.contentBlocks}>
+              <RenderBlocks blocks={blocks as never} mapper={unifiedBlocksMapper} />
+            </div>
+          </Container>
+        </section>
+      ) : null}
       {relatedPosts ? (
         <EntityRelatedPostsSection
           categories={relatedPosts.categories}
